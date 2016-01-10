@@ -1,7 +1,15 @@
 //шапка
 header {
+	margin: auto;
+	width:  75%;
+
 	//картинка с именем
 	.img-name {
+		> a {
+			display: block;
+			width:   100%;
+			height:  100%;
+		}
 		display: none;
 		margin:  1em auto;
 
@@ -47,8 +55,6 @@ header {
 				background-image:  url(../images/header_desktop.png);
 				background-size:   contain;
 				background-repeat: no-repeat;
-				margin:            auto;
-				width:             75%;
 				height:            169px;
 			}
 		}
@@ -60,7 +66,7 @@ header {
 		@include respond-to(desktop) {
 			display: block;
 			margin:  1em auto;
-			width:   60%;
+			width:   80%;
 			//контейнер с фото
 			.photos-container {
 				display:  block;
@@ -73,6 +79,66 @@ header {
 					height:           $header-photo-height;
 					background-color: $salmon-color;
 					margin:           0 1em;
+				}
+			}
+		}
+	}
+
+	//menu
+	.menu {
+		display: block;
+		ul.menu-items {
+			display: inline-block;
+
+			> li {
+				margin:  0 1em 0 0;
+
+				display: inline-block;
+
+				> a {
+					display: block;
+					width:   100%;
+					height:  100%;
+				}
+
+				@include respond-to(mobile) {
+					height:  24px;
+					background: url(../images/menu/menu-mobile-sprite.png) no-repeat;
+
+					&.item-biser {
+						background-position: 0 0;
+						width:69px;
+					}
+
+					&.item-not-biser {
+						background-position: -70px 0;
+						width:102px;
+					}
+
+					&.item-contacts {
+						background-position: -172px 0;
+						width:112px;
+					}
+				}
+
+				@include respond-to(desktop) {
+					height:  42px;
+					background: url(../images/menu/menu-desktop-sprite.png) no-repeat;
+
+					&.item-biser {
+						background-position: 0 0;
+						width:138px;
+					}
+
+					&.item-not-biser {
+						background-position: -139px 0;
+						width:206px;
+					}
+
+					&.item-contacts {
+						background-position: -345px 0;
+						width:228px;
+					}
 				}
 			}
 		}
