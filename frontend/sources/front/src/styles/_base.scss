@@ -11,7 +11,22 @@ body {
 	}
 
 	background-repeat: no-repeat;
-	background-size:   cover;
 	background-color:  $background-base-color;
+	background-size:   100%;
 	min-width:         $screen-xs-min;
+	font-family:       Arial, Helvetica;
+	line-height:       1.4em;
+	color:             $color-text;
+
+	p {
+		color:  $color-text;
+		margin: 1em 0;
+	}
+
+	h1 {
+		color:       $color-heading;
+		font-size:   2em;
+		font-weight: bold;
+		margin:      0.5em 0;
+	}
 }

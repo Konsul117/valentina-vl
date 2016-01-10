@@ -21,13 +21,15 @@ use yii\helpers\Html;
 <?php $this->beginBody() ?>
 
 
-<?= $this->render('//layouts/blocks/header')?>
+<?= $this->render('//layouts/blocks/header') ?>
 
-<main>
+<div class="content">
+
+	<h1><?= $this->title ?></h1>
 
 	<?= $content ?>
 
-</main>
+</div>
 
 
 <!--<footer class="footer">-->

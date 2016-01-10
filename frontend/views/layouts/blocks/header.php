@@ -31,21 +31,26 @@ use yii\helpers\Html;
 
 			</div>
 		</div>
-
 	</div>
 
-	<div class="img-name-container">
-		<div class="img-name img-name-desktop">
-			<?= Html::a('', ['/']) ?>
-		</div>
+	<div class="img-name-wrapper">
+		<div class="img-name-container">
+			<div class="img-name img-name-desktop">
+				<?= Html::a('', ['/']) ?>
+			</div>
 
-		<div class="img-name img-name-mobile">
-			<?= Html::a('', ['/']) ?>
-			<div class="wrapper">
-				<div class="img-part left-part"></div>
-				<div class="img-part right-part"></div>
+			<div class="img-name img-name-mobile">
+				<?= Html::a('', ['/']) ?>
+				<div class="wrapper">
+					<div class="img-part left-part"></div>
+					<div class="img-part right-part"></div>
+				</div>
 			</div>
 		</div>
+	</div>
+
+	<div class="sup-menu">
+
 	</div>
 
 	<div class="menu">

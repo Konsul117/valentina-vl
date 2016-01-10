@@ -11,76 +11,82 @@ header {
 	}
 
 	//картинка с именем
-	.img-name-container {
-
+	.img-name-wrapper {
 		@include respond-to(desktop) {
-			position:       relative;
-			padding-bottom: 19%;
-
-			.img-name {
-				position: absolute;
-				top:      0;
-				bottom:   0;
-				left:     0;
-				right:    0;
-			}
+			max-width: 860px;
+			margin:    auto;
 		}
 
-		.img-name {
-			> a {
-				display: block;
-				width:   100%;
-				height:  100%;
-			}
-			display: none;
-			margin:  1em auto;
+		.img-name-container {
 
-			@include respond-to(mobile) {
-				//мобильная
-				&.img-name-mobile {
-					@include respond-to(mobile) {
-						width: 67%;
-					}
-					max-width: 457px;
-					display:   block;
-					.wrapper {
-						display: inline-block;
-						//части
-						.img-part {
-							display:           block;
-							background-size:   contain;
-							background-repeat: no-repeat;
+			@include respond-to(desktop) {
+				position:       relative;
+				padding-bottom: 19%;
 
-							//левая часть
-							&.left-part {
-								background-image: url(../images/header_mobile_left.png);
-								float:            left;
-								width:            236px;
-								height:           56px;
-							}
-
-							//правая часть
-							&.right-part {
-								background-image: url(../images/header_mobile_right.png);
-								float:            right;
-								width:            261px;
-								height:           61px;
-								margin-top:       5px;
-							}
-						}
-
-					}
+				.img-name {
+					position: absolute;
+					top:      0;
+					bottom:   0;
+					left:     0;
+					right:    0;
 				}
 			}
 
-			@include respond-to(desktop) {
-				//десктопная
-				display: block;
-				&.img-name-desktop {
-					background-image:  url(../images/header_desktop.png);
-					background-size:   contain;
-					background-repeat: no-repeat;
-					height:            122px;
+			.img-name {
+				> a {
+					display: block;
+					width:   100%;
+					height:  100%;
+				}
+				display: none;
+				margin:  1em auto;
+
+				@include respond-to(mobile) {
+					//мобильная
+					&.img-name-mobile {
+						width:     67%;
+						max-width: 457px;
+						display:   block;
+						.wrapper {
+							display: inline-block;
+							//части
+							.img-part {
+								display:           block;
+								background-size:   contain;
+								background-repeat: no-repeat;
+
+								//левая часть
+								&.left-part {
+									background-image: url(../images/header_mobile_left.png);
+									float:            left;
+									width:            236px;
+									height:           56px;
+								}
+
+								//правая часть
+								&.right-part {
+									background-image: url(../images/header_mobile_right.png);
+									float:            right;
+									width:            261px;
+									height:           61px;
+									margin-top:       5px;
+								}
+							}
+
+						}
+					}
+				}
+
+				@include respond-to(desktop) {
+					//десктопная
+					&.img-name-desktop {
+						max-width:         860px;
+						display:           block;
+						background-image:  url(../images/header_desktop.png);
+						background-size:   contain;
+						background-repeat: no-repeat;
+						height:            122px;
+					}
 				}
 			}
 		}
@@ -103,7 +109,7 @@ header {
 					display:          inline-block;
 					width:            $header-photo-width;
 					height:           $header-photo-height;
-					background-color: $salmon-color;
+					background-color: $color-salmon;
 					margin:           0 1em;
 				}
 			}
