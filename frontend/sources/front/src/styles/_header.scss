@@ -1,61 +1,87 @@
 //шапка
 header {
 	margin: auto;
-	width:  75%;
+
+	@include respond-to(mobile) {
+		width: 100%;
+	}
+
+	@include respond-to(desktop) {
+		width: 60%;
+	}
 
 	//картинка с именем
-	.img-name {
-		> a {
-			display: block;
-			width:   100%;
-			height:  100%;
-		}
-		display: none;
-		margin:  1em auto;
+	.img-name-container {
 
-		@include respond-to(mobile) {
-			//мобильная
-			&.img-name-mobile {
-				max-width: 457px;
-				display:   block;
-				.wrapper {
-					display: inline-block;
-					//части
-					.img-part {
-						display:           block;
-						background-size:   contain;
-						background-repeat: no-repeat;
+		@include respond-to(desktop) {
+			position:       relative;
+			padding-bottom: 19%;
 
-						//левая часть
-						&.left-part {
-							background-image: url(../images/header_mobile_left.png);
-							float:            left;
-							width:            236px;
-							height:           56px;
-						}
-
-						//правая часть
-						&.right-part {
-							background-image: url(../images/header_mobile_right.png);
-							float:            right;
-							width:            261px;
-							height:           61px;
-							margin-top:       5px;
-						}
-					}
-
-				}
+			.img-name {
+				position: absolute;
+				top:      0;
+				bottom:   0;
+				left:     0;
+				right:    0;
 			}
 		}
 
-		@include respond-to(desktop) {
-			//десктопная
-			display: block;
-			&.img-name-desktop {
-				background-image:  url(../images/header_desktop.png);
-				background-size:   contain;
-				background-repeat: no-repeat;
-				height:            169px;
+		.img-name {
+			> a {
+				display: block;
+				width:   100%;
+				height:  100%;
+			}
+			display: none;
+			margin:  1em auto;
+
+			@include respond-to(mobile) {
+				//мобильная
+				&.img-name-mobile {
+					@include respond-to(mobile) {
+						width: 67%;
+					}
+					max-width: 457px;
+					display:   block;
+					.wrapper {
+						display: inline-block;
+						//части
+						.img-part {
+							display:           block;
+							background-size:   contain;
+							background-repeat: no-repeat;
+
+							//левая часть
+							&.left-part {
+								background-image: url(../images/header_mobile_left.png);
+								float:            left;
+								width:            236px;
+								height:           56px;
+							}
+
+							//правая часть
+							&.right-part {
+								background-image: url(../images/header_mobile_right.png);
+								float:            right;
+								width:            261px;
+								height:           61px;
+								margin-top:       5px;
+							}
+						}
+
+					}
+				}
+			}
+
+			@include respond-to(desktop) {
+				//десктопная
+				display: block;
+				&.img-name-desktop {
+					background-image:  url(../images/header_desktop.png);
+					background-size:   contain;
+					background-repeat: no-repeat;
+					height:            122px;
+				}
 			}
 		}
 	}
@@ -64,9 +90,9 @@ header {
 	.last-photos {
 		display: none;
 		@include respond-to(desktop) {
-			display: block;
-			margin:  1em auto;
-			width:   80%;
+			display:    block;
+			margin:     1em auto;
+			text-align: center;
 			//контейнер с фото
 			.photos-container {
 				display:  block;
@@ -87,12 +113,15 @@ header {
 	//menu
 	.menu {
 		display: block;
+
+		@include respond-to(mobile) {
+			text-align: center;
+		}
+
 		ul.menu-items {
 			display: inline-block;
 
 			> li {
-				margin:  0 1em 0 0;
-
 				display: inline-block;
 
 				> a {
@@ -102,42 +131,46 @@ header {
 				}
 
 				@include respond-to(mobile) {
-					height:  24px;
-					background: url(../images/menu/menu-mobile-sprite.png) no-repeat;
+					margin:          0 12px 0 0;
+					height:          15px;
+					background:      url(../images/menu/menu-mobile-sprite.png) no-repeat;
+					background-size: cover;
 
 					&.item-biser {
 						background-position: 0 0;
-						width:69px;
+						width:               64px;
 					}
 
 					&.item-not-biser {
-						background-position: -70px 0;
-						width:102px;
+						background-position: -64px 0;
+						width:               94px;
 					}
 
 					&.item-contacts {
-						background-position: -172px 0;
-						width:112px;
+						background-position: -159px 0;
+						width:               111px;
 					}
 				}
 
 				@include respond-to(desktop) {
-					height:  42px;
-					background: url(../images/menu/menu-desktop-sprite.png) no-repeat;
+					margin:          0 18px 0 0;
+					height:          16px;
+					background:      url(../images/menu/menu-mobile-sprite.png) no-repeat;
+					background-size: cover;
 
 					&.item-biser {
 						background-position: 0 0;
-						width:138px;
+						width:               68px;
 					}
 
 					&.item-not-biser {
-						background-position: -139px 0;
-						width:206px;
+						background-position: -68px 0;
+						width:               102px;
 					}
 
 					&.item-contacts {
-						background-position: -345px 0;
-						width:228px;
+						background-position: -169px 0;
+						width:               119px;
 					}
 				}
 			}

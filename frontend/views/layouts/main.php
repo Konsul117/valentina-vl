@@ -23,6 +23,12 @@ use yii\helpers\Html;
 
 <?= $this->render('//layouts/blocks/header')?>
 
+<main>
+
+	<?= $content ?>
+
+</main>
+
 
 <!--<footer class="footer">-->
 <!--	<div class="container">-->
