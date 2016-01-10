@@ -1,0 +1,80 @@
+//шапка
+header {
+	//картинка с именем
+	.img-name {
+		display: none;
+		margin:  1em auto;
+
+		@include respond-to(mobile) {
+			//мобильная
+			&.img-name-mobile {
+				max-width: 457px;
+				display:   block;
+				.wrapper {
+					display: inline-block;
+					//части
+					.img-part {
+						display:           block;
+						background-size:   contain;
+						background-repeat: no-repeat;
+
+						//левая часть
+						&.left-part {
+							background-image: url(../images/header_mobile_left.png);
+							float:            left;
+							width:            236px;
+							height:           56px;
+						}
+
+						//правая часть
+						&.right-part {
+							background-image: url(../images/header_mobile_right.png);
+							float:            right;
+							width:            261px;
+							height:           61px;
+							margin-top:       5px;
+						}
+					}
+
+				}
+			}
+		}
+
+		@include respond-to(desktop) {
+			//десктопная
+			display: block;
+			&.img-name-desktop {
+				background-image:  url(../images/header_desktop.png);
+				background-size:   contain;
+				background-repeat: no-repeat;
+				margin:            auto;
+				width:             75%;
+				height:            169px;
+			}
+		}
+	}
+
+	//последние фото
+	.last-photos {
+		display: none;
+		@include respond-to(desktop) {
+			display: block;
+			margin:  1em auto;
+			width:   60%;
+			//контейнер с фото
+			.photos-container {
+				display:  block;
+				height:   $header-photo-height;
+				overflow: hidden;
+				//само фото
+				.photo-item {
+					display:          inline-block;
+					width:            $header-photo-width;
+					height:           $header-photo-height;
+					background-color: $salmon-color;
+					margin:           0 1em;
+				}
+			}
+		}
+	}
+}

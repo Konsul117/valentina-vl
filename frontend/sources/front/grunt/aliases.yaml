@@ -1,0 +1,29 @@
+default:
+  description: 'Default (production) build'
+  tasks:
+    - build
+dev:
+  description: 'Development build'
+  tasks:
+    - 'concurrent:devStep1'
+    - 'concurrent:devStep2'
+    - 'concurrent:devStep3'
+    - 'renameDistTmp'
+dist:
+  description: 'Production build'
+  tasks:
+    - 'concurrent:distStep1'
+    - 'concurrent:distStep2'
+    - 'concurrent:distStep3'
+    - 'renameDistTmp'
+    - 'concurrent:assets'
+renameDistTmp:
+  description: 'Clean assets manager'
+  tasks:
+    - 'clean:renameDistTmp'
+    - 'concurrent:renameDistTmp'
+serve:
+  description: 'Watch build'
+  tasks:
+    - 'dev'
+    - 'watch'

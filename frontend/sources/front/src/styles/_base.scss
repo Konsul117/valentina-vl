@@ -1,0 +1,17 @@
+$header-photo-width: 100px;
+$header-photo-height: 100px;
+
+body {
+	@include respond-to(mobile) {
+		background-image: url(../images/background_mobile.jpg)
+	}
+
+	@include respond-to(desktop) {
+		background-image: url(../images/background_desktop.jpg);
+	}
+
+	background-repeat: no-repeat;
+	background-size:   cover;
+	background-color:  $background-base-color;
+	min-width:         $screen-xs-min;
+}

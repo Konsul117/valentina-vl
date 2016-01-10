@@ -1,0 +1,7 @@
+{
+  "name": "Valentina-vl",
+  "private": true,
+  "dependencies": {
+	  "jquery": ">= 1.9.0"
+  }
+}
