@@ -16,6 +16,7 @@ body {
 	min-width:         $screen-xs-min;
 	line-height:       1.4em;
 	color:             $color-text;
+	font-family:       Arial, Helvetica;
 
 	p {
 		color:  $color-text;
@@ -35,7 +36,16 @@ a {
 	&:visited,
 	&:active,
 	&:hover {
-		color:           $link-color;
+		color:           $color-salmon;
 		text-decoration: none;
 	}
+}
+
+input[type=text],
+select {
+	border: 1px solid #AAA;
+}
+
+footer {
+	text-align: center;
 }

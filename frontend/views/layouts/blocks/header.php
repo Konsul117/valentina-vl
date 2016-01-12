@@ -53,20 +53,36 @@ use yii\helpers\Html;
 
 	</div>
 
-	<div class="menu">
-		<ul class="menu-items">
-			<li class="item-biser">
-				<?= Html::a('', ['/']) ?>
-			</li>
+	<div class="menu-wrapper">
 
-			<li class="item-not-biser">
-				<?= Html::a('', ['/']) ?>
-			</li>
+		<div class="social-icons">
+			<div class="social-logo social-logo-instagram"><?= Html::a('', 'https://www.instagram.com/vasa_vasa400/ ', ['target' => '_blank']) ?></div><!--
+		 --><div class="social-logo social-logo-ok"><?= Html::a('', 'http://ok.ru/valentina.panchenko1 ', ['target' => '_blank']) ?></div><!--
+		 --><div class="social-logo social-logo-vk"><?= Html::a('', 'https://vk.com/id215242627 ', ['target' => '_blank']) ?></div>
+		</div>
 
-			<li class="item-contacts">
+		<div class="menu">
+			<ul class="menu-items">
+				<li class="item-biser">
+					<?= Html::a('', ['/']) ?>
+				</li>
+
+				<li class="item-not-biser">
+					<?= Html::a('', ['/']) ?>
+				</li>
+
+				<li class="item-contacts">
+					<?= Html::a('', ['/']) ?>
+				</li>
+			</ul>
+		</div>
+
+		<div class="search-panel">
+			<input type="text" maxlength="50" placeholder="Поиск">
+			<div class="icons icons-search">
 				<?= Html::a('', ['/']) ?>
-			</li>
-		</ul>
+			</div>
+		</div>
 	</div>
 
 </header>

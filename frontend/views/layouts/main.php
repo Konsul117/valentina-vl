@@ -35,13 +35,11 @@ use yii\helpers\Html;
 </div>
 
 
-<!--<footer class="footer">-->
-<!--	<div class="container">-->
-<!--		<p class="pull-left">&copy; My Company --><? //= date('Y') ?><!--</p>-->
-<!---->
-<!--		<p class="pull-right">--><? //= Yii::powered() ?><!--</p>-->
-<!--	</div>-->
-<!--</footer>-->
+<footer class="footer">
+	<div class="container">
+		Vladivostok <?= date('Y') ?>
+	</div>
+</footer>
 
 <?php $this->endBody() ?>
 </body>
