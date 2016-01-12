@@ -1,6 +1,7 @@
 <?php
 
 /** @var \yii\web\View $this */
+/** @var string $content */
 
 use yii\helpers\Html;
 
@@ -24,6 +25,8 @@ use yii\helpers\Html;
 <?= $this->render('//layouts/blocks/header') ?>
 
 <div class="content">
+
+	<?= $this->render('//layouts/blocks/breadcrumbs') ?>
 
 	<h1><?= $this->title ?></h1>
 

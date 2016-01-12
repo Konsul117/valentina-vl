@@ -1,8 +1,10 @@
 <?php
 
-/* @var $this yii\web\View */
+/* @var $this \common\base\View */
 
 $this->title = 'My Yii Application';
+$this->breadcrumbs['index'] =  'Первая';
+$this->breadcrumbs['index2'] =  'Вторая';
 ?>
 
 

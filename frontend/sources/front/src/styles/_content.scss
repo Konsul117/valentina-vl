@@ -2,7 +2,6 @@
 	padding:    1px 1em;
 
 	@include respond-to(mobile) {
-
 	}
 
 	@include respond-to(desktop) {
@@ -13,4 +12,18 @@
 	background: rgba(0, 0, 0, 0.4);
 	color:      #FFF;
 	text-align: justify;
+
+	ul.breadcrubms {
+		margin:  0.5em 0;
+		display: block;
+		> li {
+			display: inline-block;
+
+			.delimiter {
+				margin:      0 0.5em;
+				font-size:   0.9em;
+				font-weight: bold;
+			}
+		}
+	}
 }

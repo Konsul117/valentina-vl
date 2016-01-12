@@ -3,46 +3,49 @@
 use common\components\ModuleManager;
 
 return [
-	'bootstrap' => [
+	'bootstrap'  => [
 		'log',
 		'debug',
 		'moduleManager',
 	],
 	'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
-	'language' => 'ru',
+	'language'   => 'ru',
 	'components' => [
-		'request' => [
-//			'enableCookieValidation' => false,
-//			'enableCsrfValidation' => false,
-//			'cookieValidationKey' => 'xxxxxxx',
+		'view'          => [
+			'class' => \common\base\View::class,
+		],
+		'request'       => [
+			//			'enableCookieValidation' => false,
+			//			'enableCsrfValidation' => false,
+			//			'cookieValidationKey' => 'xxxxxxx',
 		],
 		'configManager' => [
 			'class' => ModuleManager::class,
 		],
-		'cache' => [
+		'cache'         => [
 			'class' => \yii\caching\FileCache::class,
 		],
-		'urlManager' => [
+		'urlManager'    => [
 			'enablePrettyUrl' => true,
-			'showScriptName' => false,
+			'showScriptName'  => false,
 		],
-		'user' => [
-			'identityClass' => 'common\models\User',
+		'user'          => [
+			'identityClass'   => 'common\models\User',
 			'enableAutoLogin' => true,
 		],
-		'log' => [
+		'log'           => [
 			'traceLevel' => YII_DEBUG ? 3 : 0,
-			'targets' => [
+			'targets'    => [
 				[
-					'class' => 'yii\log\FileTarget',
+					'class'  => 'yii\log\FileTarget',
 					'levels' => ['error', 'warning'],
 				],
 			],
 		],
-		'errorHandler' => [
+		'errorHandler'  => [
 			'errorAction' => 'site/error',
 		],
-		'db' => [
+		'db'            => [
 			'class'               => \yii\db\Connection::class,
 			'charset'             => 'utf8',
 			'dsn'                 => 'mysql:host=localhost;port=3306;dbname=altopromo',
@@ -54,12 +57,8 @@ return [
 		'moduleManager' => [
 			'class' => ModuleManager::class,
 		],
-		'processLocker' => [
-			'class' => \common\base\ProcessFileLocker::class,
-			'method' => 'file',
-		],
 	],
-	'modules' => [
+	'modules'    => [
 		'debug' => [
 			'class'      => \yii\debug\Module::class,
 			'allowedIPs' => ['127.0.0.1', '::1'],

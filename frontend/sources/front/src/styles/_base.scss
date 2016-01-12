@@ -14,8 +14,6 @@ body {
 	background-color:  $background-base-color;
 	background-size:   100%;
 	min-width:         $screen-xs-min;
-
-
 	line-height:       1.4em;
 	color:             $color-text;
 
@@ -29,5 +27,15 @@ body {
 		font-size:   2em;
 		font-weight: bold;
 		margin:      0.5em 0;
+	}
+}
+
+a {
+	&:link,
+	&:visited,
+	&:active,
+	&:hover {
+		color:           $link-color;
+		text-decoration: none;
 	}
 }
