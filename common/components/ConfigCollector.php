@@ -226,35 +226,40 @@ class ConfigCollector {
 				$config = require($cacheFilename);
 			}
 			else {
-//				$enabledModules = static::_getEnabledModules();
+				//				$enabledModules = static::_getEnabledModules();
 
-//				$enabledModules = ['seoScanner'];
+				//				$enabledModules = ['seoScanner'];
 
 				// -- Проходимся по всем модулям и находим их конфиги
 				$urlRuleFiles = [];
-				$mergeFiles = [];
-				foreach (new GlobIterator(static::$_repositoryRootPath . '/common/modules/*') as $globItem) {/** @var GlobIterator $globItem */
-					if (is_dir($globItem->getPathname()) && '.' !== $globItem->getPathname() && '..' !== $globItem->getPathname()) {
-						// -- На frontend'е не подключаем конфиги отключённых модулей
-//						if (false === isset($enabledModules[mb_strtolower($globItem->getFilename())]) && static::ENTRY_POINT_BACKEND !== static::getEntryPoint()) {
-//							continue;
-//						}
-						// -- -- -- --
+				$mergeFiles   = [];
 
-						// -- Заносим список файлов, хранящих правила для urlManager'а
-						$urlRuleFiles[] = $globItem->getPathname() . '/config/url-rules.php';
-						$urlRuleFiles[] = static::$_runFromPath . '/modules/' . $globItem->getFilename() . '/config/url-rules.php';
-						// -- -- -- --
+				foreach (['common', static::$_entryPoint] as $enityPoint) {
 
-						$mergeFiles[] = $globItem->getPathname() . '/config/common.php';// Основной файл конфига
-						$mergeFiles[] = $globItem->getPathname() . '/config/common-local.php';// Основной локальный файл конфига
-						$mergeFiles[] = $globItem->getPathname() . '/config/' . static::$_entryPoint . '.php';// Файл конфига для текущего типа приложения
-						$mergeFiles[] = $globItem->getPathname() . '/config/' . static::$_entryPoint . '-local.php';// Локальный файл конфига для текущего типа приложения
+					foreach (new GlobIterator(static::$_repositoryRootPath . '/' . $enityPoint . '/modules/*') as $globItem) {
+						/** @var GlobIterator $globItem */
+						if (is_dir($globItem->getPathname()) && '.' !== $globItem->getPathname() && '..' !== $globItem->getPathname()) {
+							// -- На frontend'е не подключаем конфиги отключённых модулей
+							//						if (false === isset($enabledModules[mb_strtolower($globItem->getFilename())]) && static::ENTRY_POINT_BACKEND !== static::getEntryPoint()) {
+							//							continue;
+							//						}
+							// -- -- -- --
 
-						$mergeFiles[] = static::$_runFromPath . '/modules/' . $globItem->getFilename() . '/config/common.php';// Основной файл конфига для текущего сайта
-						$mergeFiles[] = static::$_runFromPath . '/modules/' . $globItem->getFilename() . '/config/common-local.php';// Основной локальный файл конфига для текущего сайта
-						$mergeFiles[] = static::$_runFromPath . '/modules/' . $globItem->getFilename() . '/config/' . static::$_entryPoint . '.php';// Файл конфига для текущего сайта для текущего типа приложения
-						$mergeFiles[] = static::$_runFromPath . '/modules/' . $globItem->getFilename() . '/config/' . static::$_entryPoint . '-local.php';// Локальный файл конфига для текущего сайта для текущего типа приложения
+							// -- Заносим список файлов, хранящих правила для urlManager'а
+							$urlRuleFiles[] = $globItem->getPathname() . '/config/url-rules.php';
+//							$urlRuleFiles[] = static::$_runFromPath . '/modules/' . $globItem->getFilename() . '/config/url-rules.php';
+							// -- -- -- --
+
+							$mergeFiles[] = $globItem->getPathname() . '/config/common.php';// Основной файл конфига
+							$mergeFiles[] = $globItem->getPathname() . '/config/common-local.php';// Основной локальный файл конфига
+							$mergeFiles[] = $globItem->getPathname() . '/config/' . static::$_entryPoint . '.php';// Файл конфига для текущего типа приложения
+							$mergeFiles[] = $globItem->getPathname() . '/config/' . static::$_entryPoint . '-local.php';// Локальный файл конфига для текущего типа приложения
+
+							$mergeFiles[] = static::$_runFromPath . '/modules/' . $globItem->getFilename() . '/config/common.php';// Основной файл конфига для текущего сайта
+							$mergeFiles[] = static::$_runFromPath . '/modules/' . $globItem->getFilename() . '/config/common-local.php';// Основной локальный файл конфига для текущего сайта
+							$mergeFiles[] = static::$_runFromPath . '/modules/' . $globItem->getFilename() . '/config/' . static::$_entryPoint . '.php';// Файл конфига для текущего сайта для текущего типа приложения
+							$mergeFiles[] = static::$_runFromPath . '/modules/' . $globItem->getFilename() . '/config/' . static::$_entryPoint . '-local.php';// Локальный файл конфига для текущего сайта для текущего типа приложения
+						}
 					}
 				}
 				// -- -- -- --

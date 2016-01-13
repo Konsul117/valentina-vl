@@ -30,8 +30,10 @@ return [
 			'showScriptName'  => false,
 		],
 		'user'          => [
+			'class'           => \yii\web\User::class,
 			'identityClass'   => 'common\models\User',
 			'enableAutoLogin' => true,
+			'loginUrl'        => ['user/auth/login'],
 		],
 		'log'           => [
 			'traceLevel' => YII_DEBUG ? 3 : 0,
@@ -42,13 +44,13 @@ return [
 				],
 			],
 		],
-		'errorHandler'  => [
-			'errorAction' => 'site/error',
-		],
+		//		'errorHandler'  => [
+		//			'errorAction' => 'site/error',
+		//		],
 		'db'            => [
 			'class'               => \yii\db\Connection::class,
 			'charset'             => 'utf8',
-			'dsn'                 => 'mysql:host=localhost;port=3306;dbname=altopromo',
+			'dsn'                 => 'mysql:host=localhost;port=3306;dbname=valentina-vl',
 			'username'            => 'root',
 			'password'            => 'qwe',
 			'enableSchemaCache'   => true,
