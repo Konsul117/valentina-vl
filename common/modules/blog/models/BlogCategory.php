@@ -12,5 +12,13 @@ use yii\db\ActiveRecord;
  * @property string $title_url    Название ЧПУ категории
  */
 class BlogCategory extends ActiveRecord {
+	/** Уникальный идентификатор категории */
+	const ATTR_ID = 'id';
+
+	/** Название категории */
+	const ATTR_TITLE = 'title';
+
+	/** Название ЧПУ категории */
+	const ATTR_TITLE_URL = 'title_url';
 
 }

@@ -1,0 +1,22 @@
+{
+  "name": "valentina-vl.ru",
+  "authors": [
+    "Konsul117"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "vendor/bower",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "ckeditor": "~4.5.6"
+  }
+}
