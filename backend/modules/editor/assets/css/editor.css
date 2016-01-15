@@ -1,0 +1,18 @@
+#uploadModal #uploadDropzone {
+	width:      200px;
+	height:     200px;
+	border:     2px dashed #AAA;
+	color:      #AAA;
+	background: #F7F7F7;
+	text-align: center;
+	font-size:  1.2em;
+	margin:     auto;
+	padding:    0;
+}
+
+#uploadModal #uploadDropzone .dz-message {
+	display:        table-cell;
+	height:         inherit;
+	vertical-align: middle;
+	padding:        0.5em;
+}

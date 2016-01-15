@@ -82,7 +82,6 @@ class BlogController extends BackendController {
 			return $this->redirect(['view', 'id' => $model->id]);
 		}
 		else {
-			print_r($model->getErrors());
 			return $this->render('update', [
 				'model' => $model,
 			]);
