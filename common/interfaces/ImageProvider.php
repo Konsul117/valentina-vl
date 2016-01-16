@@ -22,4 +22,9 @@ interface ImageProvider {
 	 * @return string URL изображения
 	 */
 	public function getImageUrl($format);
+
+	/**
+	 * @return int
+	 */
+	public function getIdent();
 }

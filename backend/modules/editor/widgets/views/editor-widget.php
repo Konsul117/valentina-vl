@@ -20,6 +20,7 @@ use yii\web\View;
 				<?php /** @var ImageProvider $image */ ?>
 				<?= Html::img($image->getImageUrl(ImageProvider::FORMAT_THUMB), [
 					'data-medium-url' => $image->getImageUrl(ImageProvider::FORMAT_MEDIUM),
+					'data-image-id' => $image->getIdent(),
 				]) ?>
 			</div>
 		<?php endforeach ?>
@@ -55,6 +56,10 @@ use yii\web\View;
 				<div id="uploadDropzone" class="dropzone">
 					<div class="dz-default dz-message"><span>Перетащите изображения сюда</span></div>
 				</div>
+
+				<ul class="uploading-images list-unstyled">
+
+				</ul>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>

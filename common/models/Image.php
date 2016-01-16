@@ -85,4 +85,11 @@ class Image extends ActiveRecord implements ImageProvider {
 		return $imageThumbCreator->getImageThumbUrl($this->id, $format);
 	}
 
+	/**
+	 * @inheritdoc
+	 */
+	public function getIdent() {
+		return $this->id;
+	}
+
 }
