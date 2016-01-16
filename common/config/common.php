@@ -1,6 +1,8 @@
 <?php
 
+use common\components\ImageThumbCreator;
 use common\components\ModuleManager;
+use common\interfaces\ImageProvider;
 
 return [
 	'bootstrap'  => [
@@ -11,31 +13,31 @@ return [
 	'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
 	'language'   => 'ru',
 	'components' => [
-		'view'          => [
+		'view'              => [
 			'class' => \common\base\View::class,
 		],
-		'request'       => [
+		'request'           => [
 			//			'enableCookieValidation' => false,
 			//			'enableCsrfValidation' => false,
 			//			'cookieValidationKey' => 'xxxxxxx',
 		],
-		'configManager' => [
+		'configManager'     => [
 			'class' => ModuleManager::class,
 		],
-		'cache'         => [
+		'cache'             => [
 			'class' => \yii\caching\FileCache::class,
 		],
-		'urlManager'    => [
+		'urlManager'        => [
 			'enablePrettyUrl' => true,
 			'showScriptName'  => false,
 		],
-		'user'          => [
+		'user'              => [
 			'class'           => \yii\web\User::class,
 			'identityClass'   => 'common\models\User',
 			'enableAutoLogin' => true,
 			'loginUrl'        => ['user/auth/login'],
 		],
-		'log'           => [
+		'log'               => [
 			'traceLevel' => YII_DEBUG ? 3 : 0,
 			'targets'    => [
 				[
@@ -47,7 +49,7 @@ return [
 		//		'errorHandler'  => [
 		//			'errorAction' => 'site/error',
 		//		],
-		'db'            => [
+		'db'                => [
 			'class'               => \yii\db\Connection::class,
 			'charset'             => 'utf8',
 			'dsn'                 => 'mysql:host=localhost;port=3306;dbname=valentina-vl',
@@ -56,9 +58,31 @@ return [
 			'enableSchemaCache'   => true,
 			'schemaCacheDuration' => 24 * 60 * 60,
 		],
-		'moduleManager' => [
+		'moduleManager'     => [
 			'class' => ModuleManager::class,
 		],
+		'imageThumbCreator' => [
+			'class'       => ImageThumbCreator::class,
+			'thumbsSizes' => [
+				ImageProvider::FORMAT_THUMB  => [
+					'width'  => 90,
+					'height' => 90,
+				],
+				ImageProvider::FORMAT_MEDIUM => [
+					'width'  => 600,
+					'height' => 600,
+				],
+				ImageProvider::FORMAT_FULL   => [
+					'width'  => 100,
+					'height' => 1000,
+				],
+			],
+		],
+	],
+	'params'     => [
+		'baseDomain'     => 'valentina-vl.ru',
+		'backendDomain'  => 'backend.valentina-vl.ru',
+		'frontendDomain' => 'valentina-vl.ru',
 	],
 	'modules'    => [
 		'debug' => [

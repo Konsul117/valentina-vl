@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "8580bd82955b1fbb80d47024e184056e",
+    "hash": "677fe3589e9e97b25e97bd16a1182783",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -271,6 +271,50 @@
                 "markdown-extra"
             ],
             "time": "2015-03-06 05:28:07"
+        },
+        {
+            "name": "eventviva/php-image-resize",
+            "version": "1.5.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/eventviva/php-image-resize.git",
+                "reference": "683a80e76908fd1c53cd2fd7f638df39d6ebfcb5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/eventviva/php-image-resize/zipball/683a80e76908fd1c53cd2fd7f638df39d6ebfcb5",
+                "reference": "683a80e76908fd1c53cd2fd7f638df39d6ebfcb5",
+                "shasum": ""
+            },
+            "require": {
+                "ext-gd": "*",
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Aditya Patadia",
+                    "homepage": "http://aditya.patadia.org/"
+                }
+            ],
+            "description": "PHP class to re-size and scale images",
+            "homepage": "https://github.com/eventviva/php-image-resize",
+            "keywords": [
+                "image",
+                "php",
+                "resize",
+                "scale"
+            ],
+            "time": "2016-01-06 18:04:49"
         },
         {
             "name": "ezyang/htmlpurifier",

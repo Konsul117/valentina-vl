@@ -5,6 +5,8 @@ namespace backend\modules\blog\controllers;
 use backend\base\BackendController;
 use backend\modules\blog\models\BlogPostForm;
 use backend\modules\blog\models\BlogPostSearch;
+use common\exceptions\ModelSaveException;
+use common\models\Image;
 use common\modules\blog\models\BlogCategory;
 use Yii;
 use yii\web\NotFoundHttpException;
@@ -58,7 +60,6 @@ class BlogController extends BackendController {
 	 * @throws NotFoundHttpException
 	 */
 	public function actionCreate() {
-
 	}
 
 	/**
@@ -69,6 +70,7 @@ class BlogController extends BackendController {
 	 * @throws NotFoundHttpException
 	 */
 	public function actionUpdate($id) {
+		$errors = [];
 		/** @var BlogPostForm $model */
 		$model = BlogPostForm::findOne($id);
 
@@ -78,14 +80,35 @@ class BlogController extends BackendController {
 
 		$model->setScenario(BlogPostForm::SCENARIO_UPDATE);
 
-		if ($model->load(Yii::$app->request->post()) && $model->save()) {
-			return $this->redirect(['view', 'id' => $model->id]);
+		if (Yii::$app->request->isPost) {
+			$model->load(Yii::$app->request->post());
+
+			$saveResult = $model->save();
+
+			if ($saveResult) {
+				$newImagesIds = [];
+				//.. получение ids
+
+				try {
+					Image::bindImagesToRelated($newImagesIds, $model->id);
+				}
+				catch (ModelSaveException $e) {
+					$errors[] = $e->getMessage();
+				}
+			}
+			else {
+				$errors[] = 'Ошибка при сохранении записи';
+			}
+
+			if (empty($errors)) {
+				return $this->redirect(['view', 'id' => $model->id]);
+			}
 		}
-		else {
-			return $this->render('update', [
-				'model' => $model,
-			]);
-		}
+
+		return $this->render('update', [
+			'model'  => $model,
+			'errors' => $errors,
+		]);
 	}
 
 	/**

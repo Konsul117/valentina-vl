@@ -25,7 +25,12 @@ class EditorWidget extends Widget {
 	/**
 	 * @var string
 	 */
-	public $attribute;
+	public $identAttribute;
+
+	/**
+	 * @var string
+	 */
+	public $contentAttribute;
 
 	/**
 	 * @inheritdoc

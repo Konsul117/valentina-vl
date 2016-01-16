@@ -8,7 +8,7 @@ use yii\web\View;
 /** @var EditorWidget $widget */
 ?>
 
-<?= $widget->form->field($widget->model, $widget->attribute)->textarea(['id' => 'contentTextarea']) ?>
+<?= $widget->form->field($widget->model, $widget->contentAttribute)->textarea(['id' => 'contentTextarea']) ?>
 
 <?php $this->registerJs('CKEDITOR.config.extraPlugins = \'justify\';') ?>
 
@@ -51,5 +51,12 @@ use yii\web\View;
 </div>
 
 <?php
-$this->registerJs('$(\'#uploadModal\').uploadImage({editor: CKEDITOR.instances.contentTextarea, showButtonId: \'imageUploadButton\', uploadUrl: "' . Url::to(['/editor/upload/upload-image/']) . '"})');
+$this->registerJs('$(\'#uploadModal\').uploadImage({
+editor: CKEDITOR.instances.contentTextarea,
+showButtonId: \'imageUploadButton\',
+uploadUrl: "' . Url::to(['/editor/upload/upload-image/']) . '",
+params: {
+	related_entity_item_id: ' . $widget->model->{$widget->identAttribute} . '
+}
+})');
 ?>

@@ -9,7 +9,8 @@
 			settings = $.extend({
 				editor:       null,
 				showButtonId: null,
-				uploadUrl:    null
+				uploadUrl:    null,
+				params:       {}
 			}, options);
 
 			this.editor = settings.editor;
@@ -29,7 +30,8 @@
 			if (settings.uploadUrl !== null) {
 				var uploadDropzone = new Dropzone("#uploadModal #uploadDropzone", {
 					url:               settings.uploadUrl,
-					previewsContainer: false
+					previewsContainer: false,
+					params:            settings.params
 				});
 
 				uploadDropzone.on("complete", function(file) {

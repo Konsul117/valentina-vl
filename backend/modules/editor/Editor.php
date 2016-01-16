@@ -18,14 +18,16 @@ class Editor extends Module {
 	 *
 	 * @param ActiveForm $form
 	 * @param Model      $model
-	 * @param string     $attribute
+	 * @param string     $identAttribute   аттрибут идентификатора модели
+	 * @param string     $contentAttribute аттрибут контента модели
 	 * @return Widget
 	 */
-	public function getEditorWidget(ActiveForm $form, Model $model, $attribute) {
+	public function getEditorWidget(ActiveForm $form, Model $model, $identAttribute, $contentAttribute) {
 		$widget = new EditorWidget([
-			'form'      => $form,
-			'model'     => $model,
-			'attribute' => $attribute,
+			'form'             => $form,
+			'model'            => $model,
+			'identAttribute'   => $identAttribute,
+			'contentAttribute' => $contentAttribute,
 		]);
 
 		return $widget;
