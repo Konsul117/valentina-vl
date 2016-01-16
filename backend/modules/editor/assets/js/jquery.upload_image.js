@@ -4,8 +4,10 @@
 
 	var $modal;
 
+	var $previewPane;
+
 	var methods = {
-		init:            function(options) {
+		init:               function(options) {
 			settings = $.extend({
 				editor:        null,
 				showButtonId:  null,
@@ -39,13 +41,33 @@
 				});
 			}
 
+			if (settings.previewPaneId) {
+				$previewPane = $('#'+settings.previewPaneId);
+			}
+
+			if ($previewPane.length > 0) {
+				$('.image-item', $previewPane).click(function() {
+					if (settings.editor !== null) {
+
+						var $img = $('img', $(this));
+
+						if ($img.length > 0) {
+							var insertHtml = '<img src="'+$img.data('medium-url')+'" data-image-id="'+$img.data('image-id')+'"/>';
+
+							var insetElement = CKEDITOR.dom.element.createFromHtml(insertHtml, settings.editor.document);
+							settings.editor.insertElement(insetElement);
+						}
+					}
+				});
+			}
+
 		},
-		findStatusBlock: function(filename) {
+		findStatusBlock:    function(filename) {
 			return $('ul.uploading-images > li', $modal).filter(function() {
 				return $(this).data('filename') === filename;
 			});
 		},
-		uploadComplete:  function(file) {
+		uploadComplete:     function(file) {
 			if (file.xhr.status !== 200) {
 				methods.updateUploadStatus(file.name, false);
 				alert('Произошла ошибка соединения с сервером');
@@ -59,25 +81,21 @@
 				return;
 			}
 
-			if (settings.previewPaneId) {
-				var $previewPane = $('#'+settings.previewPaneId);
+			if ($previewPane.length > 0) {
+				$previewPane.append('<div class="image-item">'
+					+'<img src="'+response.data.urls.thumb+'" data-medium-url="'+response.data.urls.medium+' data-image-id="'+response.data.image_id+'"/>'
+					+'</div>');
 
-				if ($previewPane.length > 0) {
-					$previewPane.append('<div class="image-item">'
-						+'<img src="' + response.data.urls.thumb + '" data-medium-url="' + response.data.urls.medium + ' data-image-id="' + response.data.image_id + '"/>'
-						+'</div>');
+				var $form = $previewPane.closest('form');
 
-					var $form = $previewPane.closest('form');
-
-					if ($form.length > 0) {
-						$form.append('<input type="hidden" name="uploaded_images_ids[]" value="'+response.data.image_id+'"/>');
-					}
+				if ($form.length > 0) {
+					$form.append('<input type="hidden" name="uploaded_images_ids[]" value="'+response.data.image_id+'"/>');
 				}
-
-				methods.updateUploadStatus(file.name, true);
 			}
+
+			methods.updateUploadStatus(file.name, true);
 		},
-		uploadSending:   function(file) {
+		uploadSending:      function(file) {
 			$('.uploading-images', $modal).append('<li data-filename="'+file.name+'">'
 				+'<div class="lbl-progress">'
 				+'<span class="filename">Загрузка файла '+file.name+'</span>'
@@ -86,7 +104,7 @@
 				+'</li>'
 			)
 		},
-		uploadProgress:  function(file, progress) {
+		uploadProgress:     function(file, progress) {
 			var $li = methods.findStatusBlock(file.name);
 
 			if ($li.length > 0) {
@@ -115,14 +133,7 @@
 				$status.addClass('glyphicon glyphicon-remove');
 			}
 		},
-		show:            function() {
-			if (settings.editor !== null) {
-				//var insertHtml = '<div>qwewe</div>';
-				//
-				//var insetElement = CKEDITOR.dom.element.createFromHtml(insertHtml, settings.editor.document);
-				//settings.editor.insertElement(insetElement);
-			}
-
+		show:               function() {
 			$modal.modal();
 		}
 	};

@@ -24,10 +24,11 @@
 }
 
 #uploadedPreviewPane .image-item {
-	width:        90px;
-	height:       90px;
-	margin:       5px 10px 5px 0;
-	float:        left;
+	width:  90px;
+	height: 90px;
+	margin: 5px 10px 5px 0;
+	float:  left;
+	cursor: pointer;
 }
 
 #uploadModal .uploading-images {
