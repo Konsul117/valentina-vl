@@ -47,7 +47,7 @@ class Image extends ActiveRecord implements ImageProvider {
 		}
 
 		foreach ($imagesModels as $imagesModel) {
-			if ($imagesModel->related_entity_item_id !== null) {
+			if ($imagesModel->related_entity_item_id === null) {
 				$imagesModel->related_entity_item_id = $relatedEntityId;
 
 				$saveResult = $imagesModel->save();

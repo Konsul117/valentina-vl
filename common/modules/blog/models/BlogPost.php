@@ -3,6 +3,7 @@
 namespace common\modules\blog\models;
 
 use common\components\TimestampUTCBehavior;
+use common\models\Image;
 use yii\db\ActiveRecord;
 
 /**
@@ -20,6 +21,7 @@ use yii\db\ActiveRecord;
  *
  * Отношения
  * @property BlogCategory $category        Категория
+ * @property Image[]      $images          Изображения
  */
 class BlogPost extends ActiveRecord {
 
@@ -82,6 +84,10 @@ class BlogPost extends ActiveRecord {
 
 	public function getCategory() {
 		return $this->hasOne(BlogCategory::class, [BlogCategory::ATTR_ID => static::ATTR_CATEGORY_ID]);
+	}
+
+	public function getImages() {
+		return $this->hasMany(Image::class, [Image::ATTR_RELATED_ENTITY_ITEM_ID => static::ATTR_ID]);
 	}
 
 }

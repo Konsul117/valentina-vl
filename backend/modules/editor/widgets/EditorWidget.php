@@ -33,6 +33,11 @@ class EditorWidget extends Widget {
 	public $contentAttribute;
 
 	/**
+	 * @var string
+	 */
+	public $imagesAttribute;
+
+	/**
 	 * @inheritdoc
 	 */
 	public function run() {

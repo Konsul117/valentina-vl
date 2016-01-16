@@ -16,3 +16,16 @@
 	vertical-align: middle;
 	padding:        0.5em;
 }
+
+#uploadedPreviewPane {
+	display: inline-block;
+	padding: 5px;
+	margin:  5px 0;
+}
+
+#uploadedPreviewPane .image-item {
+	width:        90px;
+	height:       90px;
+	margin-right: 10px;
+	float:        left;
+}

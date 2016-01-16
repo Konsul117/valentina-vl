@@ -47,8 +47,8 @@ class UploadController extends Controller {
 		Yii::$app->response->format = Response::FORMAT_JSON;
 
 		if (!isset($_FILES['file'])) {
-			$this->ajaxResponse->success  = false;
-			$this->ajaxResponse->errors[] = 'Файл не получен';
+			$this->ajaxResponse->success = false;
+			$this->ajaxResponse->error   = 'Файл не получен';
 
 			return;
 		}
@@ -57,8 +57,8 @@ class UploadController extends Controller {
 			$param = UploadedFileParams::getInstanceByArray($_FILES['file']);
 		}
 		catch (InvalidParamException $e) {
-			$this->ajaxResponse->success  = false;
-			$this->ajaxResponse->errors[] = $e->getMessage();
+			$this->ajaxResponse->success = false;
+			$this->ajaxResponse->error   = $e->getMessage();
 
 			return;
 		}
@@ -66,10 +66,15 @@ class UploadController extends Controller {
 		$transaction = Yii::$app->db->beginTransaction();
 		$image       = new Image();
 
+		$relatedEntityItemId = Yii::$app->request->post('related_entity_item_id');
+
+		if ($relatedEntityItemId !== null) {
+			$image->related_entity_item_id = $relatedEntityItemId;
+		}
 
 		if ($image->save() === false) {
-			$this->ajaxResponse->success  = false;
-			$this->ajaxResponse->errors[] = 'Ошибка сохранения изображения';
+			$this->ajaxResponse->success = false;
+			$this->ajaxResponse->error   = 'Ошибка сохранения изображения';
 
 			return;
 		}
@@ -78,8 +83,8 @@ class UploadController extends Controller {
 		$imageUploader = Yii::$app->modules['editor']->imageUploader;
 
 		if ($imageUploader === null) {
-			$this->ajaxResponse->success  = false;
-			$this->ajaxResponse->errors[] = 'Системная ошибка';
+			$this->ajaxResponse->success = false;
+			$this->ajaxResponse->error   = 'Системная ошибка';
 		}
 
 		try {
@@ -99,8 +104,8 @@ class UploadController extends Controller {
 			];
 		}
 		catch (ImageException $e) {
-			$this->ajaxResponse->success  = false;
-			$this->ajaxResponse->errors[] = $e->getMessage();
+			$this->ajaxResponse->success = false;
+			$this->ajaxResponse->error   = $e->getMessage();
 
 			$transaction->rollBack();
 

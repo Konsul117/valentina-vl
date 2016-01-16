@@ -7,10 +7,11 @@
 	var methods = {
 		init: function(options) {
 			settings = $.extend({
-				editor:       null,
-				showButtonId: null,
-				uploadUrl:    null,
-				params:       {}
+				editor:        null,
+				showButtonId:  null,
+				previewPaneId: null,
+				uploadUrl:     null,
+				params:        {}
 			}, options);
 
 			this.editor = settings.editor;
@@ -35,7 +36,32 @@
 				});
 
 				uploadDropzone.on("complete", function(file) {
+					if (file.xhr.status !== 200) {
+						alert('Произошла ошибка соединения с сервером');
+					}
+
+
 					var response = $.parseJSON(file.xhr.response);
+
+					if (response.success === false) {
+						alert(response.error ? response.error : 'Неизвестная ошибка');
+
+						return ;
+					}
+
+					if (settings.previewPaneId) {
+						var $previewPane = $('#' + settings.previewPaneId);
+
+						if ($previewPane.length > 0) {
+							$previewPane.append('<div class="image-item"><img src="' + response.data.urls.thumb + '" data-medium-url="' + response.data.urls.medium + '"/></div>')
+
+							var $form = $previewPane.closest('form');
+
+							if ($form.length > 0) {
+								$form.append('<input type="hidden" name="uploaded_images_ids[]" value="' + response.data.image_id + '"/>');
+							}
+						}
+					}
 					console.log(response);
 				});
 			}

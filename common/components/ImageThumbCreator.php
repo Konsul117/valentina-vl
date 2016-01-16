@@ -82,7 +82,7 @@ class ImageThumbCreator extends Component {
 
 			$url .= Yii::getAlias('@resized_images_url') . '/' . $resizedFilename;
 
-			return Url::to($url);
+			return 'http://' . Url::to($url);
 		}
 		catch(InvalidParamException $e) {
 			throw new ImageException('Исключение при получении URL изображения: ' . $e->getMessage(), 0, $e);

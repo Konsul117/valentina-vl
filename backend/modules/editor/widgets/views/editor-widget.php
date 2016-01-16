@@ -1,5 +1,6 @@
 <?php
 use backend\modules\editor\widgets\EditorWidget;
+use common\interfaces\ImageProvider;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\web\View;
@@ -9,6 +10,22 @@ use yii\web\View;
 ?>
 
 <?= $widget->form->field($widget->model, $widget->contentAttribute)->textarea(['id' => 'contentTextarea']) ?>
+
+<div id="uploadedPreviewPane" class="preview-pane">
+	<p>Загруженные изображения: </p>
+
+	<?php if (!empty($widget->model->{$widget->imagesAttribute})): ?>
+		<?php foreach ($widget->model->{$widget->imagesAttribute} as $image): ?>
+			<div class="image-item">
+				<?php /** @var ImageProvider $image */ ?>
+				<?= Html::img($image->getImageUrl(ImageProvider::FORMAT_THUMB), [
+					'data-medium-url' => $image->getImageUrl(ImageProvider::FORMAT_MEDIUM),
+				]) ?>
+			</div>
+		<?php endforeach ?>
+	<?php endif ?>
+
+</div>
 
 <?php $this->registerJs('CKEDITOR.config.extraPlugins = \'justify\';') ?>
 
@@ -55,6 +72,7 @@ $this->registerJs('$(\'#uploadModal\').uploadImage({
 editor: CKEDITOR.instances.contentTextarea,
 showButtonId: \'imageUploadButton\',
 uploadUrl: "' . Url::to(['/editor/upload/upload-image/']) . '",
+previewPaneId: "uploadedPreviewPane",
 params: {
 	related_entity_item_id: ' . $widget->model->{$widget->identAttribute} . '
 }

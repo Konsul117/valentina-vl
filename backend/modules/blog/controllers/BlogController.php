@@ -87,6 +87,15 @@ class BlogController extends BackendController {
 
 			if ($saveResult) {
 				$newImagesIds = [];
+
+				$uploadedImagesIds = Yii::$app->request->post('uploaded_images_ids');
+
+				if (is_array($uploadedImagesIds) && !empty($uploadedImagesIds)) {
+					foreach($uploadedImagesIds as $id) {
+						$newImagesIds[] = (int) $id;
+					}
+				}
+
 				//.. получение ids
 
 				try {

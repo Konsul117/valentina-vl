@@ -34,7 +34,7 @@ use yii\widgets\ActiveForm;
 	/** @var \backend\modules\editor\Editor $editorModule */
 	$editorModule = Yii::$app->modules['editor']; ?>
 
-	<?= $editorModule->getEditorWidget($form, $model, BlogPostForm::ATTR_ID, BlogPostForm::ATTR_CONTENT)->run() ?>
+	<?= $editorModule->getEditorWidget($form, $model, BlogPostForm::ATTR_ID, BlogPostForm::ATTR_CONTENT, 'images')->run() ?>
 
 	<?= $form->field($model, BlogPostForm::ATTR_IS_PUBLISHED)->checkbox() ?>
 
