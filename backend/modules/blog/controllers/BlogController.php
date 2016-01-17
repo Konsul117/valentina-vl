@@ -26,7 +26,7 @@ class BlogController extends BackendController {
 		}
 
 		$searchModel  = new BlogPostSearch();
-		$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+		$dataProvider = $searchModel->search(Yii::$app->request->queryParams, $category->id);
 		$dataProvider->setPagination(['pageSize' => 10]);
 		$dataProvider->setSort(['defaultOrder' => [BlogPostSearch::ATTR_INSERT_STAMP => SORT_DESC]]);
 

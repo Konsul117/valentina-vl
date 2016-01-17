@@ -32,9 +32,10 @@ class BlogPostSearch extends BlogPost {
 	 * Поиск
 	 *
 	 * @param array $params
+	 * @param int $categoryId
 	 * @return ActiveDataProvider
 	 */
-	public function search($params) {
+	public function search($params, $categoryId) {
 		$query = $this->find();
 
 		$dataProvider = new ActiveDataProvider([
@@ -46,6 +47,8 @@ class BlogPostSearch extends BlogPost {
 		$query->leftJoin(BlogCategory::tableName(),
 			BlogCategory::tableName() . '.' . BlogCategory::ATTR_ID . ' = ' . $this->tableName() . '.' . static::ATTR_CATEGORY_ID
 		);
+
+		$query->where([static::ATTR_CATEGORY_ID => $categoryId]);
 
 		if (!($this->load($params) && $this->validate())) {
 			return $dataProvider;
