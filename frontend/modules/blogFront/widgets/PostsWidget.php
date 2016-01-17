@@ -2,7 +2,6 @@
 
 namespace frontend\modules\blogFront\widgets;
 
-use common\modules\blog\models\BlogCategory;
 use yii\base\InvalidConfigException;
 use yii\base\Widget;
 use yii\bootstrap\BootstrapAsset;
@@ -22,13 +21,6 @@ class PostsWidget extends Widget {
 	 * @var Query
 	 */
 	public $query;
-
-	/**
-	 * Категория фильтрации
-	 *
-	 * @var string
-	 */
-	public $categoryUrl;
 
 	/**
 	 * @inheritdoc
@@ -57,19 +49,6 @@ class PostsWidget extends Widget {
 			'pages'  => $pages,
 			'widget' => $this,
 		]);
-	}
-
-	/**
-	 * Проверка корректности переданной категории
-	 *
-	 * @return bool
-	 */
-	public function checkCategory() {
-		if ($this->categoryUrl === null) {
-			return false;
-		}
-
-		return !empty(BlogCategory::findOne([BlogCategory::ATTR_TITLE_URL => $this->categoryUrl]));
 	}
 
 }

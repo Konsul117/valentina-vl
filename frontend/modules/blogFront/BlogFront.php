@@ -11,30 +11,28 @@ use yii\base\InvalidParamException;
 class BlogFront extends Blog {
 
 	/**
-	 * @param int    $limit
+	 * @param int $limit
 	 * @param string $categoryUrl
 	 * @return PostsWidget
 	 * @throws InvalidParamException
 	 */
 	public function getPostsWidget($limit = null, $categoryUrl = null) {
+		if ($categoryUrl !== null && empty(BlogCategory::findOne([BlogCategory::ATTR_TITLE_URL => $categoryUrl]))) {
+			throw new InvalidParamException('Некорректная категория');
+		}
 
 		$query = BlogPost::find()->where([BlogPost::ATTR_IS_PUBLISHED => true]);
 
 		if ($categoryUrl !== null) {
-			$query->innerJoin(BlogCategory::tableName(),
-				BlogCategory::tableName() . '.' . BlogCategory::ATTR_ID . '=' . BlogPost::tableName() . '.' . BlogPost::ATTR_CATEGORY_ID
-				. ' AND ' . BlogCategory::tableName() . '.' . BlogCategory::ATTR_TITLE_URL . ' = :categoryUrl',
-				[':categoryUrl' => $categoryUrl]);
+			$query->innerJoin(BlogCategory::tableName(), BlogCategory::tableName() . '.' . BlogCategory::ATTR_ID . '=' . BlogPost::tableName() . '.' . BlogPost::ATTR_CATEGORY_ID
+				. ' AND ' . BlogCategory::tableName() . '.' . BlogCategory::ATTR_TITLE_URL . ' = :categoryUrl', [':categoryUrl' => $categoryUrl]);
 		}
 
 		$widget = new PostsWidget([
 			'postsForPage' => $limit,
-			'query'        => $query,
+			'query'   => $query,
 		]);
 
-		if ($categoryUrl !== null && !$widget->checkCategory()) {
-			throw new InvalidParamException('Некорректная категория');
-		}
 
 		return $widget;
 	}

@@ -2,11 +2,12 @@
 
 namespace frontend\modules\blogFront\controllers;
 
+use common\modules\blog\models\BlogPost;
 use frontend\modules\blogFront\BlogFront;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\web\Controller;
-use yii\web\HttpException;
+use yii\web\NotFoundHttpException;
 
 class PostsController extends Controller {
 
@@ -20,7 +21,16 @@ class PostsController extends Controller {
 	}
 
 	public function actionView($title_url) {
-		return 'view post ' . $title_url;
+		/** @var BlogPost $post */
+		$post = BlogPost::findOne([BlogPost::ATTR_TITLE_URL => $title_url]);
+
+		if ($post === null) {
+			throw new NotFoundHttpException('Запись не найдена');
+		}
+
+		return $this->render('view', [
+			'post' => $post,
+		]);
 	}
 
 	public function actionCategory($category_url) {
@@ -33,7 +43,7 @@ class PostsController extends Controller {
 			]);
 		}
 		catch (InvalidParamException $e) {
-			throw new HttpException(404, 'Запрошена неизвестная категория');
+			throw new NotFoundHttpException('Запрошена неизвестная категория');
 		}
 	}
 
