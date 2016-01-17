@@ -4,6 +4,7 @@ namespace common\models;
 
 use common\components\ErrorHelper;
 use common\components\ImageThumbCreator;
+use common\components\TimestampUTCBehavior;
 use common\exceptions\ImageException;
 use common\exceptions\ModelSaveException;
 use common\interfaces\ImageProvider;
@@ -13,8 +14,9 @@ use yii\db\ActiveRecord;
 /**
  * Изображения
  *
- * @property int $id                         Уникальынй идентификатор изображения
- * @property int $related_entity_item_id     Идентификатр объекта сущности, с которой связано изображение
+ * @property int    $id                         Уникальынй идентификатор изображения
+ * @property int    $related_entity_item_id     Идентификатр объекта сущности, с которой связано изображение
+ * @property string $insert_stamp               Дата-время создания изображения
  */
 class Image extends ActiveRecord implements ImageProvider {
 
@@ -23,6 +25,9 @@ class Image extends ActiveRecord implements ImageProvider {
 
 	/** Идентификатр объекта сущности, с которой связано изображение */
 	const ATTR_RELATED_ENTITY_ITEM_ID = 'related_entity_item_id';
+
+	/** Дата-время создания изображения */
+	const ATTR_INSERT_STAMP = 'insert_stamp';
 
 	/**
 	 * Привязать изображения к сущности
@@ -66,7 +71,19 @@ class Image extends ActiveRecord implements ImageProvider {
 		}
 
 		return true;
+	}
 
+	/**
+	 * @inheritdoc
+	 */
+	public function behaviors() {
+		return [
+			[
+				'class'              => TimestampUTCBehavior::class,
+				'createdAtAttribute' => static::ATTR_INSERT_STAMP,
+				'updatedAtAttribute' => false,
+			],
+		];
 	}
 
 	/**

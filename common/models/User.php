@@ -35,43 +35,6 @@ class User extends ActiveRecord implements IdentityInterface {
 	/**
 	 * @inheritdoc
 	 */
-	public function rules() {
-		return [
-			[['username', 'password', 'email'], 'required'],
-			[['email'], 'email'],
-		];
-	}
-
-	/**
-	 * @return array
-	 */
-	public function behaviors() {
-		return [
-			[
-				'class'              => TimestampUTCBehavior::className(),
-				'createdAtAttribute' => 'create_stamp',
-				'updatedAtAttribute' => 'update_stamp',
-			],
-		];
-	}
-
-	/**
-	 * @inheritdoc
-	 */
-	public function attributeLabels() {
-		return [
-			'username'       => 'Имя пользователя',
-			'password'       => 'Пароль',
-			'passwordRepeat' => 'Подтверждение пароля',
-			'email'          => 'E-mail',
-			'create_stamp'   => 'Создано',
-			'update_stamp'   => 'Обновлено',
-		];
-	}
-
-	/**
-	 * @inheritdoc
-	 */
 	public static function findIdentity($id) {
 		return static::findOne(['id' => $id/* , 'status' => self::STATUS_ACTIVE */]);
 	}
@@ -88,10 +51,6 @@ class User extends ActiveRecord implements IdentityInterface {
 		//		}
 
 		return null;
-	}
-
-	public static function findByUsername($username) {
-		return static::findOne(['username' => $username]);
 	}
 
 	/**
@@ -113,6 +72,47 @@ class User extends ActiveRecord implements IdentityInterface {
 	 */
 	public function validateAuthKey($authKey) {
 		return $this->auth_key === $authKey;
+	}
+
+	public static function findByUsername($username) {
+		return static::findOne(['username' => $username]);
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	public function rules() {
+		return [
+			[['username', 'password', 'email'], 'required'],
+			[['email'], 'email'],
+		];
+	}
+
+	/**
+	 * @return array
+	 */
+	public function behaviors() {
+		return [
+			[
+				'class'              => TimestampUTCBehavior::class,
+				'createdAtAttribute' => 'create_stamp',
+				'updatedAtAttribute' => 'update_stamp',
+			],
+		];
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	public function attributeLabels() {
+		return [
+			'username'       => 'Имя пользователя',
+			'password'       => 'Пароль',
+			'passwordRepeat' => 'Подтверждение пароля',
+			'email'          => 'E-mail',
+			'create_stamp'   => 'Создано',
+			'update_stamp'   => 'Обновлено',
+		];
 	}
 
 	/**

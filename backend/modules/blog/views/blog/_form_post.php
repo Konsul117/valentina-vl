@@ -36,7 +36,13 @@ use yii\widgets\ActiveForm;
 	<?= $editorModule->getEditorWidget($form, $model, BlogPostForm::ATTR_ID, BlogPostForm::ATTR_CONTENT, 'images')->run() ?>
 
 	<?= $form->field($model, BlogPostForm::ATTR_IS_PUBLISHED)->checkbox() ?>
+</div>
 
+<div class="form-group">
+	<?= $form->field($model, BlogPostForm::ATTR_TAGS)->textInput() ?>
+</div>
+
+<div class="form-group">
 	<?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>
 	<?= Html::a('Отмена', ['/blog/blog/category/?category_url=' . $model->category->title_url],
 			['class' => 'btn btn-primary']) ?>
