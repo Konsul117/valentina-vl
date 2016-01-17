@@ -26,4 +26,8 @@ use yii\widgets\LinkPager;
 				'pagination' => $pages,
 		]) ?>
 	</div>
+<?php else: ?>
+	<div class="alert alert-info">
+		По вашему запросу ничего не найдено.
+	</div>
 <?php endif ?>

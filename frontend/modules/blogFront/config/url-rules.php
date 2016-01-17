@@ -10,6 +10,11 @@ return [
 			'pattern' => 'blog/<title_url:[a-zA-Z0-9\-_]*>',
 			'route'   => 'blogFront/posts/view',
 			'suffix'  => '/',
+		],
+		[
+			'pattern' => 'blog/category/<category_url:[a-zA-Z0-9\-_]*>',
+			'route'   => 'blogFront/posts/category',
+			'suffix'  => '/',
 		]
 	],
 ];
