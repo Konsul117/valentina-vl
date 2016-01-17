@@ -1,12 +1,16 @@
 <?php
 
+use yii\base\Widget;
+
 /* @var $this \common\base\View */
+/** @var Widget $postsWidget */
 
 $this->title = 'My Yii Application';
 $this->breadcrumbs['index'] =  'Первая';
 $this->breadcrumbs['index2'] =  'Вторая';
 ?>
 
+<?= $postsWidget->run() ?>
 
 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla consectetur eu massa id vehicula. Vivamus vel tellus tincidunt libero commodo lobortis. Duis enim tortor, accumsan in arcu luctus, aliquet aliquet enim. Sed sed urna eros. Curabitur ultricies ac arcu et maximus. Nunc condimentum nunc eu dolor ultricies, sit amet vehicula eros sagittis. Mauris dignissim nunc in tellus porta consequat. Mauris ut egestas lacus, eget placerat risus. Aliquam suscipit nibh quis quam dapibus, in ultrices justo semper. Vivamus vulputate lacus sed feugiat suscipit. Aliquam consectetur augue massa, vel lobortis elit auctor quis. Ut pharetra est eu nisi ullamcorper, sit amet hendrerit ligula bibendum.</p>
 

@@ -38,6 +38,12 @@ class EditorWidget extends Widget {
 	public $imagesAttribute;
 
 	/**
+	 * Возможность загрузки изображений
+	 * @var bool
+	 */
+	public $uploadImages = false;
+
+	/**
 	 * @inheritdoc
 	 */
 	public function run() {

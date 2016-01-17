@@ -24,6 +24,7 @@ class BlogPostForm extends BlogPost {
 		return [
 			static::SCENARIO_UPDATE => [
 				static::ATTR_TITLE,
+				static::ATTR_SHORT_CONTENT,
 				static::ATTR_CONTENT,
 				static::ATTR_TAGS,
 				static::ATTR_IS_PUBLISHED,

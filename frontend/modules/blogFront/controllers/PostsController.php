@@ -1,21 +1,13 @@
 <?php
 
-namespace frontend\controllers;
+namespace frontend\modules\blogFront\controllers;
 
 use frontend\modules\blogFront\BlogFront;
 use Yii;
 use yii\web\Controller;
 
-/**
- * Site controller
- */
-class SiteController extends Controller {
+class PostsController extends Controller {
 
-	/**
-	 * Displays homepage.
-	 *
-	 * @return mixed
-	 */
 	public function actionIndex() {
 		/** @var BlogFront $blogFrontModule */
 		$blogFrontModule = Yii::$app->modules['blogFront'];
@@ -24,4 +16,9 @@ class SiteController extends Controller {
 			'postsWidget' => $blogFrontModule->getPostsWidget(2),
 		]);
 	}
+
+	public function actionView($title_url) {
+		return $title_url;
+	}
+
 }
