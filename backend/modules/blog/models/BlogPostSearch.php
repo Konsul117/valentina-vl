@@ -61,8 +61,6 @@ class BlogPostSearch extends BlogPost {
 			static::tableName() . '.' . static::ATTR_UPDATE_STAMP => $this->update_stamp,
 		]);
 
-		$query->orderBy([static::ATTR_INSERT_STAMP => SORT_DESC]);
-
 		return $dataProvider;
 	}
 

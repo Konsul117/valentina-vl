@@ -73,13 +73,14 @@ use yii\web\View;
 </div>
 
 <?php
+$related_entity_item_id = $widget->model->{$widget->identAttribute};
 $this->registerJs('$(\'#uploadModal\').uploadImage({
 editor: CKEDITOR.instances.contentTextarea,
 showButtonId: \'imageUploadButton\',
 uploadUrl: "' . Url::to(['/editor/upload/upload-image/']) . '",
 previewPaneId: "uploadedPreviewPane",
 params: {
-	related_entity_item_id: ' . $widget->model->{$widget->identAttribute} . '
+	' . ($related_entity_item_id !== null ? ('related_entity_item_id: ' . $related_entity_item_id) : '') . '
 }
 })');
 ?>

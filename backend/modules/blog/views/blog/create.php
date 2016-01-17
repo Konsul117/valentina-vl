@@ -5,10 +5,11 @@ use yii\web\View;
 /** @var View $this */
 /** @var BlogPostForm $model */
 
-$this->title = 'Редактирование: ' . $model->title . '.';
+$title = 'Создание нового поста: ' . ($model->category->title);
+$this->title = $title;
 ?>
 
-<h1><?= Html::encode($model->title) ?></h1>
+	<h1><?= Html::encode($title) ?></h1>
 
 <?= $this->render('_form_post', [
 	'model' => $model,

@@ -5,7 +5,6 @@ use yii\web\View;
 use yii\widgets\ActiveForm;
 
 /** @var View $this */
-/** @var  */
 
 /** @var BlogPostForm $model */
 /** @var string[] $errors */

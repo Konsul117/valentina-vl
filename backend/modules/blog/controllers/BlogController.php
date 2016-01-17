@@ -9,6 +9,7 @@ use common\exceptions\ModelSaveException;
 use common\models\Image;
 use common\modules\blog\models\BlogCategory;
 use Yii;
+use yii\db\ActiveRecord;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
@@ -29,6 +30,7 @@ class BlogController extends BackendController {
 		$searchModel  = new BlogPostSearch();
 		$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 		$dataProvider->setPagination(['pageSize' => 10]);
+		$dataProvider->setSort(['defaultOrder' => [BlogPostSearch::ATTR_INSERT_STAMP => SORT_DESC]]);
 
 		return $this->render('category', [
 			'category'     => $category,
@@ -51,6 +53,10 @@ class BlogController extends BackendController {
 		if ($model === null) {
 			throw new NotFoundHttpException('Запись блога не найдена');
 		}
+
+		return $this->render('view', [
+			'model' => $model,
+		]);
 	}
 
 	/**
@@ -59,7 +65,68 @@ class BlogController extends BackendController {
 	 * @return string|Response
 	 * @throws NotFoundHttpException
 	 */
-	public function actionCreate() {
+	public function actionCreate($category_id) {
+		$errors = [];
+
+		$model = new BlogPostForm();
+		$model->category_id = $category_id;
+
+		if (Yii::$app->request->isPost) {
+			$errors = $this->postSave($model);
+
+			if (empty($errors)) {
+				return $this->redirect(['view', 'id' => $model->id]);
+			}
+		}
+
+		return $this->render('create', [
+			'model'  => $model,
+			'errors' => $errors,
+		]);
+
+	}
+
+	/**
+	 * Сохранение поста
+	 * @param ActiveRecord $model модель поста
+	 * @return array ошибки
+	 */
+	protected function postSave(ActiveRecord $model) {
+		$errors = [];
+
+		$model->setScenario(BlogPostForm::SCENARIO_UPDATE);
+
+		$model->load(Yii::$app->request->post());
+
+		$saveResult = $model->save();
+
+		if ($saveResult) {
+			$newImagesIds = [];
+
+			$uploadedImagesIds = Yii::$app->request->post('uploaded_images_ids');
+
+			if (is_array($uploadedImagesIds) && !empty($uploadedImagesIds)) {
+				foreach($uploadedImagesIds as $id) {
+					$newImagesIds[] = (int) $id;
+				}
+			}
+
+			//.. получение ids
+
+			try {
+				Image::bindImagesToRelated($newImagesIds, $model->id);
+			}
+			catch (ModelSaveException $e) {
+				$errors[] = $e->getMessage();
+			}
+		}
+		else {
+			$errors[] = 'Ошибка при сохранении записи';
+		}
+
+		return $errors;
+
+
 	}
 
 	/**
@@ -78,36 +145,8 @@ class BlogController extends BackendController {
 			throw new NotFoundHttpException('Запись блога не найдена');
 		}
 
-		$model->setScenario(BlogPostForm::SCENARIO_UPDATE);
-
 		if (Yii::$app->request->isPost) {
-			$model->load(Yii::$app->request->post());
-
-			$saveResult = $model->save();
-
-			if ($saveResult) {
-				$newImagesIds = [];
-
-				$uploadedImagesIds = Yii::$app->request->post('uploaded_images_ids');
-
-				if (is_array($uploadedImagesIds) && !empty($uploadedImagesIds)) {
-					foreach($uploadedImagesIds as $id) {
-						$newImagesIds[] = (int) $id;
-					}
-				}
-
-				//.. получение ids
-
-				try {
-					Image::bindImagesToRelated($newImagesIds, $model->id);
-				}
-				catch (ModelSaveException $e) {
-					$errors[] = $e->getMessage();
-				}
-			}
-			else {
-				$errors[] = 'Ошибка при сохранении записи';
-			}
+			$errors = $this->postSave($model);
 
 			if (empty($errors)) {
 				return $this->redirect(['view', 'id' => $model->id]);

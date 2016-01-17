@@ -46,19 +46,7 @@
 			}
 
 			if ($previewPane.length > 0) {
-				$('.image-item', $previewPane).click(function() {
-					if (settings.editor !== null) {
-
-						var $img = $('img', $(this));
-
-						if ($img.length > 0) {
-							var insertHtml = '<img src="'+$img.data('medium-url')+'" data-image-id="'+$img.data('image-id')+'"/>';
-
-							var insetElement = CKEDITOR.dom.element.createFromHtml(insertHtml, settings.editor.document);
-							settings.editor.insertElement(insetElement);
-						}
-					}
-				});
+				$previewPane.on('click', '.image-item', methods.imageItemAddToEditor);
 			}
 
 		},
@@ -83,7 +71,7 @@
 
 			if ($previewPane.length > 0) {
 				$previewPane.append('<div class="image-item">'
-					+'<img src="'+response.data.urls.thumb+'" data-medium-url="'+response.data.urls.medium+' data-image-id="'+response.data.image_id+'"/>'
+					+'<img src="'+response.data.urls.thumb+'" data-medium-url="'+response.data.urls.medium+'" data-image-id="'+response.data.image_id+'"/>'
 					+'</div>');
 
 				var $form = $previewPane.closest('form');
@@ -135,6 +123,19 @@
 		},
 		show:               function() {
 			$modal.modal();
+		},
+		imageItemAddToEditor: function() {
+			if (settings.editor !== null) {
+
+				var $img = $('img', $(this));
+
+				if ($img.length > 0) {
+					var insertHtml = '<img src="'+$img.data('medium-url')+'" data-image-id="'+$img.data('image-id')+'"/>';
+
+					var insetElement = CKEDITOR.dom.element.createFromHtml(insertHtml, settings.editor.document);
+					settings.editor.insertElement(insetElement);
+				}
+			}
 		}
 	};
 

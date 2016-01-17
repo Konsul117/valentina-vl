@@ -16,7 +16,7 @@ use yii\helpers\Html;
 	<h1><?= $category->title ?></h1>
 
 	<p>
-		<?= Html::a('Добавить', ['create'], ['class' => 'btn btn-success']) ?>
+		<?= Html::a('Добавить', ['create?category_id=' . $category->id], ['class' => 'btn btn-success']) ?>
 	</p>
 
 <?=
