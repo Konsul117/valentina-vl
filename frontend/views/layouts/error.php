@@ -8,6 +8,26 @@ use yii\web\View;
 /** @var string $content */
 
 CommonAsset::register($this);
+/* @var $exception \yii\web\HttpException|\Exception */
+/* @var $handler \yii\web\ErrorHandler */
+if ($exception instanceof \yii\web\HttpException) {
+	$code = $exception->statusCode;
+} else {
+	$code = $exception->getCode();
+}
+$name = \Yii::t('app',$handler->getExceptionName($exception));
+if ($name === null) {
+	$name = 'Ошибка';
+}
+if ($code) {
+	$name .= " (#$code)";
+}
+
+if ($exception instanceof \yii\base\UserException) {
+	$message = $exception->getMessage();
+} else {
+	$message = 'An internal server error occurred.';
+}
 ?>
 
 <?php $this->beginPage() ?>
@@ -32,7 +52,8 @@ CommonAsset::register($this);
 
 	<h1><?= $this->title ?></h1>
 
-	<?= $content ?>
+	<h1><?= $handler->htmlEncode($name) ?></h1>
+	<h2><?= nl2br($handler->htmlEncode($message)) ?></h2>
 
 </div>
 

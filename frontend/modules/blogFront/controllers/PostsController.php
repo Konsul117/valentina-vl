@@ -20,7 +20,7 @@ class PostsController extends Controller {
 	}
 
 	public function actionView($title_url) {
-		return $title_url;
+		return 'view post ' . $title_url;
 	}
 
 	public function actionCategory($category_url) {
@@ -33,7 +33,7 @@ class PostsController extends Controller {
 			]);
 		}
 		catch (InvalidParamException $e) {
-			throw new HttpException(404, 'Запрошена неизвестная катаегория');
+			throw new HttpException(404, 'Запрошена неизвестная категория');
 		}
 	}
 

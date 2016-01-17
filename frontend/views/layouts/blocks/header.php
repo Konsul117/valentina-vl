@@ -64,11 +64,11 @@ use yii\helpers\Html;
 		<div class="menu">
 			<ul class="menu-items">
 				<li class="item-biser">
-					<?= Html::a('', ['/']) ?>
+					<?= Html::a('', ['/blogFront/posts/category', 'category_url' => 'biser']) ?>
 				</li>
 
 				<li class="item-not-biser">
-					<?= Html::a('', ['/']) ?>
+					<?= Html::a('', ['/blogFront/posts/category', 'category_url' => 'not_biser']) ?>
 				</li>
 
 				<li class="item-contacts">
