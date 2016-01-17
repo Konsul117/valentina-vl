@@ -3,21 +3,29 @@
 namespace frontend\modules\blogFront\widgets;
 
 use common\modules\blog\models\BlogCategory;
-use common\modules\blog\models\BlogPost;
+use yii\base\InvalidConfigException;
 use yii\base\Widget;
 use yii\bootstrap\BootstrapAsset;
 use yii\data\Pagination;
+use yii\db\Query;
 
 class PostsWidget extends Widget {
 
 	/**
 	 * Количество постов на одну страницу
+	 *
 	 * @var int
 	 */
 	public $postsForPage = 10;
 
 	/**
+	 * @var Query
+	 */
+	public $query;
+
+	/**
 	 * Категория фильтрации
+	 *
 	 * @var string
 	 */
 	public $categoryUrl;
@@ -26,25 +34,21 @@ class PostsWidget extends Widget {
 	 * @inheritdoc
 	 */
 	public function run() {
+		if (!$this->query instanceof Query) {
+			throw new InvalidConfigException('Отсуствует query');
+		}
 
 		BootstrapAsset::register($this->getView());
 
-		$query = BlogPost::find()->where([BlogPost::ATTR_IS_PUBLISHED => true]);
-
-		if ($this->categoryUrl !== null) {
-			$query->innerJoin(BlogCategory::tableName(), BlogCategory::tableName() . '.' . BlogCategory::ATTR_ID . '=' . BlogPost::tableName() . '.' . BlogPost::ATTR_CATEGORY_ID
-			. ' AND ' . BlogCategory::tableName() . '.' . BlogCategory::ATTR_TITLE_URL . ' = :categoryUrl', [':categoryUrl' => $this->categoryUrl]);
-		}
-
-		$countQuery = clone $query;
+		$countQuery = clone $this->query;
 
 		$pages = new Pagination([
 			'totalCount' => $countQuery->count(),
-			'pageSize' => $this->postsForPage,
-			'route' => 'blog'
+			'pageSize'   => $this->postsForPage,
+			'route'      => '/blogFront/posts/index',
 		]);
 
-		$posts = $query->offset($pages->offset)
+		$posts = $this->query->offset($pages->offset)
 			->limit($pages->limit)
 			->all();
 
@@ -57,6 +61,7 @@ class PostsWidget extends Widget {
 
 	/**
 	 * Проверка корректности переданной категории
+	 *
 	 * @return bool
 	 */
 	public function checkCategory() {
