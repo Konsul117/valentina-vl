@@ -43,7 +43,9 @@ use yii\web\View;
 		{ name: \'paragraph\', items : [ \'NumberedList\',\'BulletedList\',\'-\',\'Outdent\',\'Indent\',\'-\',\'Blockquote\',\'JustifyLeft\',\'JustifyCenter\',\'JustifyRight\', \'JustifyBlock\' ] },
 		{ name: \'links\', items : [ \'Link\',\'Unlink\',\'Anchor\' ] },
 		{ name: \'tools\', items : [ \'Maximize\',\'-\',\'About\' ] }
-		]});') ?>
+		],
+		allowedContent: true
+		});') ?>
 
 <div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog">

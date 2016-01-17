@@ -88,7 +88,7 @@ class BlogPost extends ActiveRecord {
 	}
 
 	public function getImages() {
-		return $this->hasMany(Image::class, [Image::ATTR_RELATED_ENTITY_ITEM_ID => static::ATTR_ID]);
+		return $this->hasMany(Image::class, [Image::ATTR_RELATED_ENTITY_ITEM_ID => static::ATTR_ID])->indexBy(Image::ATTR_ID);
 	}
 
 	public function getTagsModels() {

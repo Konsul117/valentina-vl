@@ -109,4 +109,21 @@ class ImageThumbCreator extends Component {
 
 		return $path;
 	}
+
+	/**
+	 * Вычищение всех созданных тамбов для изображения
+	 * @param string $imageIdent идентификатор изображения
+	 * @throws Exception
+	 * @throws ImageException
+	 */
+	public function clearThumbs($imageIdent) {
+		foreach(glob($this->getResizedPath() . DIRECTORY_SEPARATOR . $imageIdent . '_*') as $path) {
+			if (is_writable($path)) {
+				unlink($path);
+			}
+			else {
+				throw new ImageException('Не удалось удалить тамб фото - нет доступа: ' . $path);
+			}
+		}
+	}
 }

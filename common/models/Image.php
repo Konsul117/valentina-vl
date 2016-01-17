@@ -9,6 +9,7 @@ use common\exceptions\ImageException;
 use common\exceptions\ModelSaveException;
 use common\interfaces\ImageProvider;
 use Yii;
+use yii\base\Exception;
 use yii\db\ActiveRecord;
 
 /**
@@ -16,6 +17,7 @@ use yii\db\ActiveRecord;
  *
  * @property int    $id                         Уникальынй идентификатор изображения
  * @property int    $related_entity_item_id     Идентификатр объекта сущности, с которой связано изображение
+ * @property bool   $is_main                    Главная картинка
  * @property string $insert_stamp               Дата-время создания изображения
  */
 class Image extends ActiveRecord implements ImageProvider {
@@ -25,6 +27,9 @@ class Image extends ActiveRecord implements ImageProvider {
 
 	/** Идентификатр объекта сущности, с которой связано изображение */
 	const ATTR_RELATED_ENTITY_ITEM_ID = 'related_entity_item_id';
+
+	/** Главная картинка */
+	const ATTR_IS_MAIN = 'is_main';
 
 	/** Дата-время создания изображения */
 	const ATTR_INSERT_STAMP = 'insert_stamp';
@@ -84,6 +89,26 @@ class Image extends ActiveRecord implements ImageProvider {
 				'updatedAtAttribute' => false,
 			],
 		];
+	}
+
+	public function afterDelete() {
+		parent::afterDelete();
+
+		$imageFile = Yii::getAlias('@upload_images_path') . DIRECTORY_SEPARATOR . $this->id . '.jpg';
+
+		if (file_exists($imageFile) && is_writable($imageFile)) {
+			unlink($imageFile);
+		}
+
+		/** @var ImageThumbCreator $imageThumbCreator */
+		$imageThumbCreator = Yii::$app->imageThumbCreator;
+
+		try {
+			$imageThumbCreator->clearThumbs($this->id);
+		}
+		catch (ImageException $e) {
+			throw new Exception('Не удалось вычистить тамбы изображения: ' . $e->getMessage(), 0, $e);
+		}
 	}
 
 	/**

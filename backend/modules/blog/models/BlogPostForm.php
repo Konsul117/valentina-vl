@@ -5,8 +5,11 @@ namespace backend\modules\blog\models;
 
 
 use common\exceptions\ModelSaveException;
+use common\models\Image;
 use common\modules\blog\models\BlogPost;
 use common\modules\blog\models\BlogPostTag;
+use phpQuery;
+use Yii;
 use yii\base\Exception;
 
 class BlogPostForm extends BlogPost {
@@ -49,9 +52,11 @@ class BlogPostForm extends BlogPost {
 		catch (ModelSaveException $e) {
 			throw new Exception('Исключение при сохранении тегов поста: ' . $e->getMessage(), 0, $e);
 		}
+
+		$this->updateMainImage();
 	}
 
-	public function generateTitleUrl($title) {
+	protected function generateTitleUrl($title) {
 		$title = preg_replace('/\[([^\]]+)\]/u', '', $title);
 		$title = preg_replace('/\(([^\)]+)\)/u', '', $title);
 
@@ -107,6 +112,57 @@ class BlogPostForm extends BlogPost {
 		$title = preg_replace('/-+/', '-', $title);
 
 		return $title;
+	}
+
+	/**
+	 * Обновление главного изображения поста
+	 */
+	protected function updateMainImage() {
+		$images = $this->images;
+
+		if (empty($images)) {
+			return ;
+		}
+
+		$doc = phpQuery::newDocumentHTML($this->content);
+
+		$imagesIds = [];
+
+		foreach ($doc->find('img[data-image-id]') as $imgEl) {
+			$imageId = (int) $imgEl->getAttribute('data-image-id');
+			if (!$imageId) {
+				continue;
+			}
+
+			$imagesIds[] = $imageId;
+		}
+
+		if (empty($imagesIds)) {
+			return ;
+		}
+
+		foreach($images as $image) {
+			//удаляем те картинки, которых нет в посте
+			if (!in_array($image->id, $imagesIds)) {
+				$image->delete();
+			}
+		}
+
+		reset($imagesIds);
+
+		$firstImageId = current($imagesIds);
+
+		if (isset($images[$firstImageId])) {
+			$id = $this->id;
+			$command = Yii::$app->db->createCommand('UPDATE ' . Image::tableName()
+				. ' SET ' . Image::ATTR_IS_MAIN . ' = 0'
+				. ' WHERE ' . Image::ATTR_RELATED_ENTITY_ITEM_ID . ' = :post_id')
+				->bindParam(':post_id', $id);
+
+			$command->execute();
+			$images[$firstImageId]->is_main = true;
+			$images[$firstImageId]->save();
+		}
 	}
 
 }

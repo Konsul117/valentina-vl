@@ -2,6 +2,7 @@
 
 namespace console\controllers;
 
+use common\models\Image;
 use common\modules\blog\models\BlogPost;
 use yii\console\Controller;
 
@@ -37,5 +38,12 @@ class TestController extends Controller {
 		});
 
 		var_dump($strs);
+	}
+
+	public function actionImgClear() {
+		/** @var Image $image */
+		$image = Image::findOne(62);
+
+		$image->delete();
 	}
 }

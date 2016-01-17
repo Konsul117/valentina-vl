@@ -5,11 +5,9 @@ namespace backend\modules\blog\controllers;
 use backend\base\BackendController;
 use backend\modules\blog\models\BlogPostForm;
 use backend\modules\blog\models\BlogPostSearch;
-use common\exceptions\ModelSaveException;
 use common\models\Image;
 use common\modules\blog\models\BlogCategory;
 use Yii;
-use yii\db\ActiveRecord;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
@@ -88,45 +86,47 @@ class BlogController extends BackendController {
 
 	/**
 	 * Сохранение поста
-	 * @param ActiveRecord $model модель поста
+	 *
+	 * @param BlogPostForm $model модель поста
 	 * @return array ошибки
 	 */
-	protected function postSave(ActiveRecord $model) {
+	protected function postSave(BlogPostForm $model) {
 		$errors = [];
 
 		$model->setScenario(BlogPostForm::SCENARIO_UPDATE);
 
+		//грузим форму в модель
 		$model->load(Yii::$app->request->post());
+
+		//собираем id всех добавленных картинок
+		$newImagesIds = [];
+
+		$uploadedImagesIds = Yii::$app->request->post('uploaded_images_ids');
+
+		if (is_array($uploadedImagesIds) && !empty($uploadedImagesIds)) {
+			foreach($uploadedImagesIds as $id) {
+				$newImagesIds[] = (int) $id;
+			}
+		}
+
+		if ($model->isNewRecord) {
+			//если модель новая
+			//вешаем сохранение картинок на событие
+			$model->on(BlogPostForm::EVENT_AFTER_INSERT, function() use ($newImagesIds, $model) {
+				Image::bindImagesToRelated($newImagesIds, $model->id);
+			});
+		}
+		else {
+			Image::bindImagesToRelated($newImagesIds, $this->id);
+		}
 
 		$saveResult = $model->save();
 
-		if ($saveResult) {
-			$newImagesIds = [];
-
-			$uploadedImagesIds = Yii::$app->request->post('uploaded_images_ids');
-
-			if (is_array($uploadedImagesIds) && !empty($uploadedImagesIds)) {
-				foreach($uploadedImagesIds as $id) {
-					$newImagesIds[] = (int) $id;
-				}
-			}
-
-			//.. получение ids
-
-			try {
-				Image::bindImagesToRelated($newImagesIds, $model->id);
-			}
-			catch (ModelSaveException $e) {
-				$errors[] = $e->getMessage();
-			}
-		}
-		else {
+		if (!$saveResult) {
 			$errors[] = 'Ошибка при сохранении записи';
 		}
 
 		return $errors;
-
-
 	}
 
 	/**
