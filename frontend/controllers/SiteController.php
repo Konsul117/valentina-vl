@@ -18,10 +18,12 @@ class SiteController extends Controller {
 	 */
 	public function actionIndex() {
 		/** @var BlogFront $blogFrontModule */
-		$blogFrontModule = Yii::$app->modules['blogFront'];
+		$blogFrontModule             = Yii::$app->modules['blogFront'];
+		$postsWidget                 = $blogFrontModule->getPostsWidget(2);
+		$postsWidget->showEmptyLabel = false;
 
 		return $this->render('index', [
-			'postsWidget' => $blogFrontModule->getPostsWidget(2),
+			'postsWidget' => $postsWidget,
 		]);
 	}
 }

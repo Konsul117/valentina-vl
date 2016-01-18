@@ -2,7 +2,7 @@
 
 use frontend\assets\CommonAsset;
 use yii\helpers\Html;
-use yii\web\View;
+use common\base\View;
 
 /** @var View $this */
 /** @var string $content */
@@ -17,6 +17,16 @@ CommonAsset::register($this);
 	<meta charset="<?= Yii::$app->charset ?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<?= Html::csrfMetaTags() ?>
+
+	<?php if ($this->title === null) {
+		$lastBreadcrumb = $this->breadcrumbs->getLast();
+
+		if ($lastBreadcrumb !== null) {
+			$this->title = $lastBreadcrumb->title;
+		}
+
+	}?>
+
 	<title><?= Html::encode($this->title) ?></title>
 	<?php $this->head() ?>
 </head>
@@ -30,7 +40,7 @@ CommonAsset::register($this);
 
 	<?= $this->render('//layouts/blocks/breadcrumbs') ?>
 
-	<h1><?= $this->title ?></h1>
+	<h1><?= ($this->titleCustom !== null ? $this->titleCustom : $this->title) ?></h1>
 
 	<?= $content ?>
 

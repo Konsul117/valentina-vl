@@ -5,7 +5,7 @@ use common\base\View;
 /** @var View $this */
 /** @var Widget $postsWidget */
 
-$this->breadcrumbs['blog'] =  'Блог';
+$this->breadcrumbs->addBreadcrumb(['blog'], 'Блог');
 ?>
 
 

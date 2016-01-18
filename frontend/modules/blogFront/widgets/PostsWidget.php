@@ -23,6 +23,12 @@ class PostsWidget extends Widget {
 	public $query;
 
 	/**
+	 * Показывать сообщение об отсутствии записей
+	 * @var bool
+	 */
+	public $showEmptyLabel = true;
+
+	/**
 	 * @inheritdoc
 	 */
 	public function run() {

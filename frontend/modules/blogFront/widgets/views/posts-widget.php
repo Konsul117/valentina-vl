@@ -27,7 +27,7 @@ use yii\widgets\LinkPager;
 				'pagination' => $pages,
 		]) ?>
 	</div>
-<?php else: ?>
+<?php elseif ($widget->showEmptyLabel): ?>
 	<div class="alert alert-info">
 		По вашему запросу ничего не найдено.
 	</div>

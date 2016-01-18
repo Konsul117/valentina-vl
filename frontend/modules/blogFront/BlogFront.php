@@ -17,10 +17,6 @@ class BlogFront extends Blog {
 	 * @throws InvalidParamException
 	 */
 	public function getPostsWidget($limit = null, $categoryUrl = null) {
-		if ($categoryUrl !== null && empty(BlogCategory::findOne([BlogCategory::ATTR_TITLE_URL => $categoryUrl]))) {
-			throw new InvalidParamException('Некорректная категория');
-		}
-
 		$query = BlogPost::find()->where([BlogPost::ATTR_IS_PUBLISHED => true]);
 
 		if ($categoryUrl !== null) {

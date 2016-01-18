@@ -5,17 +5,20 @@
 
 use yii\helpers\Html;
 
-$this->breadcrumbs = \yii\helpers\ArrayHelper::merge(['/' => 'Главная'], $this->breadcrumbs);
-$count             = count($this->breadcrumbs);
+$count = count($this->breadcrumbs);
 ?>
 
 <?php if ($count > 1): ?>
 	<ul class="breadcrubms">
 		<?php $i = 0 ?>
-		<?php foreach ($this->breadcrumbs as $route => $title): ?>
+		<?php foreach ($this->breadcrumbs as $crumb): ?>
 			<li>
-				<?= Html::a($title, [$route]) ?>
-				<?php if (++$i < ($count)): ?><span class="delimiter"> > </span><?php endif ?>
+				<?php if (++$i < ($count)): ?>
+					<?= Html::a($crumb->title, $crumb->url) ?>
+					<span class="delimiter"> > </span>
+				<?php else: ?>
+					<?= $crumb->title ?>
+				<?php endif ?>
 			</li>
 		<? endforeach ?>
 	</ul>

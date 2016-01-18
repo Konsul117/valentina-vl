@@ -5,7 +5,8 @@ use yii\base\Widget;
 /* @var $this \common\base\View */
 /** @var Widget $postsWidget */
 
-$this->title = 'My Yii Application';
+$this->title = 'Валентина Панченко';
+$this->titleCustom = 'Главная';
 ?>
 
 <p>Мой дом - город у моря.</p>
