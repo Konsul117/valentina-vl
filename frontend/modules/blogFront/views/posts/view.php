@@ -13,8 +13,6 @@ $this->breadcrumbs->addBreadcrumb(['/blogFront/posts/category', 'category_url' =
 $this->breadcrumbs->addBreadcrumb(['/blogFront/posts/view', 'title_url' => $post->title_url], $post->title);
 ?>
 
-<h1><?= $post->title ?></h1>
-
 <div class="blog-post-content">
 	<?= $post->content ?>
 </div>
