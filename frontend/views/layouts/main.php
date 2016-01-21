@@ -49,11 +49,7 @@ CommonAsset::register($this);
 
 <div class="bg-aside bg-right"></div>
 
-<footer class="footer">
-	<div class="container">
-		Vladivostok <?= date('Y') ?>
-	</div>
-</footer>
+<?= $this->render('//layouts/blocks/footer') ?>
 
 <?php $this->endBody() ?>
 </body>

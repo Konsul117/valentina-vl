@@ -12,6 +12,11 @@ return [
 			'suffix'  => '/',
 		],
 		[
+			'pattern' => 'blog/tag/',
+			'route'   => 'blogFront/posts/tags',
+			'suffix'  => '/',
+		],
+		[
 			'pattern' => 'blog/<title_url:[a-zA-Z0-9\-_]*>',
 			'route'   => 'blogFront/posts/view',
 			'suffix'  => '/',
@@ -20,6 +25,11 @@ return [
 			'pattern' => 'blog/category/<category_url:[a-zA-Z0-9\-_]*>',
 			'route'   => 'blogFront/posts/category',
 			'suffix'  => '/',
-		]
+		],
+		[
+			'pattern' => 'blog/tag/<tag:[a-zA-Z0-9\-_]*>',
+			'route'   => 'blogFront/posts/tag',
+			'suffix'  => '/',
+		],
 	],
 ];

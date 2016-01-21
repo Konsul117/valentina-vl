@@ -6,11 +6,16 @@ use common\models\Image;
 use common\modules\blog\Blog;
 use common\modules\blog\models\BlogCategory;
 use common\modules\blog\models\BlogPost;
+use common\modules\blog\models\BlogPostTag;
 use frontend\modules\blogFront\widgets\ImagePostsWidget;
 use frontend\modules\blogFront\widgets\PostsWidget;
 use frontend\modules\blogFront\widgets\SearchWidget;
+use frontend\modules\blogFront\widgets\TagsCloudWidget;
 use yii\base\InvalidParamException;
 
+/**
+ * Расширение модуля "Блог" для фронтэнда
+ */
 class BlogFront extends Blog {
 
 	/**
@@ -75,12 +80,40 @@ class BlogFront extends Blog {
 	}
 
 	/**
+	 * Получение виждета постов поиском по тегу
+	 * @param string $tagUrl ЧПУ тега
+	 * @param int $limit лимит
+	 * @return PostsWidget виджет
+	 */
+	public function getTagPosts($tagId, $limit = null) {
+		$query = BlogPost::find()
+			->innerJoin(BlogPostTag::tableName(),
+				BlogPostTag::tableName() . '.' . BlogPostTag::ATTR_POST_ID . ' = ' . BlogPost::tableName() . '.' . BlogPost::ATTR_ID
+			)
+			->where([BlogPostTag::tableName() . '.' . BlogPostTag::ATTR_TAG_ID => $tagId]);
+
+		return new PostsWidget([
+			'postsForPage'   => $limit,
+			'query'          => $query,
+			'showTotalCount' => true,
+		]);
+	}
+
+	/**
 	 * Получение виджета поиска
 	 *
 	 * @return SearchWidget
 	 */
 	public function getSearchWidget() {
 		return new SearchWidget();
+	}
+
+	/**
+	 * Получение виджета облака тегов
+	 * @return TagsCloudWidget
+	 */
+	public function getTagsCloudWidget() {
+		return new TagsCloudWidget();
 	}
 
 }

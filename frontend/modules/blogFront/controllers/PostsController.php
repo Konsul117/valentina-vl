@@ -4,6 +4,7 @@ namespace frontend\modules\blogFront\controllers;
 
 use common\modules\blog\models\BlogCategory;
 use common\modules\blog\models\BlogPost;
+use common\modules\blog\models\BlogTag;
 use frontend\modules\blogFront\BlogFront;
 use Yii;
 use yii\base\Exception;
@@ -15,6 +16,7 @@ class PostsController extends Controller {
 
 	/**
 	 * Модуль Блога для фронта
+	 *
 	 * @var BlogFront
 	 */
 	protected $blogFrontModule;
@@ -67,6 +69,31 @@ class PostsController extends Controller {
 
 		return $this->render('search', [
 			'postsWidget' => $this->blogFrontModule->getSearchPostsWidget($query),
+		]);
+	}
+
+	public function actionTags() {
+		$tags = BlogTag::find()
+			->orderBy([BlogTag::ATTR_NAME => SORT_ASC])
+			->all();
+
+		return $this->render('tags', [
+			'tags' => $tags,
+		]);
+	}
+
+	public function actionTag($tag) {
+		$tag = Html::encode($tag);
+		/** @var BlogTag $tagModel */
+		$tagModel = BlogTag::findOne([BlogTag::ATTR_NAME_URL => $tag]);
+
+		if ($tagModel === null) {
+			throw new NotFoundHttpException('Тег ' . $tag . ' не существует');
+		}
+
+		return $this->render('tag', [
+			'tag'         => $tagModel,
+			'postsWidget' => $this->blogFrontModule->getTagPosts($tagModel->id),
 		]);
 	}
 

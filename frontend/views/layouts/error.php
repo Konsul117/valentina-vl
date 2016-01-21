@@ -43,6 +43,7 @@ if ($exception instanceof \yii\base\UserException) {
 <body>
 <?php $this->beginBody() ?>
 
+<div class="bg-aside bg-left"></div>
 
 <?= $this->render('//layouts/blocks/header') ?>
 
@@ -57,12 +58,9 @@ if ($exception instanceof \yii\base\UserException) {
 
 </div>
 
+<div class="bg-aside bg-right"></div>
 
-<footer class="footer">
-	<div class="container">
-		Vladivostok <?= date('Y') ?>
-	</div>
-</footer>
+<?= $this->render('//layouts/blocks/footer') ?>
 
 <?php $this->endBody() ?>
 </body>

@@ -1,7 +1,6 @@
 <?php
 use frontend\modules\blogFront\BlogFront;
 use yii\helpers\Html;
-
 ?>
 
 <header>
