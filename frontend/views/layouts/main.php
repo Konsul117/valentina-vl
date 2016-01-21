@@ -33,6 +33,7 @@ CommonAsset::register($this);
 <body>
 <?php $this->beginBody() ?>
 
+<div class="bg-aside bg-left"></div>
 
 <?= $this->render('//layouts/blocks/header') ?>
 
@@ -46,6 +47,7 @@ CommonAsset::register($this);
 
 </div>
 
+<div class="bg-aside bg-right"></div>
 
 <footer class="footer">
 	<div class="container">

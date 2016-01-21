@@ -1,0 +1,30 @@
+a.btn-default {
+
+	&:link,
+	&:visited,
+	&:active {
+		background-color: #000;
+		color:            $color-heading;
+	}
+
+	&:hover {
+		color: #000;
+		background-color: #eee;
+	}
+}
+
+.pagination {
+	> li, li.disabled {
+		> a, span {
+			background-color: #000;
+			color:            #FFF;
+		}
+
+		&.active {
+			a {
+				background-color: #262626;
+				border-color:     inherit;
+			}
+		}
+	}
+}

@@ -7,6 +7,11 @@ return [
 			'suffix'  => '/',
 		],
 		[
+			'pattern' => 'blog/search',
+			'route'   => 'blogFront/posts/search',
+			'suffix'  => '/',
+		],
+		[
 			'pattern' => 'blog/<title_url:[a-zA-Z0-9\-_]*>',
 			'route'   => 'blogFront/posts/view',
 			'suffix'  => '/',

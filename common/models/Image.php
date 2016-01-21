@@ -8,17 +8,22 @@ use common\components\TimestampUTCBehavior;
 use common\exceptions\ImageException;
 use common\exceptions\ModelSaveException;
 use common\interfaces\ImageProvider;
+use common\modules\blog\models\BlogPost;
 use Yii;
 use yii\base\Exception;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
 /**
  * Изображения
  *
- * @property int    $id                         Уникальынй идентификатор изображения
- * @property int    $related_entity_item_id     Идентификатр объекта сущности, с которой связано изображение
- * @property bool   $is_main                    Главная картинка
- * @property string $insert_stamp               Дата-время создания изображения
+ * @property int      $id                         Уникальынй идентификатор изображения
+ * @property int      $related_entity_item_id     Идентификатр объекта сущности, с которой связано изображение
+ * @property bool     $is_main                    Главная картинка
+ * @property string   $insert_stamp               Дата-время создания изображения
+ *
+ * Отношения
+ * @property-read BlogPost $post                       Пост блога, с котороым связано изображение
  */
 class Image extends ActiveRecord implements ImageProvider {
 
@@ -33,6 +38,7 @@ class Image extends ActiveRecord implements ImageProvider {
 
 	/** Дата-время создания изображения */
 	const ATTR_INSERT_STAMP = 'insert_stamp';
+	const REL_POST = 'post';
 
 	/**
 	 * Привязать изображения к сущности
@@ -132,6 +138,13 @@ class Image extends ActiveRecord implements ImageProvider {
 	 */
 	public function getIdent() {
 		return $this->id;
+	}
+
+	/**
+	 * @return ActiveQuery
+	 */
+	public function getPost() {
+		return $this->hasOne(BlogPost::class, [BlogPost::ATTR_ID => static::ATTR_RELATED_ENTITY_ITEM_ID]);
 	}
 
 }

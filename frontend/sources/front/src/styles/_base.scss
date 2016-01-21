@@ -1,22 +1,32 @@
-$header-photo-width: 100px;
-$header-photo-height: 100px;
-
 body {
-	@include respond-to(mobile) {
-		background-image: url(../images/background_mobile.jpg)
-	}
+	position:         relative;
+	background-image: url(../images/background_wood.jpg);
+	background-color: $background-base-color;
+	min-width:        $screen-xs-min;
+	line-height:      1.4em;
+	color:            $color-text;
+	font-family:      Arial, Helvetica;
 
-	@include respond-to(desktop) {
-		background-image: url(../images/background_desktop.jpg);
+	.bg-aside {
+		display:           none;
+		@include respond-to(desktop) {
+			display: block;
+		}
+		position:          absolute;
+		bottom:            0;
+		top:               0;
+		width:             15%;
+		background-size:   100%;
+		background-repeat: no-repeat;
+		&.bg-left {
+			background-image: url(../images/tree-left.png);
+			left:             0;
+		}
+		&.bg-right {
+			background-image: url(../images/tree-right.png);
+			right:            0;
+		}
 	}
-
-	background-repeat: no-repeat;
-	background-color:  $background-base-color;
-	background-size:   100%;
-	min-width:         $screen-xs-min;
-	line-height:       1.4em;
-	color:             $color-text;
-	font-family:       Arial, Helvetica;
 
 	p {
 		color:  $color-text;
@@ -44,7 +54,7 @@ a {
 	&:active,
 	&:hover {
 		color:           $color-salmon;
-		text-decoration: none;
+		text-decoration: underline;
 	}
 }
 

@@ -8,6 +8,9 @@ use yii\bootstrap\BootstrapAsset;
 use yii\data\Pagination;
 use yii\db\Query;
 
+/**
+ * Виджет списка постов
+ */
 class PostsWidget extends Widget {
 
 	/**
@@ -27,6 +30,12 @@ class PostsWidget extends Widget {
 	 * @var bool
 	 */
 	public $showEmptyLabel = true;
+
+	/**
+	 * Общее количество найденных постов
+	 * @var int
+	 */
+	public $showTotalCount = false;
 
 	/**
 	 * @inheritdoc
@@ -50,7 +59,7 @@ class PostsWidget extends Widget {
 			->limit($pages->limit)
 			->all();
 
-		return $this->render('posts-widget', [
+		return $this->render('posts', [
 			'posts'  => $posts,
 			'pages'  => $pages,
 			'widget' => $this,

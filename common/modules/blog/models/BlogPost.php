@@ -56,6 +56,7 @@ class BlogPost extends ActiveRecord {
 
 	/** Дата-время обновления поста */
 	const ATTR_UPDATE_STAMP = 'update_stamp';
+	const REL_CATEGORY = 'category';
 
 	/**
 	 * @inheritdoc

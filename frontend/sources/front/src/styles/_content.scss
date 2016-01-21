@@ -14,8 +14,9 @@
 		margin:  0.5em 0;
 		display: block;
 		> li {
-			display: inline-block;
-			color:   $color-salmon;
+			display:   inline-block;
+			color:     $color-salmon;
+			font-size: 0.8em;
 
 			.delimiter {
 				margin:      0 0.5em;

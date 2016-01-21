@@ -1,37 +1,17 @@
 <?php
+use frontend\modules\blogFront\BlogFront;
 use yii\helpers\Html;
 
 ?>
 
 <header>
 
-	<div class="last-photos">
-		<div class="photos-container">
-			<div class="photo-item">
+	<?php
+	/** @var BlogFront $blogFrontModule */
+	$blogFrontModule = Yii::$app->modules['blogFront'];
+	?>
 
-			</div>
-
-			<div class="photo-item">
-
-			</div>
-
-			<div class="photo-item">
-
-			</div>
-
-			<div class="photo-item">
-
-			</div>
-
-			<div class="photo-item">
-
-			</div>
-
-			<div class="photo-item">
-
-			</div>
-		</div>
-	</div>
+	<?= $blogFrontModule->getImagePostsWidget(10)->run() ?>
 
 	<div class="img-name-wrapper">
 		<div class="img-name-container">
@@ -77,12 +57,7 @@ use yii\helpers\Html;
 			</ul>
 		</div>
 
-		<div class="search-panel">
-			<input type="text" maxlength="50" placeholder="Поиск">
-			<div class="icons icons-search">
-				<?= Html::a('', ['/']) ?>
-			</div>
-		</div>
+		<?= $blogFrontModule->getSearchWidget()->run() ?>
 	</div>
 
 </header>

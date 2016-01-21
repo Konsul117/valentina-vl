@@ -6,17 +6,31 @@ use common\modules\blog\models\BlogCategory;
 use common\modules\blog\models\BlogPost;
 use frontend\modules\blogFront\BlogFront;
 use Yii;
+use yii\base\Exception;
+use yii\helpers\Html;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
 class PostsController extends Controller {
 
-	public function actionIndex() {
-		/** @var BlogFront $blogFrontModule */
-		$blogFrontModule = Yii::$app->modules['blogFront'];
+	/**
+	 * Модуль Блога для фронта
+	 * @var BlogFront
+	 */
+	protected $blogFrontModule;
 
+	public function init() {
+		parent::init();
+		$this->blogFrontModule = Yii::$app->modules['blogFront'];
+
+		if ($this->blogFrontModule === null) {
+			throw new Exception('Отсутствует модуль BlogFront');
+		}
+	}
+
+	public function actionIndex() {
 		return $this->render('index', [
-			'postsWidget' => $blogFrontModule->getPostsWidget(2),
+			'postsWidget' => $this->blogFrontModule->getPostsWidget(1),
 		]);
 	}
 
@@ -41,12 +55,18 @@ class PostsController extends Controller {
 			throw new NotFoundHttpException('Некорректная категория');
 		}
 
-		/** @var BlogFront $blogFrontModule */
-		$blogFrontModule = Yii::$app->modules['blogFront'];
-
 		return $this->render('category', [
-			'postsWidget' => $blogFrontModule->getPostsWidget(2, $category_url),
+			'postsWidget' => $this->blogFrontModule->getPostsWidget(2, $category_url),
 			'category'    => $category,
+		]);
+	}
+
+	public function actionSearch($query) {
+
+		$query = Html::encode($query);
+
+		return $this->render('search', [
+			'postsWidget' => $this->blogFrontModule->getSearchPostsWidget($query),
 		]);
 	}
 

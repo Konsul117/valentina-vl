@@ -1,8 +1,39 @@
+$header-photo-width:  90px;
+$header-photo-height: 90px;
+
 .blog-posts {
 	.post-item {
 		.post-stamp {
 			font-size:  0.9em;
 			font-style: italic;
+		}
+	}
+	.pagination-wrap {
+		text-align: center;
+	}
+}
+
+header {
+	//последние фото
+	.last-photos {
+		display: none;
+		@include respond-to(desktop) {
+			display:    block;
+			margin:     1em auto;
+			text-align: center;
+			//контейнер с фото
+			.photos-container {
+				display:  block;
+				height:   $header-photo-height;
+				overflow: hidden;
+				//само фото
+				.photo-item {
+					display:          inline-block;
+					width:            $header-photo-width;
+					height:           $header-photo-height;
+					margin:           0 1em;
+				}
+			}
 		}
 	}
 }
