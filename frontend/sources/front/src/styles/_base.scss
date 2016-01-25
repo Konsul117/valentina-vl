@@ -15,16 +15,17 @@ body {
 		position:          absolute;
 		bottom:            0;
 		top:               0;
-		width:             15%;
 		background-size:   100%;
 		background-repeat: no-repeat;
 		&.bg-left {
-			background-image: url(../images/tree-left.png);
+			background-image: url(../images/tree-left.svg);
 			left:             0;
+			width:            18%;
 		}
 		&.bg-right {
-			background-image: url(../images/tree-right.png);
+			background-image: url(../images/tree-right.svg);
 			right:            0;
+			width:            20%;
 		}
 	}
 
