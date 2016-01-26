@@ -83,15 +83,15 @@ class BlogPostForm extends BlogPost {
 			$imagesIds[] = $imageId;
 		}
 
-		if (empty($imagesIds)) {
-			return ;
-		}
-
 		foreach($images as $image) {
 			//удаляем те картинки, которых нет в посте
 			if (!in_array($image->id, $imagesIds)) {
 				$image->delete();
 			}
+		}
+
+		if (empty($imagesIds)) {
+			return ;
 		}
 
 		reset($imagesIds);
