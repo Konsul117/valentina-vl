@@ -47,9 +47,15 @@ class BlogPostForm extends BlogPost {
 		];
 	}
 
-	public function afterSave($insert, $changedAttributes) {
-		parent::afterSave($insert, $changedAttributes);
+	public function init() {
+		parent::init();
 
+		$this->on(static::EVENT_AFTER_INSERT, [$this, 'relatedSaveActions']);
+		$this->on(static::EVENT_AFTER_UPDATE, [$this, 'relatedSaveActions']);
+		$this->on(static::EVENT_AFTER_DELETE, [$this, 'relatedDeleteActions']);
+	}
+
+	public function relatedSaveActions() {
 		try {
 			BlogPostTag::bindPostTags($this);
 		}
@@ -108,6 +114,20 @@ class BlogPostForm extends BlogPost {
 			$command->execute();
 			$images[$firstImageId]->is_main = true;
 			$images[$firstImageId]->save();
+		}
+	}
+
+	public function relatedDeleteActions() {
+		//удаляем связанные картинки
+		foreach ($this->images as $image) {
+			$image->delete();
+		}
+
+		//удаляем связи с тегами
+		$postRelations = BlogPostTag::findAll([BlogPostTag::ATTR_POST_ID => $this->id]);
+
+		foreach($postRelations as $rel) {
+			$rel->delete();
 		}
 	}
 

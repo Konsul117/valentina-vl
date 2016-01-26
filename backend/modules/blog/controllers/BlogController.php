@@ -8,10 +8,22 @@ use backend\modules\blog\models\BlogPostSearch;
 use common\models\Image;
 use common\modules\blog\models\BlogCategory;
 use Yii;
+use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
 class BlogController extends BackendController {
+
+	public function behaviors() {
+		return [
+			'verbs'	 => [
+				'class'		 => VerbFilter::className(),
+				'actions'	 => [
+					'delete' => ['post'],
+				],
+			],
+		];
+	}
 
 	public function actionIndex() {
 		return $this->render('index');
@@ -173,6 +185,10 @@ class BlogController extends BackendController {
 		if ($model === null) {
 			throw new NotFoundHttpException('Запись блога не найдена');
 		}
+
+		$model->delete();
+
+		return $this->redirect(['/blog/blog/category/', 'category_url' => $model->category->title_url]);
 	}
 
 }
