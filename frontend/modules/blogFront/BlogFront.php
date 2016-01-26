@@ -31,7 +31,9 @@ class BlogFront extends Blog {
 			->where([BlogPost::ATTR_IS_PUBLISHED => true]);
 
 		if ($categoryUrl !== null) {
-			$query->andWhere(BlogCategory::tableName() . '.' . BlogCategory::ATTR_TITLE_URL . ' = :categoryUrl',
+			$query
+				->innerJoinWith(BlogPost::REL_CATEGORY)
+				->andWhere(BlogCategory::tableName() . '.' . BlogCategory::ATTR_TITLE_URL . ' = :categoryUrl',
 				[':categoryUrl' => $categoryUrl]);
 		}
 
