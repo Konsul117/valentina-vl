@@ -27,7 +27,7 @@ module.exports = {
 	distStep2: [
 		'sass:dist', //компилим .scss в .css
 		'uglify', //сжимаем .js
-		'imagemin', //копируем изображения со сжатием
+		'copy:images', //копируем изображения со сжатием
 		'copy:fonts', //копируем изображения
 		'concurrent:bower_components'
 	],
