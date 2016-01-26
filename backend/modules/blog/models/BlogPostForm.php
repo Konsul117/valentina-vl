@@ -14,6 +14,10 @@ use Yii;
 use yii\base\Exception;
 use yii\helpers\ArrayHelper;
 
+/**
+ * Модель формы поста, расширяющая модель поста
+ * @inheritdoc
+ */
 class BlogPostForm extends BlogPost {
 
 	const SCENARIO_UPDATE = 'scenarioUpdate';
@@ -35,6 +39,9 @@ class BlogPostForm extends BlogPost {
 		);
 	}
 
+	/**
+	 * @inheritdoc
+	 */
 	public function scenarios() {
 		return [
 			static::SCENARIO_UPDATE => [
@@ -47,6 +54,9 @@ class BlogPostForm extends BlogPost {
 		];
 	}
 
+	/**
+	 * @inheritdoc
+	 */
 	public function init() {
 		parent::init();
 
@@ -55,7 +65,12 @@ class BlogPostForm extends BlogPost {
 		$this->on(static::EVENT_AFTER_DELETE, [$this, 'relatedDeleteActions']);
 	}
 
+	/**
+	 * Действия над связанными сущностями при сохранении модели (вставка, обновление)
+	 * @throws Exception
+	 */
 	public function relatedSaveActions() {
+		//присоединяем теги
 		try {
 			BlogPostTag::bindPostTags($this);
 		}
@@ -63,6 +78,7 @@ class BlogPostForm extends BlogPost {
 			throw new Exception('Исключение при сохранении тегов поста: ' . $e->getMessage(), 0, $e);
 		}
 
+		//обновляем главное изображение поста
 		$this->updateMainImage();
 	}
 
@@ -117,6 +133,10 @@ class BlogPostForm extends BlogPost {
 		}
 	}
 
+	/**
+	 * Действия над связанными сущностями при удалении модели
+	 * @throws \Exception
+	 */
 	public function relatedDeleteActions() {
 		//удаляем связанные картинки
 		foreach ($this->images as $image) {

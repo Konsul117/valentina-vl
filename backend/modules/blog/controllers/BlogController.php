@@ -14,6 +14,9 @@ use yii\web\Response;
 
 class BlogController extends BackendController {
 
+	/**
+	 * @inheritdoc
+	 */
 	public function behaviors() {
 		return [
 			'verbs'	 => [
@@ -25,10 +28,20 @@ class BlogController extends BackendController {
 		];
 	}
 
+	/**
+	 * Главная страница
+	 * @return string
+	 */
 	public function actionIndex() {
 		return $this->render('index');
 	}
 
+	/**
+	 * Страница категории
+	 * @param $category_url
+	 * @return string
+	 * @throws NotFoundHttpException
+	 */
 	public function actionCategory($category_url) {
 		/** @var BlogCategory $category */
 		$category = BlogCategory::findOne(['title_url' => $category_url]);
