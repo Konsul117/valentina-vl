@@ -21,12 +21,19 @@ use yii\helpers\ArrayHelper;
  */
 class BlogPostForm extends BlogPost {
 
+	/** Сценарий сохранения */
 	const SCENARIO_UPDATE = 'scenarioUpdate';
 
+	/**
+	 * @inheritdoc
+	 */
 	public static function tableName() {
 		return BlogPost::tableName();
 	}
 
+	/**
+	 * @inheritdoc
+	 */
 	public function behaviors() {
 		return ArrayHelper::merge(
 			parent::behaviors(),
@@ -66,6 +73,13 @@ class BlogPostForm extends BlogPost {
 		$this->on(static::EVENT_AFTER_DELETE, [$this, 'relatedDeleteActions']);
 	}
 
+	/**
+	 * Сохранить пост с новыми изображениями
+	 *
+	 * @param int[] $imagesIds Массив id изображений
+	 *
+	 * @return bool
+	 */
 	public function saveWithNewImages($imagesIds) {
 		$this->on(static::EVENT_AFTER_INSERT, function() use ($imagesIds) {
 			$this->bindImagesToPost($imagesIds);

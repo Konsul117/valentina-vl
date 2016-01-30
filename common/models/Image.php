@@ -53,6 +53,9 @@ class Image extends ActiveRecord implements ImageProvider {
 		];
 	}
 
+	/**
+	 * @inheritdoc
+	 */
 	public function afterDelete() {
 		parent::afterDelete();
 
@@ -75,7 +78,9 @@ class Image extends ActiveRecord implements ImageProvider {
 
 	/**
 	 * @param string $format
+	 *
 	 * @return string
+	 *
 	 * @throws ImageException
 	 */
 	public function getImageUrl($format) {
@@ -97,6 +102,8 @@ class Image extends ActiveRecord implements ImageProvider {
 	}
 
 	/**
+	 * Связь с постом
+	 *
 	 * @return ActiveQuery
 	 */
 	public function getPost() {
