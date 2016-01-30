@@ -1,6 +1,7 @@
 <?php
 use common\components\Formatter;
 use common\modules\blog\models\BlogPost;
+use frontend\modules\blogFront\components\PostOutHelper;
 use frontend\modules\blogFront\widgets\PostsWidget;
 use yii\data\Pagination;
 use yii\helpers\Html;
@@ -29,7 +30,7 @@ $formatter = new Formatter();
 				</div>
 
 				<div class="item-content">
-					<?= $post->short_content ?>
+					<?= PostOutHelper::wrapContentImages($post->short_content) ?>
 				</div>
 
 				<p>

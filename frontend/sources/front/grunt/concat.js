@@ -33,7 +33,8 @@ module.exports = {
 			}
 		},
 		src: [
-			'bower_components/jquery/dist/jquery.min.js'
+			'bower_components/jquery/dist/jquery.min.js',
+			'bower_components/fancybox/source/jquery.fancybox.pack.js'
 		],
 		dest: '<%= config.distTmp %>/js/<%= config.sitePrefix %>vendor.js'
 	}

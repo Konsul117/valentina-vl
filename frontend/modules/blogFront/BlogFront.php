@@ -28,7 +28,8 @@ class BlogFront extends Blog {
 	 */
 	public function getPostsWidget($limit = null, $categoryUrl = null) {
 		$query = BlogPost::find()
-			->where([BlogPost::ATTR_IS_PUBLISHED => true]);
+			->where([BlogPost::ATTR_IS_PUBLISHED => true])
+			->orderBy([BlogPost::ATTR_INSERT_STAMP => SORT_DESC]);
 
 		if ($categoryUrl !== null) {
 			$query
@@ -67,8 +68,8 @@ class BlogFront extends Blog {
 	/**
 	 * Получение виджета поиска постов
 	 *
-	 * @param int    $limit
 	 * @param string $query
+	 * @param int    $limit
 	 * @return PostsWidget
 	 * @throws InvalidParamException
 	 */
@@ -76,7 +77,8 @@ class BlogFront extends Blog {
 		$query = BlogPost::find()
 			->where(['like', BlogPost::tableName() . '.' . BlogPost::ATTR_TITLE, $query])
 			->orWhere(['like', BlogPost::tableName() . '.' . BlogPost::ATTR_TAGS, $query])
-			->andWhere([BlogPost::tableName() . '.' . BlogPost::ATTR_IS_PUBLISHED => true]);
+			->andWhere([BlogPost::tableName() . '.' . BlogPost::ATTR_IS_PUBLISHED => true])
+			->orderBy([BlogPost::ATTR_INSERT_STAMP => SORT_DESC]);
 
 		return new PostsWidget([
 			'postsForPage'   => $limit,
@@ -88,8 +90,8 @@ class BlogFront extends Blog {
 	/**
 	 * Получение виждета постов поиском по тегу
 	 *
-	 * @param string $tagUrl ЧПУ тега
-	 * @param int    $limit  лимит
+	 * @param int $tagId Id тега
+	 * @param int $limit лимит
 	 * @return PostsWidget виджет
 	 */
 	public function getTagPosts($tagId, $limit = null) {
@@ -97,7 +99,8 @@ class BlogFront extends Blog {
 			->innerJoin(BlogPostTag::tableName(),
 				BlogPostTag::tableName() . '.' . BlogPostTag::ATTR_POST_ID . ' = ' . BlogPost::tableName() . '.' . BlogPost::ATTR_ID
 			)
-			->where([BlogPostTag::tableName() . '.' . BlogPostTag::ATTR_TAG_ID => $tagId]);
+			->where([BlogPostTag::tableName() . '.' . BlogPostTag::ATTR_TAG_ID => $tagId])
+			->orderBy([BlogPost::ATTR_INSERT_STAMP => SORT_DESC]);
 
 		return new PostsWidget([
 			'postsForPage'   => $limit,

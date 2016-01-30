@@ -32,7 +32,7 @@ class PostsController extends Controller {
 
 	public function actionIndex() {
 		return $this->render('index', [
-			'postsWidget' => $this->blogFrontModule->getPostsWidget(1),
+			'postsWidget' => $this->blogFrontModule->getPostsWidget(),
 		]);
 	}
 
@@ -58,7 +58,7 @@ class PostsController extends Controller {
 		}
 
 		return $this->render('category', [
-			'postsWidget' => $this->blogFrontModule->getPostsWidget(2, $category_url),
+			'postsWidget' => $this->blogFrontModule->getPostsWidget(null, $category_url),
 			'category'    => $category,
 		]);
 	}

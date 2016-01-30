@@ -74,7 +74,7 @@ return [
 					'height' => 240,
 				],
 				ImageProvider::FORMAT_FULL   => [
-					'width'  => 100,
+					'width'  => 1000,
 					'height' => 1000,
 				],
 			],

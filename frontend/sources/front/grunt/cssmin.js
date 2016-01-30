@@ -12,7 +12,7 @@ module.exports = {
 	bower_components: {
 		files: {
 			'<%= config.distTmp %>/css/<%= config.sitePrefix %>vendor.css': [
-				//'bower_components/fancybox/source/jquery.fancybox.css'
+				'bower_components/fancybox/source/jquery.fancybox.css'
 			]
 		}
 	}

@@ -1,3 +1,3 @@
-/**
- * Created by konsul on 10.01.16.
- */
+$(document).ready(function() {
+	$('a[data-lightbox]').fancybox();
+});

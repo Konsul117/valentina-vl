@@ -1,6 +1,7 @@
 <?php
 use common\modules\blog\models\BlogPost;
 use common\base\View;
+use frontend\modules\blogFront\components\PostOutHelper;
 
 /** @var View $this */
 /** @var BlogPost $post */
@@ -13,7 +14,7 @@ $this->breadcrumbs->addBreadcrumb(['/blogFront/posts/view', 'title_url' => $post
 ?>
 
 <div class="blog-post-content">
-	<?= $post->content ?>
+	<?= PostOutHelper::wrapContentImages($post->content) ?>
 </div>
 
 
