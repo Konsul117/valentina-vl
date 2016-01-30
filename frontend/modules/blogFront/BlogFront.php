@@ -34,7 +34,7 @@ class BlogFront extends Blog {
 			$query
 				->innerJoinWith(BlogPost::REL_CATEGORY)
 				->andWhere(BlogCategory::tableName() . '.' . BlogCategory::ATTR_TITLE_URL . ' = :categoryUrl',
-				[':categoryUrl' => $categoryUrl]);
+					[':categoryUrl' => $categoryUrl]);
 		}
 
 		return new PostsWidget([
@@ -51,7 +51,11 @@ class BlogFront extends Blog {
 	 */
 	public function getImagePostsWidget($limit = 10) {
 		$query = Image::find()
-			->where([Image::tableName() . '.' . Image::ATTR_IS_MAIN => true])
+			->innerJoinWith(Image::REL_POST, true)
+			->where([
+				Image::tableName() . '.' . Image::ATTR_IS_MAIN            => true,
+				BlogPost::tableName() . '.' . BlogPost::ATTR_IS_PUBLISHED => true,
+			])
 			->orderBy([Image::tableName() . '.' . Image::ATTR_INSERT_STAMP => SORT_DESC]);
 
 		return new ImagePostsWidget([
@@ -83,8 +87,9 @@ class BlogFront extends Blog {
 
 	/**
 	 * Получение виждета постов поиском по тегу
+	 *
 	 * @param string $tagUrl ЧПУ тега
-	 * @param int $limit лимит
+	 * @param int    $limit  лимит
 	 * @return PostsWidget виджет
 	 */
 	public function getTagPosts($tagId, $limit = null) {
@@ -112,6 +117,7 @@ class BlogFront extends Blog {
 
 	/**
 	 * Получение виджета облака тегов
+	 *
 	 * @return TagsCloudWidget
 	 */
 	public function getTagsCloudWidget() {
