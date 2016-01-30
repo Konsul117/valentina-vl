@@ -16,6 +16,7 @@ use yii\db\ActiveRecord;
  * Изображения
  *
  * @property int      $id                         Уникальынй идентификатор изображения
+ * @property int      $related_entity_id          Идентификатор сущности, с которой связано изображение
  * @property int      $related_entity_item_id     Идентификатр объекта сущности, с которой связано изображение
  * @property bool     $is_main                    Главная картинка
  * @property string   $insert_stamp               Дата-время создания изображения
@@ -28,6 +29,9 @@ class Image extends ActiveRecord implements ImageProvider {
 	/** Уникальынй идентификатор изображения */
 	const ATTR_ID = 'id';
 
+	/** Идентификатор сущности, с которой связано изображение */
+	const ATTR_RELATED_ENTITY_ID = 'related_entity_id';
+
 	/** Идентификатр объекта сущности, с которой связано изображение */
 	const ATTR_RELATED_ENTITY_ITEM_ID = 'related_entity_item_id';
 
@@ -36,7 +40,6 @@ class Image extends ActiveRecord implements ImageProvider {
 
 	/** Дата-время создания изображения */
 	const ATTR_INSERT_STAMP = 'insert_stamp';
-
 	/** Отношение к Post */
 	const REL_POST = 'post';
 

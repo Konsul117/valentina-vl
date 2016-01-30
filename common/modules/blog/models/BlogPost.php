@@ -3,6 +3,7 @@
 namespace common\modules\blog\models;
 
 use common\components\TimestampUTCBehavior;
+use common\models\Entity;
 use common\models\Image;
 use yii\db\ActiveRecord;
 
@@ -56,7 +57,15 @@ class BlogPost extends ActiveRecord {
 
 	/** Дата-время обновления поста */
 	const ATTR_UPDATE_STAMP = 'update_stamp';
+
+	/** Отношение к категории */
 	const REL_CATEGORY = 'category';
+
+	/** Отношение к изображениям */
+	const REL_IMAGES = 'images';
+
+	/** Отношения к тегам */
+	const REL_TAGS_MODELS = 'TagsModels';
 
 	/**
 	 * @inheritdoc
@@ -94,8 +103,9 @@ class BlogPost extends ActiveRecord {
 	}
 
 	public function getImages() {
-		return $this->hasMany(Image::class,
-			[Image::ATTR_RELATED_ENTITY_ITEM_ID => static::ATTR_ID])->indexBy(Image::ATTR_ID);
+		return $this->hasMany(Image::class, [Image::ATTR_RELATED_ENTITY_ITEM_ID => static::ATTR_ID])
+			->andWhere([Image::ATTR_RELATED_ENTITY_ID => Entity::ENTITY_BLOG_POST_ID])
+			->indexBy(Image::ATTR_ID);
 	}
 
 	public function getTagsModels() {

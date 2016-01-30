@@ -7,6 +7,7 @@ use common\components\AjaxResponse;
 use common\components\UploadedFileParams;
 use common\exceptions\ImageException;
 use common\interfaces\ImageProvider;
+use common\models\Entity;
 use common\models\Image;
 use Yii;
 use yii\base\InvalidParamException;
@@ -64,7 +65,8 @@ class UploadController extends Controller {
 		}
 
 		$transaction = Yii::$app->db->beginTransaction();
-		$image       = new Image();
+		$image = new Image();
+		$image->related_entity_id = Entity::ENTITY_BLOG_POST_ID;
 
 		$relatedEntityItemId = Yii::$app->request->post('related_entity_item_id');
 

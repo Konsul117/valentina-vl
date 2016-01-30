@@ -2,6 +2,7 @@
 
 namespace frontend\modules\blogFront;
 
+use common\models\Entity;
 use common\models\Image;
 use common\modules\blog\Blog;
 use common\modules\blog\models\BlogCategory;
@@ -56,6 +57,7 @@ class BlogFront extends Blog {
 			->where([
 				Image::tableName() . '.' . Image::ATTR_IS_MAIN            => true,
 				BlogPost::tableName() . '.' . BlogPost::ATTR_IS_PUBLISHED => true,
+				Image::tableName() . '.' . Image::ATTR_RELATED_ENTITY_ID  => Entity::ENTITY_BLOG_POST_ID,
 			])
 			->orderBy([Image::tableName() . '.' . Image::ATTR_INSERT_STAMP => SORT_DESC]);
 

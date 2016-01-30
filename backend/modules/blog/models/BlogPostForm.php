@@ -7,6 +7,7 @@ namespace backend\modules\blog\models;
 use common\components\ErrorHelper;
 use common\components\SeoTranslitBehavior;
 use common\exceptions\ModelSaveException;
+use common\models\Entity;
 use common\models\Image;
 use common\modules\blog\models\BlogPost;
 use common\modules\blog\models\BlogPostTag;
@@ -119,6 +120,7 @@ class BlogPostForm extends BlogPost {
 
 		foreach ($imagesModels as $imagesModel) {
 			if ($imagesModel->related_entity_item_id === null) {
+				$imagesModel->related_entity_id      = Entity::ENTITY_BLOG_POST_ID;
 				$imagesModel->related_entity_item_id = $this->id;
 
 				$saveResult = $imagesModel->save();

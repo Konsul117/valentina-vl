@@ -19,6 +19,8 @@ class PostOutHelper {
 	 * @param string $content Контент поста
 	 *
 	 * @return string
+	 *
+	 * @throws Exception
 	 */
 	public static function wrapContentImages($content) {
 		/** @var ImageThumbCreator $imageThumbCreator */
