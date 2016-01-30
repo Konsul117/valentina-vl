@@ -4,6 +4,7 @@
 namespace backend\modules\blog\models;
 
 
+use common\components\ErrorHelper;
 use common\components\SeoTranslitBehavior;
 use common\exceptions\ModelSaveException;
 use common\models\Image;
@@ -65,6 +66,65 @@ class BlogPostForm extends BlogPost {
 		$this->on(static::EVENT_AFTER_DELETE, [$this, 'relatedDeleteActions']);
 	}
 
+	public function saveWithNewImages($imagesIds) {
+		$this->on(static::EVENT_AFTER_INSERT, function() use ($imagesIds) {
+			$this->bindImagesToPost($imagesIds);
+		}, null, false);
+
+		$this->on(static::EVENT_AFTER_UPDATE, function() use ($imagesIds) {
+			$this->bindImagesToPost($imagesIds);
+		}, null, false);
+
+		return $this->save();
+	}
+
+	/**
+	 * Привязать изображения к сущности
+	 *
+	 * @param array $imagesIds       массив id изображений для привязки
+	 *
+	 * @return bool
+	 *
+	 * @throws ModelSaveException
+	 */
+	public function bindImagesToPost(array $imagesIds) {
+		if ($this->isNewRecord) {
+			throw new ModelSaveException('Невозможно привязать изображения: пост не сохранён');
+		}
+
+		if (empty($imagesIds)) {
+			return false;
+		}
+
+		/** @var Image[] $imagesModels */
+		$imagesModels = Image::findAll($imagesIds);
+
+		if (empty($imagesModels)) {
+			return false;
+		}
+
+		foreach ($imagesModels as $imagesModel) {
+			if ($imagesModel->related_entity_item_id === null) {
+				$imagesModel->related_entity_item_id = $this->id;
+
+				$saveResult = $imagesModel->save();
+
+				if ($saveResult === false) {
+					$errors = $imagesModel->getErrors();
+
+					if (!empty($errors)) {
+						throw new ModelSaveException('Ошибки при сохранении модели Image: ' . ErrorHelper::getErrorsString($errors));
+					}
+					else {
+						throw new ModelSaveException('Неизвестная ошибка при сохранении модели');
+					}
+				}
+			}
+		}
+
+		return true;
+	}
+
 	/**
 	 * Действия над связанными сущностями при сохранении модели (вставка, обновление)
 	 * @throws Exception
@@ -79,21 +139,25 @@ class BlogPostForm extends BlogPost {
 		}
 
 		//обновляем главное изображение поста
-		$this->updateMainImage();
+		$this->actualizePostImages();
 	}
 
 	/**
+	 * Актуализация изображений по картинкам, которые помещены в тело поста
 	 * Обновление главного изображения поста
 	 */
-	protected function updateMainImage() {
+	protected function actualizePostImages() {
+		//получаем присоединённые к посту изображения
 		$images = $this->images;
 
 		if (empty($images)) {
 			return ;
 		}
 
+		//парсим id изображений в теле поста
 		$doc = phpQuery::newDocumentHTML($this->content);
 
+		//массив спарсенных id изображений
 		$imagesIds = [];
 
 		foreach ($doc->find('img[data-image-id]') as $imgEl) {
@@ -105,12 +169,15 @@ class BlogPostForm extends BlogPost {
 			$imagesIds[] = $imageId;
 		}
 
+		//проходим по привязанным изображениям
 		foreach($images as $image) {
 			//удаляем те картинки, которых нет в посте
 			if (!in_array($image->id, $imagesIds)) {
 				$image->delete();
 			}
 		}
+
+		$this->refresh();
 
 		if (empty($imagesIds)) {
 			return ;

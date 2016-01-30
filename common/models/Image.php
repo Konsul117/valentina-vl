@@ -2,11 +2,9 @@
 
 namespace common\models;
 
-use common\components\ErrorHelper;
 use common\components\ImageThumbCreator;
 use common\components\TimestampUTCBehavior;
 use common\exceptions\ImageException;
-use common\exceptions\ModelSaveException;
 use common\interfaces\ImageProvider;
 use common\modules\blog\models\BlogPost;
 use Yii;
@@ -38,51 +36,9 @@ class Image extends ActiveRecord implements ImageProvider {
 
 	/** Дата-время создания изображения */
 	const ATTR_INSERT_STAMP = 'insert_stamp';
+
+	/** Отношение к Post */
 	const REL_POST = 'post';
-
-	/**
-	 * Привязать изображения к сущности
-	 *
-	 * @param array $imagesIds       массив id изображений для привязки
-	 * @param int   $relatedEntityId идентификатор связанной сущности
-	 *
-	 * @return bool
-	 * @throws ModelSaveException
-	 */
-	public static function bindImagesToRelated(array $imagesIds, $relatedEntityId) {
-
-		if (empty($imagesIds)) {
-			return false;
-		}
-
-		/** @var Image[] $imagesModels */
-		$imagesModels = static::findAll($imagesIds);
-
-		if (empty($imagesModels)) {
-			return false;
-		}
-
-		foreach ($imagesModels as $imagesModel) {
-			if ($imagesModel->related_entity_item_id === null) {
-				$imagesModel->related_entity_item_id = $relatedEntityId;
-
-				$saveResult = $imagesModel->save();
-
-				if ($saveResult === false) {
-					$errors = $imagesModel->getErrors();
-
-					if (!empty($errors)) {
-						throw new ModelSaveException('Ошибки при сохранении модели Image: ' . ErrorHelper::getErrorsString($errors));
-					}
-					else {
-						throw new ModelSaveException('Неизвестная ошибка при сохранении модели');
-					}
-				}
-			}
-		}
-
-		return true;
-	}
 
 	/**
 	 * @inheritdoc

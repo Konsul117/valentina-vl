@@ -5,7 +5,6 @@ namespace backend\modules\blog\controllers;
 use backend\base\BackendController;
 use backend\modules\blog\models\BlogPostForm;
 use backend\modules\blog\models\BlogPostSearch;
-use common\models\Image;
 use common\modules\blog\models\BlogCategory;
 use Yii;
 use yii\filters\VerbFilter;
@@ -134,18 +133,7 @@ class BlogController extends BackendController {
 			}
 		}
 
-		if ($model->isNewRecord) {
-			//если модель новая
-			//вешаем сохранение картинок на событие
-			$model->on(BlogPostForm::EVENT_AFTER_INSERT, function() use ($newImagesIds, $model) {
-				Image::bindImagesToRelated($newImagesIds, $model->id);
-			});
-		}
-		else {
-			Image::bindImagesToRelated($newImagesIds, $this->id);
-		}
-
-		$saveResult = $model->save();
+		$saveResult = $model->saveWithNewImages($newImagesIds);
 
 		if (!$saveResult) {
 			$errors[] = 'Ошибка при сохранении записи';
