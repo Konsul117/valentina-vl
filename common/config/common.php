@@ -67,10 +67,11 @@ return [
 				ImageProvider::FORMAT_THUMB  => [
 					'width'  => 90,
 					'height' => 90,
+					'crop'   => true,
 				],
 				ImageProvider::FORMAT_MEDIUM => [
-					'width'  => 600,
-					'height' => 600,
+					'width'  => 240,
+					'height' => 240,
 				],
 				ImageProvider::FORMAT_FULL   => [
 					'width'  => 100,

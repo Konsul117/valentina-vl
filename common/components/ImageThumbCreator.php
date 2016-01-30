@@ -65,7 +65,13 @@ class ImageThumbCreator extends Component {
 				throw new ImageException('Некорректная конфигурация формата тамба: ' . $format);
 			}
 
-			$imageResize->crop($sizeParams['width'], $sizeParams['height']);
+			if (isset($sizeParams['crop']) && $sizeParams['crop']) {
+				$imageResize->crop($sizeParams['width'], $sizeParams['height']);
+			}
+			else {
+				$imageResize->resizeToBestFit($sizeParams['width'], $sizeParams['height']);
+			}
+
 			$imageResize->save($resizedFilePath);
 
 			if (!file_exists($resizedFilePath)) {
