@@ -14,8 +14,14 @@
 		margin:  0.5em 0;
 		display: block;
 		> li {
+			color:     $color-breadcrumbs;
+
+			a {
+				&:link, &:active, &:visited, &:hover {
+					color:     $color-breadcrumbs;
+				}
+			}
 			display:   inline-block;
-			color:     $color-salmon;
 			font-size: 0.8em;
 
 			.delimiter {
