@@ -3,8 +3,8 @@
 namespace console\controllers;
 
 use common\models\Image;
-use common\modules\blog\models\BlogPost;
 use yii\console\Controller;
+use yii\helpers\HtmlPurifier;
 
 /**
  * Тесты
@@ -12,22 +12,7 @@ use yii\console\Controller;
 class TestController extends Controller {
 
 	public function actionIndex() {
-		/** @var BlogPost $post */
-		$post = BlogPost::findOne(2);
-
-
-//		$post->tags = 'тег1 тег2';
-		$post->tags = 'тег2 тег1 тегтри';
-		$post->save();
-
-//		for ($i = 1; $i < 10; $i++) {
-//			$blogPostTag          = new BlogPostTag();
-//			$blogPostTag->post_id = 3;
-//			$blogPostTag->tag_id  = $i;
-//			if ($blogPostTag->save() === false) {
-//				print_r($blogPostTag->getErrors());
-//			}
-//		}
+		echo HtmlPurifier::process('<h1>qwe</h1>');
 	}
 
 	public function actionStr() {
