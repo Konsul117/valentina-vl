@@ -2,7 +2,7 @@
 
 namespace common\models;;
 
-use common\components\TimestampUTCBehavior;
+use common\components\behaviors\TimestampUTCBehavior;
 use Yii;
 use yii\base\Exception;
 use yii\base\InvalidConfigException;

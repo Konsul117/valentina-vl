@@ -2,7 +2,7 @@
 
 namespace common\modules\comment\models;
 
-use common\components\TimestampUTCBehavior;
+use common\components\behaviors\TimestampUTCBehavior;
 use yii\db\ActiveRecord;
 
 /**

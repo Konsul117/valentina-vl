@@ -1,12 +1,14 @@
 <?php
 
-namespace backend\modules\blog\models;
+namespace backend\modules\pageBackend\models;
 
-use common\modules\blog\models\BlogCategory;
-use common\modules\blog\models\BlogPost;
+use common\modules\page\models\Page;
 use yii\data\ActiveDataProvider;
 
-class BlogPostSearch extends BlogPost {
+/**
+ * Расширение модели "Страницы" для поиска в бэкэнде
+ */
+class PageSearch extends Page {
 
 	/**
 	 * @inheritdoc
@@ -16,7 +18,6 @@ class BlogPostSearch extends BlogPost {
 			[[
 				static::ATTR_ID,
 				static::ATTR_TITLE,
-				static::ATTR_TAGS,
 				static::ATTR_IS_PUBLISHED,
 				static::ATTR_INSERT_STAMP,
 				static::ATTR_UPDATE_STAMP,
@@ -28,36 +29,25 @@ class BlogPostSearch extends BlogPost {
 	 * @inheritdoc
 	 */
 	public static function tableName() {
-		return BlogPost::tableName();
+		return Page::tableName();
 	}
 
 	/**
 	 * Поиск
 	 *
 	 * @param array $params
-	 * @param int $categoryId
 	 * @return ActiveDataProvider
 	 */
-	public function search($params, $categoryId) {
+	public function search($params) {
 		$query = $this->find();
 
 		$dataProvider = new ActiveDataProvider([
 			'query' => $query,
 		]);
 
-		$query->select($this->tableName() . '.*, ' . BlogCategory::tableName() . '.' . BlogCategory::ATTR_TITLE . ' AS category_title');
-
-		$query->leftJoin(BlogCategory::tableName(),
-			BlogCategory::tableName() . '.' . BlogCategory::ATTR_ID . ' = ' . $this->tableName() . '.' . static::ATTR_CATEGORY_ID
-		);
-
-		$query->where([static::ATTR_CATEGORY_ID => $categoryId]);
-
 		if (!($this->load($params) && $this->validate())) {
 			return $dataProvider;
 		}
-
-		$query->andFilterWhere(['like', static::tableName() . '.' . static::ATTR_TAGS, $this->tags]);
 		$query->andFilterWhere(['like', static::tableName() . '.' . static::ATTR_TITLE, $this->title]);
 
 		$query->andFilterWhere([

@@ -3,12 +3,21 @@
 Yii::setAlias('@themeRoot', '@frontend/sources/front/tmp/dist');
 
 return [
-	'id' => 'frontend',
+	'id'         => 'frontend',
 	'components' => [
-		'errorHandler' => [
-			'errorView' => '@frontend/views/layouts/error.php'
+		'assetManager' => [
+			//делаем пустой ассет для jquery (т.к. jquery итак собирается грунтом)
+			'bundles' => [
+				'yii\web\JqueryAsset' => [
+					'sourcePath' => null,
+					'js'         => [],
+				],
+			],
 		],
-		'request' => [
+		'errorHandler' => [
+			'errorView' => '@frontend/views/layouts/error.php',
+		],
+		'request'      => [
 			'cookieValidationKey' => 'valentina-vl',
 		],
 	],

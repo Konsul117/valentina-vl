@@ -2,7 +2,7 @@
 
 namespace common\modules\blog\models;
 
-use common\components\TimestampUTCBehavior;
+use common\components\behaviors\TimestampUTCBehavior;
 use common\models\Entity;
 use common\models\Image;
 use yii\db\ActiveRecord;
@@ -66,6 +66,13 @@ class BlogPost extends ActiveRecord {
 
 	/** Отношения к тегам */
 	const REL_TAGS_MODELS = 'TagsModels';
+
+	/**
+	 * @return int
+	 */
+	public static function getEntityId() {
+		return Entity::ENTITY_BLOG_POST_ID;
+	}
 
 	/**
 	 * @inheritdoc

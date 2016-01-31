@@ -1,14 +1,13 @@
 <?php
 
 use frontend\assets\CommonAsset;
-use yii\bootstrap\BootstrapAsset;
 use yii\helpers\Html;
 use common\base\View;
 
 /** @var View $this */
 /** @var string $content */
 
-BootstrapAsset::register($this);
+//BootstrapAsset::register($this);
 CommonAsset::register($this);
 ?>
 

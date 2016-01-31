@@ -24,7 +24,7 @@ class Editor extends Module {
 	 * @param bool       $uploadImages     Возможность загрузки изображений
 	 * @return Widget
 	 */
-	public function getEditorWidget(ActiveForm $form, Model $model, $identAttribute, $contentAttribute, $imagesAttribute = false, $uploadImages = false) {
+	public function getEditorWidget(ActiveForm $form, Model $model, $identAttribute, $contentAttribute, $imagesAttribute = null, $uploadImages = null) {
 		$widget = new EditorWidget([
 			'form'             => $form,
 			'model'            => $model,

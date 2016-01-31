@@ -3,7 +3,7 @@
 namespace common\models;
 
 use common\components\ImageThumbCreator;
-use common\components\TimestampUTCBehavior;
+use common\components\behaviors\TimestampUTCBehavior;
 use common\exceptions\ImageException;
 use common\interfaces\ImageProvider;
 use common\modules\blog\models\BlogPost;

@@ -23,11 +23,15 @@ class EditorWidget extends Widget {
 	public $model;
 
 	/**
+	 * Аттрибут идендификатора модели
+	 *
 	 * @var string
 	 */
 	public $identAttribute;
 
 	/**
+	 * Аттрибут контента модели
+	 *
 	 * @var string
 	 */
 	public $contentAttribute;

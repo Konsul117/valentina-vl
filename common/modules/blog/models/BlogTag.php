@@ -2,8 +2,8 @@
 
 namespace common\modules\blog\models;
 
-use common\components\SeoTranslitBehavior;
-use common\components\TimestampUTCBehavior;
+use common\components\behaviors\SeoTranslitBehavior;
+use common\components\behaviors\TimestampUTCBehavior;
 use yii\db\ActiveRecord;
 
 /**

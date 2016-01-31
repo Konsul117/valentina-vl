@@ -1,6 +1,6 @@
 <?php
 
-namespace common\components;
+namespace common\components\behaviors;
 
 use yii\behaviors\AttributeBehavior;
 use yii\db\BaseActiveRecord;

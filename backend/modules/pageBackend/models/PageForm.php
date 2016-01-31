@@ -1,33 +1,39 @@
 <?php
 
-namespace backend\modules\blog\models;
+namespace backend\modules\pageBackend\models;
 
 use common\components\behaviors\ImageBindBehavior;
 use common\components\behaviors\SeoTranslitBehavior;
-use common\exceptions\ModelSaveException;
-use common\modules\blog\models\BlogPost;
-use common\modules\blog\models\BlogPostTag;
-use Yii;
-use yii\base\Exception;
+use common\modules\page\models\Page;
 use yii\helpers\ArrayHelper;
 
 /**
- * Модель формы поста, расширяющая модель поста
+ * Расширение модели "Страницы" для backend
+ *
  * @inheritdoc
  */
-class BlogPostForm extends BlogPost {
+class PageForm extends Page {
 
-	/** Сценарий сохранения */
+	/** Сценарий редактирования страницы из бэкэнда */
 	const SCENARIO_UPDATE = 'scenarioUpdate';
-
 	/** Поведение для связывания изображений */
 	const BEHAVIOR_IMAGE_BIND = 'imageBind';
+
+	public function scenarios() {
+		return ArrayHelper::merge(parent::scenarios(), [
+			static::SCENARIO_UPDATE => [
+				static::ATTR_TITLE,
+				static::ATTR_CONTENT,
+				static::ATTR_IS_PUBLISHED,
+			],
+		]);
+	}
 
 	/**
 	 * @inheritdoc
 	 */
 	public static function tableName() {
-		return BlogPost::tableName();
+		return Page::tableName();
 	}
 
 	/**
@@ -37,7 +43,7 @@ class BlogPostForm extends BlogPost {
 		return ArrayHelper::merge(
 			parent::behaviors(),
 			[
-				[
+				'seo'                       => [
 					'class'         => SeoTranslitBehavior::class,
 					'attributeFrom' => static::ATTR_TITLE,
 					'attributeTo'   => static::ATTR_TITLE_URL,
@@ -50,31 +56,6 @@ class BlogPostForm extends BlogPost {
 				],
 			]
 		);
-	}
-
-	/**
-	 * @inheritdoc
-	 */
-	public function scenarios() {
-		return [
-			static::SCENARIO_UPDATE => [
-				static::ATTR_TITLE,
-				static::ATTR_SHORT_CONTENT,
-				static::ATTR_CONTENT,
-				static::ATTR_TAGS,
-				static::ATTR_IS_PUBLISHED,
-			],
-		];
-	}
-
-	/**
-	 * @inheritdoc
-	 */
-	public function init() {
-		parent::init();
-
-		$this->on(static::EVENT_AFTER_INSERT, [$this, 'relatedSaveActions']);
-		$this->on(static::EVENT_AFTER_UPDATE, [$this, 'relatedSaveActions']);
 	}
 
 	/**
@@ -96,20 +77,6 @@ class BlogPostForm extends BlogPost {
 		}, null, false);
 
 		return $this->save();
-	}
-
-	/**
-	 * Действия над связанными сущностями при сохранении модели (вставка, обновление)
-	 * @throws Exception
-	 */
-	public function relatedSaveActions() {
-		//присоединяем теги
-		try {
-			BlogPostTag::bindPostTags($this);
-		}
-		catch (ModelSaveException $e) {
-			throw new Exception('Исключение при сохранении тегов поста: ' . $e->getMessage(), 0, $e);
-		}
 	}
 
 }

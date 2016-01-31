@@ -4,7 +4,6 @@ namespace frontend\modules\blogFront\widgets;
 
 use yii\base\InvalidConfigException;
 use yii\base\Widget;
-use yii\bootstrap\BootstrapAsset;
 use yii\data\Pagination;
 use yii\db\Query;
 
@@ -45,7 +44,7 @@ class PostsWidget extends Widget {
 			throw new InvalidConfigException('Отсуствует query');
 		}
 
-		BootstrapAsset::register($this->getView());
+//		BootstrapAsset::register($this->getView());
 
 		$countQuery = clone $this->query;
 

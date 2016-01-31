@@ -26,6 +26,7 @@ return [
 		],
 		'cache'             => [
 			'class' => \yii\caching\FileCache::class,
+			'cachePath' => '@common/runtime/cache',
 		],
 		'urlManager'        => [
 			'enablePrettyUrl' => true,
