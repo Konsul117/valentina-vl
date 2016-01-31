@@ -16,60 +16,69 @@ AppAsset::register($this);
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
 <head>
-    <meta charset="<?= Yii::$app->charset ?>">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <?= Html::csrfMetaTags() ?>
-    <title><?= Html::encode($this->title) ?></title>
-    <?php $this->head() ?>
+	<meta charset="<?= Yii::$app->charset ?>">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<?= Html::csrfMetaTags() ?>
+	<title><?= Html::encode($this->title) ?></title>
+	<?php $this->head() ?>
 </head>
 <body>
 <?php $this->beginBody() ?>
 
 <div class="wrap">
-    <?php
-    NavBar::begin([
-//        'brandLabel' => 'My Company',
-//        'brandUrl' => Yii::$app->homeUrl,
-        'options' => [
-            'class' => 'navbar-inverse navbar-fixed-top',
-        ],
-    ]);
-    $menuItems = [
-        ['label' => 'Бисер', 'url' => ['/blog/blog/category/?category_url=biser']],
-        ['label' => 'Не бисер', 'url' => ['/blog/blog/category/?category_url=not_biser']],
-        ['label' => 'Главная', 'url' => ['/']],
-    ];
-    if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
-    } else {
-        $menuItems[] = [
-            'label' => 'Logout (' . Yii::$app->user->identity->username . ')',
-            'url' => ['/site/logout'],
-            'linkOptions' => ['data-method' => 'post']
-        ];
-    }
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav navbar-left'],
-        'items' => $menuItems,
-    ]);
-    NavBar::end();
-    ?>
+	<?php
+	NavBar::begin([
+		//        'brandLabel' => 'My Company',
+		//        'brandUrl' => Yii::$app->homeUrl,
+			'options' => [
+					'class' => 'navbar-inverse navbar-fixed-top',
+			],
+	]);
 
-    <div class="container">
-        <?= Breadcrumbs::widget([
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-        ]) ?>
-        <?= Alert::widget() ?>
-        <?= $content ?>
-    </div>
+	echo Nav::widget([
+			'options' => ['class' => 'navbar-nav navbar-left'],
+			'items'   => [
+					['label' => 'Бисер', 'url' => ['/blog/blog/category/?category_url=biser']],
+					['label' => 'Не бисер', 'url' => ['/blog/blog/category/?category_url=not_biser']],
+					['label' => 'Главная', 'url' => ['/']],
+			],
+	]);
+
+	$rightItems = [];
+	if (Yii::$app->user->isGuest) {
+		$rightItems[] = ['label' => 'Вход', 'url' => ['/site/login']];
+	}
+	else {
+		$rightItems[] = [
+				'label'       => 'Выход (' . Yii::$app->user->identity->username . ')',
+				'url'         => ['/site/logout'],
+				'linkOptions' => ['data-method' => 'post'],
+		];
+	}
+
+	echo Nav::widget([
+			'options' => ['class' => 'navbar-nav navbar-right'],
+			'items'   => $rightItems,
+	]);
+
+	NavBar::end();
+	?>
+
+	<div class="container">
+		<?= Breadcrumbs::widget([
+				'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+		]) ?>
+		<?= Alert::widget() ?>
+		<?= $content ?>
+	</div>
 </div>
 
 <footer class="footer">
-    <div class="container_wrap">
-        <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
+	<div class="container_wrap">
+		<p class="pull-left">&copy; My Company <?= date('Y') ?></p>
 
-        <p class="pull-right"><?= Yii::powered() ?></p>
-    </div>
+		<p class="pull-right"><?= Yii::powered() ?></p>
+	</div>
 </footer>
 
 <?php $this->endBody() ?>
