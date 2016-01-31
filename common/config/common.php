@@ -81,9 +81,11 @@ return [
 		],
 	],
 	'params'     => [
-		'baseDomain'     => 'valentina-vl.ru',
-		'backendDomain'  => 'backend.valentina-vl.ru',
-		'frontendDomain' => 'valentina-vl.ru',
+		'baseDomain'          => 'valentina-vl.ru',
+		'backendDomain'       => 'backend.valentina-vl.ru',
+		'frontendDomain'      => 'valentina-vl.ru',
+		//смещение локальной таймзоны от UTC
+		'localTimezoneOffset' => 10,
 	],
 	'modules'    => [
 		'debug' => [

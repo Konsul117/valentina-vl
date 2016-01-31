@@ -3,8 +3,25 @@
 namespace common\components;
 
 use DateTime;
+use Yii;
 
 class Formatter extends \yii\i18n\Formatter {
+
+	protected $localTimezone;
+
+	public function init() {
+		parent::init();
+
+		if (isset(Yii::$app->params['localTimezoneOffset'])) {
+			$offset = Yii::$app->params['localTimezoneOffset'];
+		}
+		else {
+			$offset = 0;
+		}
+
+		$this->localTimezone = DateTimeZone::getTimezoneByUtcOffset($offset);
+
+	}
 
 	/**
 	 * Вывод даты, времени в локальном формате
@@ -22,7 +39,7 @@ class Formatter extends \yii\i18n\Formatter {
 		}
 
 		return (new DateTime($value, new DateTimeZone('UTC')))
-			->setTimezone(DateTimeZone::getTimezoneByUtcOffset(10))
+			->setTimezone($this->localTimezone)
 			->format($format);
 	}
 
