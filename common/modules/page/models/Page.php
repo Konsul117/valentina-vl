@@ -19,6 +19,7 @@ use yii\db\ActiveRecord;
  * @property bool    $is_published    Состояние опубликованности
  * @property string  $insert_stamp    Дата-время создания страницы
  * @property string  $update_stamp    Дата-время обновления страницы
+ * @property Image   $mainImage       Главное изображение
  *
  * Отношения
  * @property Image[] $images          Изображения
@@ -56,6 +57,7 @@ class Page extends ActiveRecord {
 	const PAGE_URL_CONTANCTS = 'contacts';
 	/** Отношение к изображениям */
 	const REL_IMAGES = 'images';
+	const REL_MAIN_IMAGE = 'mainImage';
 
 	/**
 	 * @return int
@@ -103,6 +105,14 @@ class Page extends ActiveRecord {
 		return $this->hasMany(Image::class, [Image::ATTR_RELATED_ENTITY_ITEM_ID => static::ATTR_ID])
 			->andWhere([Image::ATTR_RELATED_ENTITY_ID => Entity::ENTITY_PAGE_ID])
 			->indexBy(Image::ATTR_ID);
+	}
+
+	public function getMainImage() {
+		return $this->hasOne(Image::class, [Image::ATTR_RELATED_ENTITY_ITEM_ID => static::ATTR_ID])
+			->andWhere([
+				Image::ATTR_RELATED_ENTITY_ID => Entity::ENTITY_PAGE_ID,
+				Image::ATTR_IS_MAIN           => true,
+			]);
 	}
 
 }

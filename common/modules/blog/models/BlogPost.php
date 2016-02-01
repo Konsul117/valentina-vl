@@ -25,6 +25,7 @@ use yii\db\ActiveRecord;
  * @property BlogCategory $category        Категория
  * @property Image[]      $images          Изображения
  * @property BlogTag[]    $tagsModels      Теги (модели)
+ * @property Image        $mainImage       Главное изображение
  */
 class BlogPost extends ActiveRecord {
 
@@ -66,6 +67,7 @@ class BlogPost extends ActiveRecord {
 
 	/** Отношения к тегам */
 	const REL_TAGS_MODELS = 'TagsModels';
+	const REL_MAIN_IMAGE = 'mainImage';
 
 	/**
 	 * @return int
@@ -118,6 +120,14 @@ class BlogPost extends ActiveRecord {
 	public function getTagsModels() {
 		return $this->hasMany(BlogTag::class, [BlogTag::ATTR_ID => BlogPostTag::ATTR_TAG_ID])
 			->viaTable(BlogPostTag::tableName(), [BlogPostTag::ATTR_POST_ID => static::ATTR_ID]);
+	}
+
+	public function getMainImage() {
+		return $this->hasOne(Image::class, [Image::ATTR_RELATED_ENTITY_ITEM_ID => static::ATTR_ID])
+			->andWhere([
+				Image::ATTR_RELATED_ENTITY_ID => Entity::ENTITY_BLOG_POST_ID,
+				Image::ATTR_IS_MAIN => true,
+			]);
 	}
 
 }

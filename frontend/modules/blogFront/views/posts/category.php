@@ -10,6 +10,8 @@ use common\base\View;
 $this->title = $category->title;
 
 $this->breadcrumbs->addBreadcrumb(['/blogFront/posts/category', 'category_url' => $category->title_url], $category->title);
+
+$this->metaTagContainer->title = $category->title;
 ?>
 
 

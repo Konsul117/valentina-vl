@@ -61,4 +61,19 @@ class PostOutHelper {
 		return (string) $doc;
 	}
 
+	/**
+	 * Очистка строки от тегов, символов переноса
+	 *
+	 * @param string $str Строка
+	 *
+	 * @return string
+	 */
+	public static function clearString($str) {
+		$str = strip_tags($str);
+		$str = str_replace("\n", '', $str);
+		$str = str_replace("\r", '', $str);
+
+		return $str;
+	}
+
 }

@@ -17,6 +17,7 @@ CommonAsset::register($this);
 <head>
 	<meta charset="<?= Yii::$app->charset ?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+
 	<?= Html::csrfMetaTags() ?>
 
 	<?php if ($this->title === null) {
@@ -25,8 +26,16 @@ CommonAsset::register($this);
 		if ($lastBreadcrumb !== null) {
 			$this->title = $lastBreadcrumb->title;
 		}
+	}
 
-	}?>
+	if (!$this->metaTagContainer->title) {
+		$this->metaTagContainer->title = $this->title;
+	}
+	?>
+
+	<?= $this->render('//layouts/blocks/meta', [
+			'metaTagContainer' => $this->metaTagContainer,
+	]) ?>
 
 	<title><?= Html::encode($this->title) ?></title>
 	<?php $this->head() ?>
