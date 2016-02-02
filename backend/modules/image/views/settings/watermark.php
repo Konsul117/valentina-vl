@@ -4,13 +4,17 @@ use yii\helpers\Html;
 
 /** @var View $this */
 /** @var bool $watermarkExists */
+$title = 'Редактирование водяного знака';
+$this->title = $title;
 ?>
+
+<h1><?= Html::encode($title) ?></h1>
 
 <?php if ($watermarkExists): ?>
 	<p>Загруженный водяной знак: </p>
 
 	<p>
-		<?= Html::img(['/image/watermark/watermark']) ?>
+		<?= Html::img(['/image/settings/watermark-show']) ?>
 	</p>
 <?php endif ?>
 
