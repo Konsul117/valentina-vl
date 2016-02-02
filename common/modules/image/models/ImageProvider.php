@@ -1,6 +1,6 @@
 <?php
 
-namespace common\interfaces;
+namespace common\modules\image\models;
 
 /**
  * Интерфейс доступа к изображению, получению различных форматов и пр.

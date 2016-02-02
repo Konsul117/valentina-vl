@@ -1,5 +1,6 @@
 <?php
 
+use common\modules\image\models\ImageProvider;
 use common\modules\page\models\Page;
 use frontend\modules\blogFront\components\PostOutHelper;
 use yii\base\Widget;
@@ -13,7 +14,7 @@ $this->titleCustom = 'Главная';
 ?>
 
 <?php if ($mainPage !== null): ?>
-	<?= PostOutHelper::wrapContentImages($mainPage->content) ?>
+	<?= PostOutHelper::wrapContentImages($mainPage->content, [ImageProvider::FORMAT_MEDIUM]) ?>
 <?php endif ?>
 
 <?php if ($postsWidget !== null): ?>

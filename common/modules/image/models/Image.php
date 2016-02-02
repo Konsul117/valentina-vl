@@ -1,11 +1,9 @@
 <?php
 
-namespace common\models;
+namespace common\modules\image\models;
 
-use common\components\ImageThumbCreator;
 use common\components\behaviors\TimestampUTCBehavior;
 use common\exceptions\ImageException;
-use common\interfaces\ImageProvider;
 use common\modules\blog\models\BlogPost;
 use Yii;
 use yii\base\Exception;
@@ -68,11 +66,11 @@ class Image extends ActiveRecord implements ImageProvider {
 			unlink($imageFile);
 		}
 
-		/** @var ImageThumbCreator $imageThumbCreator */
-		$imageThumbCreator = Yii::$app->imageThumbCreator;
+		/** @var \common\modules\image\Image $imageModule */
+		$imageModule = Yii::$app->getModule('image');;
 
 		try {
-			$imageThumbCreator->clearThumbs($this->id);
+			$imageModule->imageThumbCreator->clearThumbs($this->id);
 		}
 		catch (ImageException $e) {
 			throw new Exception('Не удалось вычистить тамбы изображения: ' . $e->getMessage(), 0, $e);
@@ -91,10 +89,10 @@ class Image extends ActiveRecord implements ImageProvider {
 			throw new ImageException('Изображение отсутствует');
 		}
 
-		/** @var ImageThumbCreator $imageThumbCreator */
-		$imageThumbCreator = Yii::$app->imageThumbCreator;
+		/** @var \common\modules\image\Image $imageModule */
+		$imageModule = Yii::$app->getModule('image');
 
-		return $imageThumbCreator->getImageThumbUrl($this->id, $format);
+		return $imageModule->imageThumbCreator->getImageThumbUrl($this->id, $format);
 	}
 
 	/**

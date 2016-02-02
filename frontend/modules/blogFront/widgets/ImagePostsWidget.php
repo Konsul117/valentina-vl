@@ -2,7 +2,7 @@
 
 namespace frontend\modules\blogFront\widgets;
 
-use common\models\Image;
+use common\modules\image\models\Image;
 use yii\base\InvalidConfigException;
 use yii\base\Widget;
 use yii\db\Query;

@@ -7,6 +7,7 @@ Yii::setAlias('tests', dirname(dirname(__DIR__)) . '/tests');
 Yii::setAlias('root', dirname(dirname(__DIR__)));
 
 //путь для загрузки оригиниалов изображений
+Yii::setAlias('upload_watermark_path', Yii::getAlias('@root/upload/watermark'));
 Yii::setAlias('upload_images_path', Yii::getAlias('@root/upload/images'));
 //путь для сохранений тамбов (должен быть доступен извне)
 Yii::setAlias('resized_images_path', Yii::getAlias('@frontend/web/upload/images/resized'));

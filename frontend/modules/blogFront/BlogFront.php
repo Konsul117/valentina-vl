@@ -3,7 +3,7 @@
 namespace frontend\modules\blogFront;
 
 use common\models\Entity;
-use common\models\Image;
+use common\modules\image\models\Image;
 use common\modules\blog\Blog;
 use common\modules\blog\models\BlogCategory;
 use common\modules\blog\models\BlogPost;

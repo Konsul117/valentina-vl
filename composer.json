@@ -18,8 +18,8 @@
         "yiisoft/yii2": ">=2.0.6",
         "yiisoft/yii2-bootstrap": "*",
         "yiisoft/yii2-swiftmailer": "*",
-        "eventviva/php-image-resize": "^1.5",
-        "coderockr/php-query": "dev-master"
+        "coderockr/php-query": "dev-master",
+        "sybio/image-workshop": "dev-master"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",

@@ -4,7 +4,7 @@ namespace common\modules\page\models;
 
 use common\components\behaviors\TimestampUTCBehavior;
 use common\models\Entity;
-use common\models\Image;
+use common\modules\image\models\Image;
 use Yii;
 use yii\caching\TagDependency;
 use yii\db\ActiveRecord;
@@ -96,7 +96,6 @@ class Page extends ActiveRecord {
 
 	public function afterSave($insert, $changedAttributes) {
 		parent::afterSave($insert, $changedAttributes);
-		$this->refresh();
 
 		TagDependency::invalidate(Yii::$app->cache, __CLASS__);
 	}

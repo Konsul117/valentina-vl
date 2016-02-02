@@ -1,5 +1,6 @@
 <?php
 use common\components\Formatter;
+use common\modules\image\models\ImageProvider;
 use common\modules\blog\models\BlogPost;
 use frontend\modules\blogFront\components\PostOutHelper;
 use frontend\modules\blogFront\widgets\PostsWidget;
@@ -30,7 +31,7 @@ $formatter = new Formatter();
 				</div>
 
 				<div class="item-content">
-					<?= PostOutHelper::wrapContentImages($post->short_content) ?>
+					<?= PostOutHelper::wrapContentImages($post->short_content, [ImageProvider::FORMAT_MEDIUM]) ?>
 				</div>
 
 				<p>

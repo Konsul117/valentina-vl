@@ -4,7 +4,7 @@ namespace backend\modules\editor\components;
 
 use common\components\UploadedFileParams;
 use common\exceptions\ImageException;
-use Eventviva\ImageResize;
+use PHPImageWorkshop\ImageWorkshop;
 use Yii;
 use yii\base\Component;
 use yii\base\Exception;
@@ -46,23 +46,19 @@ class ImageUploader extends Component {
 			throw new ImageException($error);
 		}
 
-		try {
-			$image = new ImageResize($uploadParams->tmpName);
+		$imageLayer = ImageWorkshop::initFromPath($uploadParams->tmpName);
 
-		}
-		catch (\Exception $e) {
-			throw new ImageException('Исключение при обработке изображения: ' . $e->getMessage(), 0, $e);
+		if ($imageLayer->getHeight() > $this->maxOriginalHeight || $imageLayer->getWidth() > $this->maxOriginalWidth) {
+			$imageLayer->resizeToFit($this->maxOriginalWidth, $this->maxOriginalHeight, true);
 		}
 
-		if ($image->getSourceHeight() > $this->maxOriginalHeight || $image->getSourceWidth() > $this->maxOriginalWidth) {
-			$image->resizeToBestFit($this->maxOriginalWidth, $this->maxOriginalHeight);
-		}
+		$savePath = $this->getSavePath();
+		$filename = $imageIdent . '.jpg';
 
-		$filePath = $this->getSavePath() . DIRECTORY_SEPARATOR . $imageIdent . '.jpg';
-		$image->save($filePath);
+		$imageLayer->save($savePath, $filename);
 
 		//т.к. ImageResize::save() не возвращает результат сохранения, то приходиться проверять результат по наличию итогового файла
-		if (!file_exists($filePath)) {
+		if (!file_exists($savePath . DIRECTORY_SEPARATOR . $filename)) {
 			throw new ImageException('Ошибка при сохранении изображения: файл не создан');
 		}
 

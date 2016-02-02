@@ -1,6 +1,6 @@
 <?php
 use backend\modules\editor\widgets\EditorWidget;
-use common\interfaces\ImageProvider;
+use common\modules\image\models\ImageProvider;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\web\View;

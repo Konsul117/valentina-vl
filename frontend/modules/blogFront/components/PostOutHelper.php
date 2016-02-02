@@ -2,8 +2,8 @@
 
 namespace frontend\modules\blogFront\components;
 
-use common\components\ImageThumbCreator;
-use common\interfaces\ImageProvider;
+use common\modules\image\Image;
+use common\modules\image\models\ImageProvider;
 use phpQuery;
 use Yii;
 use yii\base\Exception;
@@ -16,19 +16,16 @@ class PostOutHelper {
 	/**
 	 * Оборачивание изображений контента для кликабельности
 	 *
-	 * @param string $content Контент поста
+	 * @param string $content      Контент поста
+	 * @param array  $checkFormats Форматы изображения, для которых нужно проверить и регенерировать тамбы
 	 *
 	 * @return string
 	 *
 	 * @throws Exception
 	 */
-	public static function wrapContentImages($content) {
-		/** @var ImageThumbCreator $imageThumbCreator */
-		$imageThumbCreator = Yii::$app->imageThumbCreator;
-
-		if ($imageThumbCreator === null) {
-			throw new Exception('Отсутствует компонент imageThumbCreator');
-		}
+	public static function wrapContentImages($content, $checkFormats = []) {
+		/** @var Image $imageModule */
+		$imageModule = Yii::$app->getModule('image');
 
 		//парсим id изображений в теле поста
 		$doc = phpQuery::newDocumentHTML($content);
@@ -45,7 +42,7 @@ class PostOutHelper {
 			//генерируем новые элементы a и img
 			$a = $imgEl->ownerDocument->createElement('a');
 
-			$a->setAttribute('href', $imageThumbCreator->getImageThumbUrl($imageId, ImageProvider::FORMAT_FULL));
+			$a->setAttribute('href', $imageModule->imageThumbCreator->getImageThumbUrl($imageId, ImageProvider::FORMAT_FULL));
 			$a->setAttribute('data-' . static::LINK_LIGHTBOX_PARAM, '1');
 			$a->setAttribute('rel', 'img_group');
 
@@ -56,6 +53,14 @@ class PostOutHelper {
 			//и заменяем элементы
 
 			$imgEl->parentNode->replaceChild($a, $imgEl);
+
+			if (!empty($checkFormats)) {
+				//вызываем получение среднего тамба для проверки наличия
+
+				foreach ($checkFormats as $format) {
+					$imageModule->imageThumbCreator->touchThumb($imageId, $format);
+				}
+			}
 		}
 
 		return (string) $doc;

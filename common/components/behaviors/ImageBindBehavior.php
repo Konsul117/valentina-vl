@@ -5,7 +5,7 @@ namespace common\components\behaviors;
 
 use common\components\ErrorHelper;
 use common\exceptions\ModelSaveException;
-use common\models\Image;
+use common\modules\image\models\Image;
 use phpQuery;
 use Yii;
 use yii\base\Behavior;

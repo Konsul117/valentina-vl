@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d16c8b27d6e1ca3b3fdaf296930aec31",
+    "hash": "a82a1d1142e0c31100126bae659efb28",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -322,50 +322,6 @@
             "time": "2014-08-12 14:32:42"
         },
         {
-            "name": "eventviva/php-image-resize",
-            "version": "1.5.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/eventviva/php-image-resize.git",
-                "reference": "683a80e76908fd1c53cd2fd7f638df39d6ebfcb5"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/eventviva/php-image-resize/zipball/683a80e76908fd1c53cd2fd7f638df39d6ebfcb5",
-                "reference": "683a80e76908fd1c53cd2fd7f638df39d6ebfcb5",
-                "shasum": ""
-            },
-            "require": {
-                "ext-gd": "*",
-                "php": ">=5.3.0"
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "src"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Aditya Patadia",
-                    "homepage": "http://aditya.patadia.org/"
-                }
-            ],
-            "description": "PHP class to re-size and scale images",
-            "homepage": "https://github.com/eventviva/php-image-resize",
-            "keywords": [
-                "image",
-                "php",
-                "resize",
-                "scale"
-            ],
-            "time": "2016-01-06 18:04:49"
-        },
-        {
             "name": "ezyang/htmlpurifier",
             "version": "v4.6.0",
             "source": {
@@ -461,6 +417,64 @@
                 "mailer"
             ],
             "time": "2015-06-06 14:19:39"
+        },
+        {
+            "name": "sybio/image-workshop",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Sybio/ImageWorkshop.git",
+                "reference": "c5f9db30c2c96ebcb3aece70ca2ec65cb16bb5c5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Sybio/ImageWorkshop/zipball/c5f9db30c2c96ebcb3aece70ca2ec65cb16bb5c5",
+                "reference": "c5f9db30c2c96ebcb3aece70ca2ec65cb16bb5c5",
+                "shasum": ""
+            },
+            "require": {
+                "ext-exif": "*",
+                "ext-gd": "*",
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "PHPImageWorkshop": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Clément Guillemain",
+                    "homepage": "http://clementguillemain.fr",
+                    "role": "Developer / Freelancer"
+                },
+                {
+                    "name": "ImageWorkshop Community",
+                    "homepage": "https://github.com/Sybio/ImageWorkshop/graphs/contributors"
+                }
+            ],
+            "description": "Powerful PHP class using GD library to work easily with images including layer notion (like Photoshop or GIMP)",
+            "homepage": "http://phpimageworkshop.com",
+            "keywords": [
+                "class",
+                "crop",
+                "gd",
+                "image",
+                "library",
+                "resize",
+                "rotate",
+                "thumbnail",
+                "watermark"
+            ],
+            "time": "2016-01-25 16:41:30"
         },
         {
             "name": "yiisoft/yii2",
@@ -1008,7 +1022,8 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "coderockr/php-query": 20
+        "coderockr/php-query": 20,
+        "sybio/image-workshop": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

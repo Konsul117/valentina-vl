@@ -1,4 +1,5 @@
 <?php
+use common\modules\image\models\ImageProvider;
 use common\modules\blog\models\BlogPost;
 use common\base\View;
 use frontend\modules\blogFront\components\PostOutHelper;
@@ -20,14 +21,14 @@ $this->metaTagContainer->description = PostOutHelper::clearString($post->short_c
 $mainImage = $post->mainImage;
 
 if ($mainImage !== null) {
-	$this->metaTagContainer->image = $mainImage->getImageUrl(\common\interfaces\ImageProvider::FORMAT_MEDIUM);
+	$this->metaTagContainer->image = $mainImage->getImageUrl(ImageProvider::FORMAT_MEDIUM);
 }
 ?>
 
 <?= $this->render('//blocks/socials') ?>
 
 <div class="blog-post-content">
-	<?= PostOutHelper::wrapContentImages($post->content) ?>
+	<?= PostOutHelper::wrapContentImages($post->content, [ImageProvider::FORMAT_MEDIUM]) ?>
 </div>
 
 <?= $commentWidget->run() ?>

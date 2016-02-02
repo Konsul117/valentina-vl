@@ -1,7 +1,7 @@
 <?php
 use common\base\View;
-use common\interfaces\ImageProvider;
-use common\models\Image;
+use common\modules\image\models\ImageProvider;
+use common\modules\image\models\Image;
 use frontend\modules\blogFront\widgets\PostsWidget;
 use yii\helpers\Html;
 

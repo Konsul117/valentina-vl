@@ -4,7 +4,7 @@ namespace common\modules\blog\models;
 
 use common\components\behaviors\TimestampUTCBehavior;
 use common\models\Entity;
-use common\models\Image;
+use common\modules\image\models\Image;
 use yii\db\ActiveRecord;
 
 /**

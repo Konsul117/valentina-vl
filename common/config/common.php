@@ -1,8 +1,6 @@
 <?php
 
-use common\components\ImageThumbCreator;
 use common\components\ModuleManager;
-use common\interfaces\ImageProvider;
 
 return [
 	'bootstrap'  => [
@@ -61,24 +59,6 @@ return [
 		],
 		'moduleManager'     => [
 			'class' => ModuleManager::class,
-		],
-		'imageThumbCreator' => [
-			'class'       => ImageThumbCreator::class,
-			'thumbsSizes' => [
-				ImageProvider::FORMAT_THUMB  => [
-					'width'  => 90,
-					'height' => 90,
-					'crop'   => true,
-				],
-				ImageProvider::FORMAT_MEDIUM => [
-					'width'  => 240,
-					'height' => 240,
-				],
-				ImageProvider::FORMAT_FULL   => [
-					'width'  => 1000,
-					'height' => 1000,
-				],
-			],
 		],
 	],
 	'params'     => [

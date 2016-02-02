@@ -41,6 +41,9 @@ AppAsset::register($this);
 					['label' => 'Бисер', 'url' => ['/blog/blog/category/?category_url=biser']],
 					['label' => 'Не бисер', 'url' => ['/blog/blog/category/?category_url=not_biser']],
 					['label' => 'Страницы', 'url' => ['/pageBackend/page/index']],
+					['label' => 'Настрйки', 'items' => [
+						['label' => 'Водяной знак', 'url' => ['/image/watermark/index']],
+					]],
 					['label' => 'Главная', 'url' => ['/']],
 			],
 	]);

@@ -1,5 +1,6 @@
 <?php
 use common\base\View;
+use common\modules\image\models\ImageProvider;
 use common\modules\page\models\Page;
 use frontend\modules\blogFront\components\PostOutHelper;
 
@@ -13,8 +14,8 @@ $this->metaTagContainer->title = $page->title;
 $mainImage = $page->mainImage;
 
 if ($mainImage !== null) {
-	$this->metaTagContainer->image = $mainImage->getImageUrl(\common\interfaces\ImageProvider::FORMAT_MEDIUM);
+	$this->metaTagContainer->image = $mainImage->getImageUrl(ImageProvider::FORMAT_MEDIUM);
 }
 ?>
 
-<?= PostOutHelper::wrapContentImages($page->content) ?>
+<?= PostOutHelper::wrapContentImages($page->content, [ImageProvider::FORMAT_MEDIUM]) ?>
