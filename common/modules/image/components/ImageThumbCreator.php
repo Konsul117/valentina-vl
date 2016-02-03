@@ -58,11 +58,12 @@ class ImageThumbCreator extends Component {
 	 *
 	 * @param string $imageIdent идентификатор изображения
 	 * @param string $format     формат изображения @see ImageProvider
+	 * @param bool $imageIdent   Игнорировать случай, когда оригинал изображения отсутствует
 	 *
 	 * @throws Exception
 	 * @throws ImageException
 	 */
-	public function touchThumb($imageIdent, $format) {
+	public function touchThumb($imageIdent, $format, $ignoreOnAbsent = false) {
 		$resizedFilename = $this->getResizedFilename($imageIdent, $format);
 		try {
 			$resizedFilePath = $this->getResizedPath() . DIRECTORY_SEPARATOR . $resizedFilename;
@@ -81,7 +82,12 @@ class ImageThumbCreator extends Component {
 			}
 
 			if (!file_exists($originalFilePath)) {
-				throw new ImageException('Изображение отсутствует');
+				if (!$ignoreOnAbsent) {
+					return;
+				}
+				else {
+					throw new ImageException('Изображение отсутствует');
+				}
 			}
 
 			if (!isset($this->thumbsSizes[$format])) {

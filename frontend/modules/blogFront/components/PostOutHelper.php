@@ -58,7 +58,7 @@ class PostOutHelper {
 				//вызываем получение среднего тамба для проверки наличия
 
 				foreach ($checkFormats as $format) {
-					$imageModule->imageThumbCreator->touchThumb($imageId, $format);
+					$imageModule->imageThumbCreator->touchThumb($imageId, $format, true);
 				}
 			}
 		}
