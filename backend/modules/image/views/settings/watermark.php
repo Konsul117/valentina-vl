@@ -4,7 +4,7 @@ use yii\helpers\Html;
 
 /** @var View $this */
 /** @var bool $watermarkExists */
-$title = 'Редактирование водяного знака';
+$title       = 'Редактирование водяного знака';
 $this->title = $title;
 ?>
 
@@ -21,6 +21,10 @@ $this->title = $title;
 <?= Html::beginForm('', 'post', ['enctype' => 'multipart/form-data']) ?>
 
 <div class="form-group">
+	<div class="alert alert-info">
+		Необходимо загружать только png-файл
+	</div>
+
 	<div class="btn btn-default btn-file">
 		Выбрать файл
 		<?= Html::fileInput('watermark', null, [
