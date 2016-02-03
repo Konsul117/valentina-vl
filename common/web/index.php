@@ -6,8 +6,6 @@ $repository = dirname(dirname(__DIR__));
 
 defined('YII_ENV') or define('YII_ENV', file_exists($repository . '/.dev') ? 'dev' : 'prod');
 
-define('YII_DEBUG', true);
-
 defined('YII_DEBUG') or define('YII_DEBUG', YII_ENV === 'dev' || ((@$_COOKIE['profiler'] === 'yes') && in_array($_SERVER['REMOTE_ADDR'], ['127.0.0.1'], true)));
 
 require($repository . '/vendor/autoload.php');
