@@ -81,7 +81,7 @@ class ImageThumbCreator extends Component {
 				throw new ImageException('Исключение при получении пути изображения: ' . $e->getMessage(), 0, $e);
 			}
 
-			if ($this->checkOriginImageExists($imageIdent)) {
+			if (!$this->checkOriginImageExists($imageIdent)) {
 				throw new ImageException('Изображение отсутствует');
 			}
 
