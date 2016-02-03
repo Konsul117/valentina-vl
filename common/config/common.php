@@ -5,7 +5,6 @@ use common\components\ModuleManager;
 return [
 	'bootstrap'  => [
 		'log',
-		'debug',
 		'moduleManager',
 	],
 	'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
