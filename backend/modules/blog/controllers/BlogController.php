@@ -187,7 +187,14 @@ class BlogController extends BackendController {
 			throw new NotFoundHttpException('Запись блога не найдена');
 		}
 
-		$model->delete();
+		$result = $model->delete();
+
+		if ($result) {
+			Yii::$app->session->addFlash('success', 'Пост успешно удалён');
+		}
+		else {
+			Yii::$app->session->addFlash('error', 'Ошибка при удалении поста');
+		}
 
 		return $this->redirect(['/blog/blog/category/', 'category_url' => $model->category->title_url]);
 	}

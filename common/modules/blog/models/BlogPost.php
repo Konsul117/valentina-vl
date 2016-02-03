@@ -4,6 +4,7 @@ namespace common\modules\blog\models;
 
 use common\components\behaviors\TimestampUTCBehavior;
 use common\models\Entity;
+use common\modules\comment\behaviors\CommentBehavior;
 use common\modules\image\models\Image;
 use yii\db\ActiveRecord;
 
@@ -67,14 +68,7 @@ class BlogPost extends ActiveRecord {
 
 	/** Отношения к тегам */
 	const REL_TAGS_MODELS = 'TagsModels';
-	const REL_MAIN_IMAGE = 'mainImage';
-
-	/**
-	 * @return int
-	 */
-	public static function getEntityId() {
-		return Entity::ENTITY_BLOG_POST_ID;
-	}
+	const REL_MAIN_IMAGE  = 'mainImage';
 
 	/**
 	 * @inheritdoc
@@ -85,6 +79,10 @@ class BlogPost extends ActiveRecord {
 				'class'              => TimestampUTCBehavior::class,
 				'createdAtAttribute' => static::ATTR_INSERT_STAMP,
 				'updatedAtAttribute' => static::ATTR_UPDATE_STAMP,
+			],
+			[
+				'class'    => CommentBehavior::class,
+				'entityId' => $this->getEntityId(),
 			],
 		];
 	}
@@ -107,6 +105,13 @@ class BlogPost extends ActiveRecord {
 		];
 	}
 
+	/**
+	 * @return int
+	 */
+	public static function getEntityId() {
+		return Entity::ENTITY_BLOG_POST_ID;
+	}
+
 	public function getCategory() {
 		return $this->hasOne(BlogCategory::class, [BlogCategory::ATTR_ID => static::ATTR_CATEGORY_ID]);
 	}
@@ -126,7 +131,7 @@ class BlogPost extends ActiveRecord {
 		return $this->hasOne(Image::class, [Image::ATTR_RELATED_ENTITY_ITEM_ID => static::ATTR_ID])
 			->andWhere([
 				Image::ATTR_RELATED_ENTITY_ID => Entity::ENTITY_BLOG_POST_ID,
-				Image::ATTR_IS_MAIN => true,
+				Image::ATTR_IS_MAIN           => true,
 			]);
 	}
 
