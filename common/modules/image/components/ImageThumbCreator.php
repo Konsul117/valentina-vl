@@ -63,7 +63,7 @@ class ImageThumbCreator extends Component {
 	 * @throws Exception
 	 * @throws ImageException
 	 */
-	public function touchThumb($imageIdent, $format, $ignoreOnAbsent = false) {
+	public function touchThumb($imageIdent, $format) {
 		$resizedFilename = $this->getResizedFilename($imageIdent, $format);
 		try {
 			$resizedFilePath = $this->getResizedPath() . DIRECTORY_SEPARATOR . $resizedFilename;
@@ -75,19 +75,14 @@ class ImageThumbCreator extends Component {
 
 		if (!file_exists($resizedFilePath)) {
 			try {
-				$originalFilePath = Yii::getAlias('@upload_images_path') . DIRECTORY_SEPARATOR . $imageIdent . '.jpg';
+				$originalFilePath = $this->getOriginalFilePath($imageIdent);
 			}
 			catch (InvalidParamException $e) {
 				throw new ImageException('Исключение при получении пути изображения: ' . $e->getMessage(), 0, $e);
 			}
 
-			if (!file_exists($originalFilePath)) {
-				if (!$ignoreOnAbsent) {
-					return;
-				}
-				else {
-					throw new ImageException('Изображение отсутствует');
-				}
+			if ($this->checkOriginImageExists($imageIdent)) {
+				throw new ImageException('Изображение отсутствует');
 			}
 
 			if (!isset($this->thumbsSizes[$format])) {
@@ -157,6 +152,30 @@ class ImageThumbCreator extends Component {
 		}
 
 		return $path;
+	}
+
+	/**
+	 * Получить путь к файлу оригинала изображения
+	 *
+	 * @param $imageIdent
+	 *
+	 * @return string
+	 */
+	protected function getOriginalFilePath($imageIdent) {
+		return Yii::getAlias('@upload_images_path') . DIRECTORY_SEPARATOR . $imageIdent . '.jpg';
+	}
+
+	/**
+	 * Проверка существует ли оригинальное изображение
+	 *
+	 * @param $imageIdent
+	 *
+	 * @return bool
+	 */
+	public function checkOriginImageExists($imageIdent) {
+		$filePath = $this->getOriginalFilePath($imageIdent);
+
+		return file_exists($filePath);
 	}
 
 	/**
