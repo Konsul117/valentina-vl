@@ -18,7 +18,7 @@ class EditorAsset extends AssetBundle {
 	];
 
 	public $depends = [
-		CKEditorAsset::class,
+		TinyMCERus::class,
 		DropzoneAsset::class,
 	];
 

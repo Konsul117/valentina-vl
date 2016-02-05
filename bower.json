@@ -1,23 +1,24 @@
 {
-  "name": "valentina-vl.ru",
-  "authors": [
-    "Konsul117"
-  ],
-  "description": "",
-  "main": "",
-  "moduleType": [],
-  "license": "MIT",
-  "homepage": "",
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "vendor/bower",
-    "test",
-    "tests"
-  ],
-  "dependencies": {
-    "ckeditor": "~4.5.6",
-    "dropzone": "~4.2.0"
-  }
+	"name": "valentina-vl.ru",
+	"authors": [
+		"Konsul117"
+	],
+	"description": "",
+	"main": "",
+	"moduleType": [],
+	"license": "MIT",
+	"homepage": "",
+	"ignore": [
+		"**/.*",
+		"node_modules",
+		"bower_components",
+		"vendor/bower",
+		"test",
+		"tests"
+	],
+	"dependencies": {
+		"tinymce": '~4.3.3',
+		"ivan-chkv.tinymce-i18n": '~4.0.1'
+		"dropzone": "~4.2.0"
+	}
 }

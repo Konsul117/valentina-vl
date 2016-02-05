@@ -32,27 +32,58 @@ $textareaId = 'textarea' . $widget->contentAttribute;
 	</div>
 <?php endif ?>
 
-<?php $this->registerJs('CKEDITOR.config.extraPlugins = \'justify\';') ?>
-
-<?php $this->registerJs('CKEDITOR.replace(\'' . $textareaId . '\',{toolbar :
-		[
-			{ name: \'document\', items : [ \'NewPage\',\'Preview\' ] },
-		{ name: \'clipboard\', items : [ \'Cut\',\'Copy\',\'Paste\',\'PasteText\',\'PasteFromWord\',\'-\',\'Undo\',\'Redo\' ] },
-		{ name: \'editing\', items : [ \'Find\',\'Replace\',\'-\',\'SelectAll\',\'-\',\'Scayt\' ] },
-		{ name: \'insert\', items : [ \'Image\',\'Flash\',\'Table\',\'HorizontalRule\',\'Smiley\',\'SpecialChar\',\'PageBreak\'
-                 ,\'Iframe\' ] },
-                \'/\',
-		{ name: \'styles\', items : [ \'Styles\',\'Format\' ] },
-		{ name: \'basicstyles\', items : [ \'Bold\',\'Italic\',\'Strike\',\'-\',\'RemoveFormat\' ] },
-		{ name: \'paragraph\', items : [ \'NumberedList\',\'BulletedList\',\'-\',\'Outdent\',\'Indent\',\'-\',\'Blockquote\',\'JustifyLeft\',\'JustifyCenter\',\'JustifyRight\', \'JustifyBlock\' ] },
-		{ name: \'links\', items : [ \'Link\',\'Unlink\',\'Anchor\' ] },
-		{ name: \'tools\', items : [ \'Maximize\',\'-\',\'About\' ] }
-		],
-		allowedContent: true
-		});') ?>
+<?php $related_entity_item_id = $widget->model->{$widget->identAttribute};
+$this->registerJs(
+		'var initUpload = function($editor) {
+		$editor.uploadImage({
+	editor: tinyMCE.get(\'' . $textareaId . '\'),
+	showButtonId: \'imageUploadButton\',
+	uploadUrl: "' . Url::to(['/editor/upload/upload-image/']) . '",
+	previewPaneId: "uploadedPreviewPane",
+	params: {
+		' . ($related_entity_item_id !== null ? ('related_entity_item_id: ' . $related_entity_item_id) : '') . '
+	},
+	style_formats: [
+    {
+        title: \'Image Left\',
+        selector: \'img\',
+        styles: {
+            \'float\': \'left\',
+            \'margin\': \'0 10px 0 10px\'
+        }
+     },
+     {
+         title: \'Image Right\',
+         selector: \'img\',
+         styles: {
+             \'float\': \'right\',
+             \'margin\': \'0 0 10px 10px\'
+         }
+     }
+]
+	});};
+tinymce.init({
+selector: \'#' . $textareaId . '\',
+' . ($widget->uploadImages ?
+				'init_instance_callback: function() {
+initUpload($(\'#uploadModal_' . $textareaId . '\'));
+},' : '')
+		. 'height: 200,
+//language:"ru",
+plugins: [
+    \'advlist autolink lists link image charmap print preview anchor\',
+    \'searchreplace visualblocks code fullscreen\',
+    \'insertdatetime media table contextmenu paste code\'
+  ],
+  toolbar: \'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image\',
+  content_css: [
+    \'//fast.fonts.net/cssapi/e6dc9b99-64fe-4292-ad98-6974f93cd2a2.css\',
+    \'//www.tinymce.com/css/codepen.min.css\'
+  ]
+});') ?>
 
 <?php if ($widget->uploadImages): ?>
-	<div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal fade upload-modal" id="uploadModal_<?= $textareaId ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -78,17 +109,4 @@ $textareaId = 'textarea' . $widget->contentAttribute;
 	<div class="form-group">
 		<?= Html::button('Загрузка', ['id' => 'imageUploadButton', 'class' => 'btn btn-primary']) ?>
 	</div>
-
-	<?php
-	$related_entity_item_id = $widget->model->{$widget->identAttribute};
-	$this->registerJs('$(\'#uploadModal\').uploadImage({
-	editor: CKEDITOR.instances.' . $textareaId . ',
-	showButtonId: \'imageUploadButton\',
-	uploadUrl: "' . Url::to(['/editor/upload/upload-image/']) . '",
-	previewPaneId: "uploadedPreviewPane",
-	params: {
-		' . ($related_entity_item_id !== null ? ('related_entity_item_id: ' . $related_entity_item_id) : '') . '
-	}
-	})');
-	?>
 <?php endif ?>

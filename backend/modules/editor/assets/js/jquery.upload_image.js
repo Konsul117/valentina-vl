@@ -31,7 +31,7 @@
 			}
 
 			if (settings.uploadUrl !== null) {
-				var uploadDropzone = new Dropzone("#uploadModal #uploadDropzone", {
+				new Dropzone('#' + $modal.attr('id') + ' .dropzone', {
 					url:               settings.uploadUrl,
 					previewsContainer: false,
 					params:            settings.params,
@@ -131,9 +131,7 @@
 
 				if ($img.length > 0) {
 					var insertHtml = '<img src="'+$img.data('medium-url')+'" data-image-id="'+$img.data('image-id')+'"/>';
-
-					var insetElement = CKEDITOR.dom.element.createFromHtml(insertHtml, settings.editor.document);
-					settings.editor.insertElement(insetElement);
+					settings.editor.insertContent(insertHtml);
 				}
 			}
 		}

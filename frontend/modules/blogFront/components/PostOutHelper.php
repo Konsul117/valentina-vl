@@ -52,7 +52,11 @@ class PostOutHelper {
 			$a->setAttribute('rel', 'img_group');
 
 			$img = $imgEl->ownerDocument->createElement('img');
-			$img->setAttribute('src', $imgEl->getAttribute('src'));
+
+			foreach($imgEl->attributes as $attr) {
+				$img->setAttribute((string)$attr->name, (string)$attr->value);
+			}
+
 			$a->appendChild($img);
 
 			//и заменяем элементы
