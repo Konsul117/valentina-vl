@@ -17,7 +17,7 @@
 		"tests"
 	],
 	"dependencies": {
-		"tinymce": "'~4.3.3",
+		"tinymce": "~4.3.3",
 		"ivan-chkv.tinymce-i18n": "~4.0.1",
 		"dropzone": "~4.2.0"
 	}
