@@ -20,7 +20,7 @@
 
 			a {
 				&:link, &:active, &:visited, &:hover {
-					color:     $color-breadcrumbs;
+					color: $color-breadcrumbs;
 				}
 			}
 			display:   inline-block;
@@ -32,5 +32,9 @@
 				font-weight: bold;
 			}
 		}
+	}
+
+	img {
+		margin: 1em;
 	}
 }

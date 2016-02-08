@@ -42,25 +42,7 @@ $this->registerJs(
 	previewPaneId: "uploadedPreviewPane",
 	params: {
 		' . ($related_entity_item_id !== null ? ('related_entity_item_id: ' . $related_entity_item_id) : '') . '
-	},
-	style_formats: [
-    {
-        title: \'Image Left\',
-        selector: \'img\',
-        styles: {
-            \'float\': \'left\',
-            \'margin\': \'0 10px 0 10px\'
-        }
-     },
-     {
-         title: \'Image Right\',
-         selector: \'img\',
-         styles: {
-             \'float\': \'right\',
-             \'margin\': \'0 0 10px 10px\'
-         }
-     }
-]
+	}
 	});};
 tinymce.init({
 selector: \'#' . $textareaId . '\',
@@ -69,7 +51,6 @@ selector: \'#' . $textareaId . '\',
 initUpload($(\'#uploadModal_' . $textareaId . '\'));
 },' : '')
 		. 'height: 200,
-//language:"ru",
 plugins: [
     \'advlist autolink lists link image charmap print preview anchor\',
     \'searchreplace visualblocks code fullscreen\',
@@ -79,7 +60,10 @@ plugins: [
   content_css: [
     \'//fast.fonts.net/cssapi/e6dc9b99-64fe-4292-ad98-6974f93cd2a2.css\',
     \'//www.tinymce.com/css/codepen.min.css\'
-  ]
+    ,\'' . $this->assetBundles[\backend\modules\editor\assets\TinyMCEInnerAsset::class]->baseUrl . '/css/editor_inner.css\'
+  ],
+
+	body_class: "mceContentBody"
 });') ?>
 
 <?php if ($widget->uploadImages): ?>

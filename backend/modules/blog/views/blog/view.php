@@ -7,6 +7,8 @@ use yii\web\View;
 /** @var BlogPostForm $model */
 
 $this->title = $model->title;
+
+backend\modules\editor\assets\EditorViewAsset::register($this);
 ?>
 
 <h1><?= Html::encode($model->title) ?></h1>

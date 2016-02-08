@@ -18,6 +18,7 @@ class TinyMCERus extends AssetBundle {
 
 	public $depends = [
 		TinyMCEAsset::class,
+		TinyMCEInnerAsset::class,
 	];
 
 }
