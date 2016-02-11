@@ -17,6 +17,7 @@ use yii\db\ActiveRecord;
  * @property int      $related_entity_id          Идентификатор сущности, с которой связано изображение
  * @property int      $related_entity_item_id     Идентификатр объекта сущности, с которой связано изображение
  * @property bool     $is_main                    Главная картинка
+ * @property bool     $is_need_watermark          Нужен водяной знак
  * @property string   $insert_stamp               Дата-время создания изображения
  *
  * Отношения
@@ -36,6 +37,9 @@ class Image extends ActiveRecord implements ImageProvider {
 	/** Главная картинка */
 	const ATTR_IS_MAIN = 'is_main';
 
+	/** Нужен водяной знак */
+	const ATTR_IS_NEED_WATERMARK = 'is_need_watermark';
+
 	/** Дата-время создания изображения */
 	const ATTR_INSERT_STAMP = 'insert_stamp';
 	/** Отношение к Post */
@@ -54,6 +58,12 @@ class Image extends ActiveRecord implements ImageProvider {
 		];
 	}
 
+	public function rules() {
+		return [
+			[[static::ATTR_IS_NEED_WATERMARK], 'default', 'value' => true],
+		];
+	}
+
 	/**
 	 * @inheritdoc
 	 */
@@ -66,15 +76,24 @@ class Image extends ActiveRecord implements ImageProvider {
 			unlink($imageFile);
 		}
 
-		/** @var \common\modules\image\Image $imageModule */
-		$imageModule = Yii::$app->getModule('image');;
-
 		try {
-			$imageModule->imageThumbCreator->clearThumbs($this->id);
+			$this->clearThumbs();
 		}
 		catch (ImageException $e) {
 			throw new Exception('Не удалось вычистить тамбы изображения: ' . $e->getMessage(), 0, $e);
 		}
+	}
+
+	/**
+	 * Очистить тамбы изображения
+	 *
+	 * @throws ImageException
+	 */
+	public function clearThumbs() {
+		/** @var \common\modules\image\Image $imageModule */
+		$imageModule = Yii::$app->getModule('image');
+
+		$imageModule->imageThumbCreator->clearThumbs($this->id);
 	}
 
 	/**
@@ -92,7 +111,7 @@ class Image extends ActiveRecord implements ImageProvider {
 		/** @var \common\modules\image\Image $imageModule */
 		$imageModule = Yii::$app->getModule('image');
 
-		return $imageModule->imageThumbCreator->getImageThumbUrl($this->id, $format);
+		return $imageModule->imageThumbCreator->getImageThumbUrl($this->id, $format, $this->is_need_watermark);
 	}
 
 	/**

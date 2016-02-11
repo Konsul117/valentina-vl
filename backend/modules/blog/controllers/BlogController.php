@@ -6,7 +6,9 @@ use backend\base\BackendController;
 use backend\modules\blog\models\BlogPostForm;
 use backend\modules\blog\models\BlogPostSearch;
 use common\modules\blog\models\BlogCategory;
+use common\modules\image\components\ImageThumbCreator;
 use Yii;
+use yii\caching\TagDependency;
 use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
@@ -137,6 +139,25 @@ class BlogController extends BackendController {
 
 		if (!$saveResult) {
 			$errors[] = 'Ошибка при сохранении записи';
+		}
+
+		//обновляем флаг "Watermark"
+		$needWatermarkItems = Yii::$app->request->post('needWatermark');
+
+		if (is_array($needWatermarkItems)) {
+			$images = $model->images;
+
+			foreach($images as $image) {
+				if (isset($needWatermarkItems[$image->id])) {
+					if ((bool) $image->is_need_watermark !== (bool) $needWatermarkItems[$image->id]) {
+						$image->is_need_watermark = (bool) $needWatermarkItems[$image->id];
+						$image->save();
+						$image->clearThumbs();
+					}
+				}
+			}
+
+			TagDependency::invalidate(Yii::$app->cache, ImageThumbCreator::class);
 		}
 
 		return $errors;

@@ -46,7 +46,7 @@
 			}
 
 			if ($previewPane.length > 0) {
-				$previewPane.on('click', '.image-item', methods.imageItemAddToEditor);
+				$previewPane.on('click', '.image-item img', methods.imageItemAddToEditor);
 			}
 
 		},
@@ -72,6 +72,8 @@
 			if ($previewPane.length > 0) {
 				$previewPane.append('<div class="image-item">'
 					+'<img src="'+response.data.urls.thumb+'" data-medium-url="'+response.data.urls.medium+'" data-image-id="'+response.data.image_id+'"/>'
+					+'<input type="hidden" name="needWatermark[' + response.data.image_id + ']" value="0">'
+					+'<label><input type="checkbox" name="needWatermark[' + response.data.image_id + ']" value="1" checked=""> Watermark</label>'
 					+'</div>');
 
 				var $form = $previewPane.closest('form');
@@ -127,7 +129,7 @@
 		imageItemAddToEditor: function() {
 			if (settings.editor !== null) {
 
-				var $img = $('img', $(this));
+				var $img = $(this);
 
 				if ($img.length > 0) {
 					var insertHtml = '<img src="'+$img.data('medium-url')+'" data-image-id="'+$img.data('image-id')+'"/>';

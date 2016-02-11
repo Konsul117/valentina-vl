@@ -47,7 +47,12 @@ class PostOutHelper {
 			//генерируем новые элементы a и img
 			$a = $imgEl->ownerDocument->createElement('a');
 
-			$a->setAttribute('href', $imageModule->imageThumbCreator->getImageThumbUrl($imageId, ImageProvider::FORMAT_FULL));
+			$a->setAttribute('href', $imageModule->imageThumbCreator->getImageThumbUrl(
+				$imageId,
+				ImageProvider::FORMAT_FULL,
+				$imageModule->imageThumbCreator->getImageNeedWatermark($imageId)
+			));
+
 			$a->setAttribute('data-' . static::LINK_LIGHTBOX_PARAM, '1');
 			$a->setAttribute('rel', 'img_group');
 
@@ -67,7 +72,7 @@ class PostOutHelper {
 				//вызываем получение среднего тамба для проверки наличия
 
 				foreach ($checkFormats as $format) {
-					$imageModule->imageThumbCreator->touchThumb($imageId, $format);
+					$imageModule->imageThumbCreator->touchThumb($imageId, $format, $imageModule->imageThumbCreator->getImageNeedWatermark($imageId));
 				}
 			}
 		}

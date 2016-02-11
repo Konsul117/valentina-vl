@@ -4,12 +4,14 @@ namespace common\modules\image\components;;
 
 use common\exceptions\ImageException;
 use common\modules\config\Config;
+use common\modules\image\models\Image;
 use PHPImageWorkshop\Exception\ImageWorkshopBaseException;
 use PHPImageWorkshop\ImageWorkshop;
 use Yii;
 use yii\base\Component;
 use yii\base\Exception;
 use yii\base\InvalidParamException;
+use yii\caching\TagDependency;
 use yii\helpers\Url;
 
 /**
@@ -24,16 +26,22 @@ class ImageThumbCreator extends Component {
 	 */
 	public $thumbsSizes;
 
+	/** @var array Кэш флагов для рантайма */
+	protected $needWatermarkCache = [];
+
 	/**
 	 * Получить url для тамба изображения
 	 *
-	 * @param string $imageIdent идентификатор изображения
-	 * @param string $format     формат изображения @see ImageProvider
+	 * @param string $imageIdent    идентификатор изображения
+	 * @param string $format        формат изображения @see ImageProvider
+	 * @param bool   $needWatermark Нужно накладывать водяной знак (если он требуется по формату)
+	 *
 	 * @return string URL изображения
+	 *
 	 * @throws ImageException
 	 */
-	public function getImageThumbUrl($imageIdent, $format) {
-		$this->touchThumb($imageIdent, $format);
+	public function getImageThumbUrl($imageIdent, $format, $needWatermark) {
+		$this->touchThumb($imageIdent, $format, $needWatermark);
 
 		try {
 			$url = Yii::$app->params['frontendDomain'] . '/';
@@ -58,12 +66,12 @@ class ImageThumbCreator extends Component {
 	 *
 	 * @param string $imageIdent идентификатор изображения
 	 * @param string $format     формат изображения @see ImageProvider
-	 * @param bool $imageIdent   Игнорировать случай, когда оригинал изображения отсутствует
+	 * @param bool   $needWatermark Нужно накладывать водяной знак (если он требуется по формату)
 	 *
 	 * @throws Exception
 	 * @throws ImageException
 	 */
-	public function touchThumb($imageIdent, $format) {
+	public function touchThumb($imageIdent, $format, $needWatermark) {
 		$resizedFilename = $this->getResizedFilename($imageIdent, $format);
 		try {
 			$resizedFilePath = $this->getResizedPath() . DIRECTORY_SEPARATOR . $resizedFilename;
@@ -107,7 +115,7 @@ class ImageThumbCreator extends Component {
 					$imageLayer->resizeToFit($sizeParams['width'], $sizeParams['height'], true);
 				}
 
-				if (isset($sizeParams['watermark']) && $sizeParams['watermark']) {
+				if (isset($sizeParams['watermark']) && $sizeParams['watermark'] && $needWatermark) {
 
 					$watermarkPath = $this->getWatermarkPath();
 
@@ -211,5 +219,32 @@ class ImageThumbCreator extends Component {
 				throw new ImageException('Не удалось удалить тамб фото - нет доступа: ' . $path);
 			}
 		}
+	}
+
+	public function getImageNeedWatermark($imageId) {
+		if (isset($this->needWatermarkCache[$imageId])) {
+			return (bool) $this->needWatermarkCache[$imageId];
+		}
+
+		$cacheKey = __METHOD__ . '-id=' . $imageId;
+
+		$result = Yii::$app->cache->get($cacheKey);
+
+		if ($result === false) {
+			/** @var Image $image */
+			$image = Image::findOne($imageId);
+
+			if ($image !== null) {
+				$result = (int) $image->is_need_watermark;
+			}
+
+			Yii::$app->cache->set($cacheKey, $result, 3600 * 6, new TagDependency(['tags' => [
+				static::class,
+			]]));
+		}
+
+		$this->needWatermarkCache[$imageId] = $result;
+
+		return (bool) $result;
 	}
 }

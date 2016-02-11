@@ -20,10 +20,14 @@ $textareaId = 'textarea' . $widget->contentAttribute;
 		<?php if (!empty($widget->model->{$widget->imagesAttribute})): ?>
 			<?php foreach ($widget->model->{$widget->imagesAttribute} as $image): ?>
 				<div class="image-item">
-					<?php /** @var ImageProvider $image */ ?>
+					<?php /** @var \common\modules\image\models\Image $image */ ?>
 					<?= Html::img($image->getImageUrl(ImageProvider::FORMAT_THUMB), [
 							'data-medium-url' => $image->getImageUrl(ImageProvider::FORMAT_MEDIUM),
 							'data-image-id'   => $image->getIdent(),
+					]) ?>
+					<?= Html::checkbox('needWatermark[' . $image->getIdent() . ']', $image->is_need_watermark, [
+							'uncheck' => 0,
+							'label'   => 'Watermark',
 					]) ?>
 				</div>
 			<?php endforeach ?>
@@ -89,6 +93,9 @@ plugins: [
 			</div>
 		</div>
 	</div>
+
+	<br />
+	<br />
 
 	<div class="form-group">
 		<?= Html::button('Загрузка', ['id' => 'imageUploadButton', 'class' => 'btn btn-primary']) ?>
