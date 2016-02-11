@@ -1,14 +1,19 @@
 
-body {
+body.mce-content-body {
 	background-color: #000;
 	color:            #E4DFDF;
 }
 
-*, p {
+.mce-content-body *, .mce-content-body p {
 	font-family: Arial, Helvetica;
 	font-size:   16px;
 }
 
-img {
+.mce-content-body p {
+	margin:      1em 0;
+	line-height: 1.4em;
+}
+
+.mce-content-body img {
 	margin: 1em;
 }

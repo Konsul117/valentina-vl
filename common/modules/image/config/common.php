@@ -18,9 +18,9 @@ return [
 							'crop'   => true,
 						],
 						ImageProvider::FORMAT_MEDIUM => [
-							'width'  => 240,
-							'height' => 240,
-							//					'watermark' => true,
+							'width'     => 300,
+							'height'    => 300,
+							'watermark' => true,
 						],
 						ImageProvider::FORMAT_FULL   => [
 							'width'     => 1000,
