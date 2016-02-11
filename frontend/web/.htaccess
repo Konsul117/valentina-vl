@@ -9,9 +9,6 @@
 	# -- -- -- --
 
 	# -- Таких страниц нет, но логи постоянно пишутся, поэтому на уровне apache пока редиректим на 404
-	RewriteRule ^apple-touch-.*			- [R=404,L] # Иконки для устройств Apple
-	RewriteRule ^favicon\.ico$			- [R=404,L] # Иконка сайта
-	RewriteRule ^browserconfig\.xml$	- [R=404,L] # Настройки для отображения preview сайта на планшетах
 	RewriteRule ^wp-.*$					- [R=404,L] # Боты проверки wordpress
 	RewriteRule ^bitrix/.*$				- [R=404,L] # Боты проверки bitrix
 	# -- -- -- --
