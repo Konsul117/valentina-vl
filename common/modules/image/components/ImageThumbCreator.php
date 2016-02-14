@@ -5,6 +5,7 @@ namespace common\modules\image\components;;
 use common\exceptions\ImageException;
 use common\modules\config\Config;
 use common\modules\image\models\Image;
+use common\modules\image\models\ImageProvider;
 use PHPImageWorkshop\Exception\ImageWorkshopBaseException;
 use PHPImageWorkshop\ImageWorkshop;
 use Yii;
@@ -121,6 +122,15 @@ class ImageThumbCreator extends Component {
 
 					if ($watermarkPath !== null) {
 						$watermark = ImageWorkshop::initFromPath($watermarkPath);
+
+						if ($format !== ImageProvider::FORMAT_FULL) {
+							//если формат - не полный, то ресайзим вотермарк пропорционально полному размеру
+							$watermark->resizeToFit(
+								round(($sizeParams['width'] / $this->thumbsSizes[ImageProvider::FORMAT_FULL]['width']) * $watermark->getWidth()),
+								round(($sizeParams['height'] / $this->thumbsSizes[ImageProvider::FORMAT_FULL]['height']) * $watermark->getHeight()),
+								true
+							);
+						}
 						$imageLayer->addLayerOnTop($watermark, 0, 0, 'RB');
 					}
 				}

@@ -5,7 +5,9 @@ namespace backend\modules\pageBackend\controllers;
 use backend\base\BackendController;
 use backend\modules\pageBackend\models\PageForm;
 use backend\modules\pageBackend\models\PageSearch;
+use common\modules\image\components\ImageThumbCreator;
 use Yii;
+use yii\caching\TagDependency;
 use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
@@ -121,6 +123,26 @@ class PageController extends BackendController {
 
 		if (!$saveResult) {
 			$errors[] = 'Ошибка при сохранении записи';
+		}
+
+		//@todo: дублирование кода (см. BlogController) - исправить
+		//обновляем флаг "Watermark"
+		$needWatermarkItems = Yii::$app->request->post('needWatermark');
+
+		if (is_array($needWatermarkItems)) {
+			$images = $model->images;
+
+			foreach($images as $image) {
+				if (isset($needWatermarkItems[$image->id])) {
+					if ((bool) $image->is_need_watermark !== (bool) $needWatermarkItems[$image->id]) {
+						$image->is_need_watermark = (bool) $needWatermarkItems[$image->id];
+						$image->save();
+						$image->clearThumbs();
+					}
+				}
+			}
+
+			TagDependency::invalidate(Yii::$app->cache, ImageThumbCreator::class);
 		}
 
 		return $errors;

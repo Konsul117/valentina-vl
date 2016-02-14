@@ -2,6 +2,8 @@
 /** @var View $this */
 use backend\modules\blog\models\BlogPostForm;
 use backend\modules\editor\assets\EditorViewAsset;
+use common\modules\image\models\ImageProvider;
+use frontend\modules\blogFront\components\PostOutHelper;
 use yii\helpers\Html;
 use yii\web\View;
 
@@ -19,5 +21,5 @@ EditorViewAsset::register($this);
 </p>
 
 <div class="post-content">
-	<?= $model->content ?>
+	<?= PostOutHelper::wrapContentImages($model->content, [ImageProvider::FORMAT_MEDIUM]) ?>
 </div>
