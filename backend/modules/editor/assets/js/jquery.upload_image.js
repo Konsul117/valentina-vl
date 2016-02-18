@@ -177,7 +177,7 @@
 				var $img = $(this);
 
 				if ($img.length > 0) {
-					var insertHtml = '<img src="'+$img.data('medium-url')+'" data-image-id="'+$img.data('image-id')+'"/>';
+					var insertHtml = '<img style="float:left" src="'+$img.data('medium-url')+'" data-image-id="'+$img.data('image-id')+'"/>';
 					settings.editor.insertContent(insertHtml);
 				}
 			}
