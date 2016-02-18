@@ -18,16 +18,24 @@
 }
 
 #uploadedPreviewPane {
-	display: inline-block;
-	padding: 5px;
-	margin:  5px 0;
+	text-align: center;
+	display:    inline-block;
+	padding:    5px;
+	margin:     5px 0;
+	position:   fixed;
+	left:       0;
+	top:        0;
+	width:      120px;
+	max-width:  120px;
+	height:     100%;
+	overflow-y: auto;
 }
 
 #uploadedPreviewPane .image-item {
 	width:  90px;
 	height: 90px;
-	margin: 5px 10px 5px 0;
-	float:  left;
+	margin: 5px auto 30px;
+
 	cursor: pointer;
 }
 

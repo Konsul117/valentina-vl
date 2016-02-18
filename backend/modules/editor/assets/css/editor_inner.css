@@ -1,7 +1,6 @@
 
 body.mce-content-body {
-	background-color: #000;
-	color:            #E4DFDF;
+	color:            #000;
 }
 
 .mce-content-body *, .mce-content-body p {
@@ -10,7 +9,7 @@ body.mce-content-body {
 }
 
 .mce-content-body p {
-	margin:      1em 0;
+	margin:      0;
 	line-height: 1.4em;
 }
 

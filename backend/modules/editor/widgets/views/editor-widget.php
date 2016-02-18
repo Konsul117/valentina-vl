@@ -15,7 +15,9 @@ $textareaId = 'textarea' . $widget->contentAttribute;
 
 <?php if ($widget->uploadImages): ?>
 	<div id="uploadedPreviewPane" class="preview-pane">
-		<p>Загруженные изображения: </p>
+		<div class="form-group">
+			<?= Html::button('Загрузка', ['id' => 'imageUploadButton', 'class' => 'btn btn-primary']) ?>
+		</div>
 
 		<?php if (!empty($widget->model->{$widget->imagesAttribute})): ?>
 			<?php foreach ($widget->model->{$widget->imagesAttribute} as $image): ?>
@@ -96,8 +98,4 @@ plugins: [
 
 	<br />
 	<br />
-
-	<div class="form-group">
-		<?= Html::button('Загрузка', ['id' => 'imageUploadButton', 'class' => 'btn btn-primary']) ?>
-	</div>
 <?php endif ?>

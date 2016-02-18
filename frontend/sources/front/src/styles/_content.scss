@@ -1,6 +1,11 @@
 /** Содержимое страницы **/
 
 .content {
+
+	p {
+		margin: 0;
+	}
+
 	padding:    1px 1em;
 
 	@include respond-to(desktop) {
