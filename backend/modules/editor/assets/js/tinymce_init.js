@@ -8,7 +8,6 @@ function tinymce_init(textarea_id, inner_css) {
 				var $content = $('<div class="wrap">' + editor.getContent() + '</div>');
 
 				if ($('p', $content).length === 0) {
-					console.log('Добавляем <p>');
 					$content.append('<p></p>');
 
 					editor.setContent($content.html());
