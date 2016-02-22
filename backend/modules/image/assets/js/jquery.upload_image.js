@@ -193,23 +193,34 @@
 		imageItemAddToEditor: function($image) {
 
 			//селектбокс для селектора редактора
-			var editorsSelectbox = '<select id="editorId" class="form-control">';
+			var editorsRadiobuttons = '<ul class="list-unstyled">';
 
 			$.each(settings.editorsIds, function(key, editorId) {
-				editorsSelectbox += '<option value="' + editorId + '"' + (addImageModalOptions['editorId'] === editorId ? ' selected' : '') + '>'
-					+ $('#' + editorId).siblings('label').text()
-					+ '</option>';
+				if (addImageModalOptions['editorId'] === false) {
+					addImageModalOptions['editorId'] = editorId;
+				}
+
+				editorsRadiobuttons += '<li class="radio">'
+						+ '<label><input name="editorId" type="radio" value="' + editorId + '"' + (addImageModalOptions['editorId'] === editorId ? ' checked' : '') + '>'
+						+ $('#' + editorId).siblings('label').text() + '</label>'
+						+ '</li>';
 			});
-			editorsSelectbox += '</select>';
+			editorsRadiobuttons += '</ul>';
 
 			//селектбокс для селектора позиции
-			var positionSelectbox = '<select id="positionId" class="form-control">';
+			var positionRadiobuttons = '<ul class="list-unstyled">';
 
 			$.each(addImagePositions, function(positionId, title) {
-				positionSelectbox += '<option value="' + positionId + '"' + (addImageModalOptions['positionId'] === positionId ? ' selected' : '') + '>'
-					+ title + '</option>';
+				if (addImageModalOptions['positionId'] === false) {
+					addImageModalOptions['positionId'] = positionId;
+				}
+
+				positionRadiobuttons += '<li class="radio">'
+					+ '<label><input name="positionId" type="radio" value="' + positionId + '"' + (addImageModalOptions['positionId'] === positionId ? ' checked' : '') + '>'
+					+ title + '</label>'
+					+ '</li>';
 			});
-			positionSelectbox += '</select>';
+			positionRadiobuttons += '</ul>';
 
 			var modalHtml =
 				'<div class="modal fade add-image-modal" id="addImageModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">'
@@ -223,12 +234,12 @@
 
 								+ '<div class="form-group">'
 									+ '<label>Блок</label>'
-									+ editorsSelectbox
+									+ editorsRadiobuttons
 								+ '</div>'
 
 								+ '<div class="form-group">'
 									+ '<label>Размещение</label>'
-									+ positionSelectbox
+									+ positionRadiobuttons
 								+ '</div>'
 
 								+ '<div class="form-group">'
@@ -249,6 +260,11 @@
 
 			$addModal.modal();
 
+			$addModal.on('hidden.bs.modal', function() {
+				console.log('hidden');
+				$(this).remove();
+			});
+
 			$addModal.find('input[type=text]').keyup(function(event) {
 				if(event.keyCode==13) {
 					$addModal.find('button.btn-success').click();
@@ -256,8 +272,8 @@
 			});
 
 			$addModal.find('button.btn-success').click(function() {
-				var editorId = $addModal.find('#editorId').val();
-				var positionId = $addModal.find('#positionId').val();
+				var editorId = $addModal.find('input[name=editorId]:checked').val();
+				var positionId = $addModal.find('input[name=positionId]:checked').val();
 				var title = $addModal.find('#title').val();
 
 				addImageModalOptions['editorId'] = editorId;
