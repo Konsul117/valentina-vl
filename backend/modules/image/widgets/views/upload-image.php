@@ -13,7 +13,7 @@ use yii\helpers\Url;
 		previewPaneId: "uploadedPreviewPane",
 		editorsIds: ["' . implode('","', $widget->editorsIds) . '"],
 		params: {
-			related_entity_item_id: ' . $widget->relatedEntityItemId . '
+			related_entity_item_id: ' . (int) $widget->relatedEntityItemId . '
 		}
 	});') ?>
 

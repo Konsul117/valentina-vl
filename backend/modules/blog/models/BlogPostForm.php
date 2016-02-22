@@ -43,10 +43,13 @@ class BlogPostForm extends BlogPost {
 					'attributeTo'   => static::ATTR_TITLE_URL,
 				],
 				static::BEHAVIOR_IMAGE_BIND => [
-					'class'        => ImageBindBehavior::class,
-					'imagesField'  => static::REL_IMAGES,
-					'contentField' => static::ATTR_CONTENT,
-					'entityId'     => $this->getEntityId(),
+					'class'         => ImageBindBehavior::class,
+					'imagesField'   => static::REL_IMAGES,
+					'contentFields' => [
+						static::ATTR_SHORT_CONTENT,
+						static::ATTR_CONTENT,
+					],
+					'entityId'      => $this->getEntityId(),
 				],
 			]
 		);

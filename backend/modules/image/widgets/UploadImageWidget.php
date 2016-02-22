@@ -30,10 +30,6 @@ class UploadImageWidget extends Widget {
 			throw new InvalidConfigException('Не заданы идентификаторы редакторов');
 		}
 
-		if ($this->relatedEntityItemId === null) {
-			throw new InvalidConfigException('Не задан идентификатор связанной сущности');
-		}
-
 		return $this->render('upload-image', [
 			'widget' => $this,
 		]);

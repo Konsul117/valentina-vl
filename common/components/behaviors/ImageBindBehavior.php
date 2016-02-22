@@ -26,11 +26,11 @@ class ImageBindBehavior extends Behavior {
 	public $imagesField;
 
 	/**
-	 * Поле, по которому можно получить контент модели, в котором находятся ссылки на изображения
+	 * Поля, по которым можно получить контент модели, в котором находятся ссылки на изображения
 	 *
-	 * @var string
+	 * @var string[]
 	 */
-	public $contentField;
+	public $contentFields;
 
 	/**
 	 * Идентификатор типа сущности (@see Entity)
@@ -50,7 +50,7 @@ class ImageBindBehavior extends Behavior {
 			throw new InvalidConfigException('Не указан параметр imagesField');
 		}
 
-		if ($this->contentField === null) {
+		if ($this->contentFields === null) {
 			throw new InvalidConfigException('Не указан параметр imagesField');
 		}
 
@@ -88,19 +88,24 @@ class ImageBindBehavior extends Behavior {
 			return;
 		}
 
-		//парсим id изображений в теле поста
-		$doc = phpQuery::newDocumentHTML($model->{$this->contentField});
-
 		//массив спарсенных id изображений
 		$imagesIds = [];
 
-		foreach ($doc->find('img[data-image-id]') as $imgEl) {
-			$imageId = (int)$imgEl->getAttribute('data-image-id');
-			if (!$imageId) {
-				continue;
-			}
+		//парсим id изображений в теле поста
+		foreach($this->contentFields as $field) {
+			$doc = phpQuery::newDocumentHTML($model->{$field});
 
-			$imagesIds[] = $imageId;
+
+			foreach ($doc->find('img[data-image-id]') as $imgEl) {
+				$imageId = (int)$imgEl->getAttribute('data-image-id');
+				if (!$imageId) {
+					continue;
+				}
+
+				if (!in_array($imageId, $imagesIds)) {
+					$imagesIds[] = $imageId;
+				}
+			}
 		}
 
 		//проходим по привязанным изображениям

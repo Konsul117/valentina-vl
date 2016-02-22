@@ -308,11 +308,23 @@
 				$imagesBlock =  $content.find('div.image-block.' + posClass);
 
 				if ($imagesBlock.length === 0) {
-					$content.prepend('<div class="image-block ' + posClass + '"></div>');
+
+					if (position === 'right') {
+						$leftBlock = $content.find('div.image-block.format-left');
+						if ($leftBlock.length > 0) {
+							$leftBlock.after('<div class="image-block ' + posClass + '"></div>');
+						}
+						else {
+							$content.prepend('<div class="image-block ' + posClass + '"></div>');
+						}
+					}
+					else {
+						$content.prepend('<div class="image-block ' + posClass + '"></div>');
+					}
+
 					$imagesBlock = $content.find('.image-block.' + posClass);
 				}
 				$imagesBlock.append(methods.getAddImageHtml($image, title, true));
-
 			}
 
 			if ($content.find('p').length === 0) {
