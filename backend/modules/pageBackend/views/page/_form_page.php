@@ -1,5 +1,6 @@
 <?php
 use backend\modules\editor\Editor;
+use backend\modules\image\Image;
 use backend\modules\pageBackend\models\PageForm;
 use yii\helpers\Html;
 use yii\web\View;
@@ -32,7 +33,21 @@ use yii\widgets\ActiveForm;
 	/** @var Editor $editorModule */
 	$editorModule = Yii::$app->modules['editor']; ?>
 
-	<?= $editorModule->getEditorWidget($form, $model, PageForm::ATTR_ID, PageForm::ATTR_CONTENT, PageForm::REL_IMAGES, true)->run() ?>
+	<?= $editorModule->getEditorWidget($form, $model, 'text_' . PageForm::ATTR_CONTENT, PageForm::ATTR_CONTENT)->run() ?>
+
+	<?php
+	/** @var Image $imageModule */
+	$imageModule = Yii::$app->modules['image'];
+	?>
+
+	<?= $imageModule->getUploadImageWidget(
+			[
+					'text_' . PageForm::ATTR_CONTENT
+			],
+			$model->{PageForm::ATTR_ID}
+	)->run(); ?>
+
+	<?= $imageModule->getImagePanelWidget($model->images)->run() ?>
 
 	<?= $form->field($model, PageForm::ATTR_IS_PUBLISHED)->checkbox() ?>
 </div>

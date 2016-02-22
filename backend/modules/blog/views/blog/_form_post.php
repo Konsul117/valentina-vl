@@ -1,5 +1,7 @@
 <?php
 use backend\modules\blog\models\BlogPostForm;
+use backend\modules\editor\Editor;
+use backend\modules\image\Image;
 use yii\helpers\Html;
 use yii\web\View;
 use yii\widgets\ActiveForm;
@@ -30,12 +32,30 @@ use yii\widgets\ActiveForm;
 	<?= $form->field($model, BlogPostForm::ATTR_TITLE)->textInput(['maxlength' => 100]) ?>
 
 	<?php
-	/** @var \backend\modules\editor\Editor $editorModule */
+	/** @var Editor $editorModule */
 	$editorModule = Yii::$app->modules['editor']; ?>
 
-	<?= $editorModule->getEditorWidget($form, $model, BlogPostForm::ATTR_ID, BlogPostForm::ATTR_SHORT_CONTENT)->run() ?>
+	<?= $editorModule->getEditorWidget($form, $model, 'text_' . BlogPostForm::ATTR_SHORT_CONTENT, BlogPostForm::ATTR_SHORT_CONTENT)->run() ?>
 
-	<?= $editorModule->getEditorWidget($form, $model, BlogPostForm::ATTR_ID, BlogPostForm::ATTR_CONTENT, 'images', true)->run() ?>
+	<?= $editorModule->getEditorWidget($form, $model, 'text_' . BlogPostForm::ATTR_CONTENT, BlogPostForm::ATTR_CONTENT)->run() ?>
+
+	<?php
+	/** @var Image $imageModule */
+	$imageModule = Yii::$app->modules['image'];
+	?>
+
+	<?= $imageModule->getUploadImageWidget(
+			[
+				'text_' . BlogPostForm::ATTR_SHORT_CONTENT,
+				'text_' . BlogPostForm::ATTR_CONTENT
+			],
+			$model->{BlogPostForm::ATTR_ID}
+	)->run(); ?>
+
+	<?= $imageModule->getImagePanelWidget($model->images)->run() ?>
+
+	<br />
+	<br />
 
 	<?= $form->field($model, BlogPostForm::ATTR_IS_PUBLISHED)->checkbox() ?>
 </div>

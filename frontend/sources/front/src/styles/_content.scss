@@ -42,4 +42,39 @@
 	img {
 		margin: 1em;
 	}
+
+	.img-wrap {
+		text-align: center;
+
+		.img-title {
+			font-size: 0.8em;
+			clear:     both;
+		}
+	}
+
+	.image-block {
+		&.format-left {
+			float: left;
+			clear: left;
+
+			.img-wrap {
+				img {
+					float: left;
+					clear: left;
+				}
+			}
+		}
+
+		&.format-right {
+			float: right;
+			clear: right;
+
+			.img-wrap {
+				img {
+					float: right;
+					clear: right;
+				}
+			}
+		}
+	}
 }

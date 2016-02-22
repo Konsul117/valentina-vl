@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\modules\editor\assets;
+namespace backend\modules\image\assets;
 
 use yii\web\AssetBundle;
 use yii\web\JqueryAsset;

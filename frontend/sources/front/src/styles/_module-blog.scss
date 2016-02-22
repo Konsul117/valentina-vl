@@ -1,10 +1,13 @@
 /** Модуль "Блог" **/
 
-$header-photo-width:  90px;
+$header-photo-width: 90px;
 $header-photo-height: 90px;
 
 .blog-posts {
 	.post-item {
+		display: inline-block;
+		width:   100%;
+
 		.post-stamp {
 			font-size:  0.9em;
 			font-style: italic;
@@ -30,10 +33,10 @@ header {
 				overflow: hidden;
 				//само фото
 				.photo-item {
-					display:          inline-block;
-					width:            $header-photo-width;
-					height:           $header-photo-height;
-					margin:           0 1em;
+					display: inline-block;
+					width:   $header-photo-width;
+					height:  $header-photo-height;
+					margin:  0 1em;
 				}
 			}
 		}

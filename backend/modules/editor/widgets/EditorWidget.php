@@ -22,12 +22,8 @@ class EditorWidget extends Widget {
 	 */
 	public $model;
 
-	/**
-	 * Аттрибут идендификатора модели
-	 *
-	 * @var string
-	 */
-	public $identAttribute;
+	/** @var string Id textarea */
+	public $id;
 
 	/**
 	 * Аттрибут контента модели
@@ -35,17 +31,6 @@ class EditorWidget extends Widget {
 	 * @var string
 	 */
 	public $contentAttribute;
-
-	/**
-	 * @var string
-	 */
-	public $imagesAttribute;
-
-	/**
-	 * Возможность загрузки изображений
-	 * @var bool
-	 */
-	public $uploadImages = false;
 
 	/**
 	 * @inheritdoc

@@ -9,8 +9,7 @@ class EditorAsset extends AssetBundle {
 	public $sourcePath = __DIR__;
 
 	public $js = [
-		'js/jquery.upload_image.js',
-		'js/dropzone_customize.js'
+		'js/tinymce_init.js',
 	];
 
 	public $css = [
@@ -19,7 +18,6 @@ class EditorAsset extends AssetBundle {
 
 	public $depends = [
 		TinyMCERus::class,
-		DropzoneAsset::class,
 	];
 
 }

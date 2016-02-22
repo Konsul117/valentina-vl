@@ -1,6 +1,6 @@
 
 body.mce-content-body {
-	color:            #000;
+	color: #000;
 }
 
 .mce-content-body *, .mce-content-body p {
@@ -15,4 +15,33 @@ body.mce-content-body {
 
 .mce-content-body img {
 	margin: 1em;
+}
+
+body.mce-content-body .image-block .img-wrap {
+	text-align: center;
+}
+
+body.mce-content-body .img-wrap .img-title {
+	font-size: 0.8em;
+	clear:     both;
+}
+
+body.mce-content-body .image-block.format-left {
+	float: left;
+	clear: left;
+}
+
+body.mce-content-body .image-block.format-left .img-wrap img {
+	float: left;
+	clear: left;
+}
+
+body.mce-content-body .image-block.format-right {
+	float: right;
+	clear: right;
+}
+
+body.mce-content-body .image-block.format-right .img-wrap img {
+	float: right;
+	clear: right;
 }

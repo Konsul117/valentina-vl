@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\modules\editor\controllers;
+namespace backend\modules\image\controllers;
 
 use backend\modules\editor\components\ImageUploader;
 use common\components\AjaxResponse;

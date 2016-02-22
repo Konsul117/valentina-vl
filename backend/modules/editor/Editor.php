@@ -18,20 +18,16 @@ class Editor extends Module {
 	 *
 	 * @param ActiveForm $form
 	 * @param Model      $model
-	 * @param string     $identAttribute   аттрибут идентификатора модели
+	 * @param string     $id               Id textarea
 	 * @param string     $contentAttribute аттрибут контента модели
-	 * @param string     $imagesAttribute  аттрибут изображений модели
-	 * @param bool       $uploadImages     Возможность загрузки изображений
 	 * @return Widget
 	 */
-	public function getEditorWidget(ActiveForm $form, Model $model, $identAttribute, $contentAttribute, $imagesAttribute = null, $uploadImages = null) {
+	public function getEditorWidget(ActiveForm $form, Model $model,  $id, $contentAttribute) {
 		$widget = new EditorWidget([
 			'form'             => $form,
 			'model'            => $model,
-			'identAttribute'   => $identAttribute,
+			'id'               => $id,
 			'contentAttribute' => $contentAttribute,
-			'imagesAttribute'  => $imagesAttribute,
-			'uploadImages'     => $uploadImages,
 		]);
 
 		return $widget;
