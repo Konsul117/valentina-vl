@@ -25,10 +25,10 @@ if ($mainImage !== null) {
 }
 ?>
 
-<?= $this->render('//blocks/socials') ?>
-
 <div class="blog-post-content">
 	<?= PostOutHelper::wrapContentImages($post->content, [ImageProvider::FORMAT_MEDIUM]) ?>
 </div>
+
+<?= $this->render('//blocks/socials') ?>
 
 <?= $commentWidget->run() ?>
