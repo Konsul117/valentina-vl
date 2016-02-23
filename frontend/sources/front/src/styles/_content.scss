@@ -9,7 +9,7 @@
 	padding:    1px 1em;
 
 	@include respond-to(desktop) {
-		width:  60%;
+		width:  75%;
 		margin: 1em auto;
 	}
 
@@ -53,28 +53,31 @@
 	}
 
 	.image-block {
-		&.format-left {
-			float: left;
-			clear: left;
+		//@include respond-to(desktop) {
+			//применяем форматирование изображений слева и справа только для десктопных разрешений
+			&.format-left {
+				float: left;
+				clear: left;
 
-			.img-wrap {
-				img {
-					float: left;
-					clear: left;
+				.img-wrap {
+					img {
+						float: left;
+						clear: left;
+					}
 				}
 			}
-		}
 
-		&.format-right {
-			float: right;
-			clear: right;
+			&.format-right {
+				float: right;
+				clear: right;
 
-			.img-wrap {
-				img {
-					float: right;
-					clear: right;
+				.img-wrap {
+					img {
+						float: right;
+						clear: right;
+					}
 				}
 			}
-		}
+		//}
 	}
 }

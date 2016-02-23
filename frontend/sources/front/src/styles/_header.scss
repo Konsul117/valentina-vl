@@ -192,15 +192,13 @@ header {
 		.social-icons {
 			@include respond-to(mobile) {
 				margin: 0.5em 0;
-				//width:  $social-icon-width-mobile-block;
-				//height: $social-icon-height-mobile-block;
 			}
 
 			@include respond-to(desktop) {
 				position: absolute;
 				width:    $social-icon-width-desktop-block;
 				height:   $social-icon-height-desktop-block;
-				left:     -$social-icon-width-desktop-block - 30px;
+				left:     -$social-icon-width-desktop-block - 100px;
 				bottom:   -$social-icon-height-desktop-block - 90px;
 				display:  table-cell;
 			}
