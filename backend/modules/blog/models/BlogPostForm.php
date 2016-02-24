@@ -13,6 +13,7 @@ use yii\helpers\ArrayHelper;
 
 /**
  * Модель формы поста, расширяющая модель поста
+ *
  * @inheritdoc
  */
 class BlogPostForm extends BlogPost {
@@ -28,6 +29,18 @@ class BlogPostForm extends BlogPost {
 	 */
 	public static function tableName() {
 		return BlogPost::tableName();
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	public function rules() {
+		return ArrayHelper::merge(
+			parent::rules(),
+			[
+				[static::ATTR_TITLE, 'unique'],
+			]
+		);
 	}
 
 	/**

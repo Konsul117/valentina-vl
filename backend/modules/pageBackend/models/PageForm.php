@@ -32,6 +32,18 @@ class PageForm extends Page {
 	/**
 	 * @inheritdoc
 	 */
+	public function rules() {
+		return ArrayHelper::merge(
+			parent::rules(),
+			[
+				[static::ATTR_TITLE, 'unique'],
+			]
+		);
+	}
+
+	/**
+	 * @inheritdoc
+	 */
 	public static function tableName() {
 		return Page::tableName();
 	}
