@@ -59,7 +59,7 @@ class Formatter extends \yii\i18n\Formatter {
 		}
 
 		return (new DateTime($value, new DateTimeZone('UTC')))
-			->setTimezone(DateTimeZone::getTimezoneByUtcOffset(10))
+			->setTimezone($this->localTimezone)
 			->format($format);
 	}
 

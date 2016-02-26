@@ -47,7 +47,7 @@ class ImageThumbCreator extends Component {
 		try {
 			$url = Yii::$app->params['frontendDomain'] . '/';
 
-			if (Yii::$app->request->baseUrl) {
+			if (isset(Yii::$app->request->baseUrl) && Yii::$app->request->baseUrl) {
 				$url .= Yii::$app->request->baseUrl . '/';
 			}
 

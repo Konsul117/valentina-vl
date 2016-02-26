@@ -32,3 +32,5 @@ phpunit.phar
 /.dev
 
 /upload
+
+sitemap.xml
