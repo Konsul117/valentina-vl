@@ -17,8 +17,6 @@ class SitemapGenController extends Controller {
 
 		$dom = $sitemapModule->generateSitemap();
 
-		$dom->formatOutput =true;
-
 		file_put_contents(Yii::getAlias('@frontend/web') . DIRECTORY_SEPARATOR . 'sitemap.xml', $dom->saveXML());
 	}
 }

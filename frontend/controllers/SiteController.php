@@ -4,9 +4,11 @@ namespace frontend\controllers;
 
 use common\modules\page\models\Page as PageModel;
 use common\modules\page\Page;
+use common\modules\sitemap\Sitemap;
 use frontend\modules\blogFront\BlogFront;
 use Yii;
 use yii\web\Controller;
+use yii\web\Response;
 
 /**
  * Site controller
@@ -44,5 +46,18 @@ class SiteController extends Controller {
 			'postsWidget' => $postsWidget,
 			'mainPage'    => $mainPage,
 		]);
+	}
+
+	public function actionSitemap() {
+		/** @var Sitemap $sitemapModule */
+		$sitemapModule = Yii::$app->modules['sitemap'];
+
+		$dom = $sitemapModule->generateSitemap();
+
+		Yii::$app->response->format = Response::FORMAT_RAW;
+
+		Yii::$app->response->headers->add('Content-Type', 'text/xml');
+
+		return $dom->saveXML();
 	}
 }

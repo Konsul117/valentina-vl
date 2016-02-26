@@ -1,4 +1,4 @@
-<?php use common\modules\sitemap\Sitemap;
+<?php
 
 return [
 	'id' => 'console',
@@ -7,9 +7,4 @@ return [
 			'baseUrl' => 'http://valentina-vl.ru',
 		],
 	],
-	'modules' => [
-		'sitemap' => [
-			'class' => Sitemap::class,
-		]
-	]
 ];
