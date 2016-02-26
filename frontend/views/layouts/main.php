@@ -43,6 +43,10 @@ CommonAsset::register($this);
 	<?php $this->head() ?>
 </head>
 <body>
+
+
+<?= $this->render('//layouts/blocks/counters') ?>
+
 <?php $this->beginBody() ?>
 
 <div class="bg-aside bg-left"></div>

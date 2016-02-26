@@ -36,19 +36,21 @@ AppAsset::register($this);
 			],
 	]);
 
-	echo Nav::widget([
-			'options' => ['class' => 'navbar-nav navbar-left'],
-			'items'   => [
-					['label' => 'Бисер', 'url' => ['/blog/blog/category/?category_url=biser']],
-					['label' => 'Не бисер', 'url' => ['/blog/blog/category/?category_url=not_biser']],
-					['label' => 'Страницы', 'url' => ['/pageBackend/page/index']],
-					['label' => 'Настройки', 'items' => [
-						['label' => 'Водяной знак', 'url' => ['/image/settings/watermark']],
-						['label' => 'Очистка', 'url' => ['/image/settings/clear-thumbs']],
-					]],
-					['label' => 'Главная', 'url' => ['/']],
-			],
-	]);
+	if (!Yii::$app->user->isGuest) {
+		echo Nav::widget([
+				'options' => ['class' => 'navbar-nav navbar-left'],
+				'items'   => [
+						['label' => 'Бисер', 'url' => ['/blog/blog/category/?category_url=biser']],
+						['label' => 'Не бисер', 'url' => ['/blog/blog/category/?category_url=not_biser']],
+						['label' => 'Страницы', 'url' => ['/pageBackend/page/index']],
+						['label' => 'Настройки', 'items' => [
+								['label' => 'Водяной знак', 'url' => ['/image/settings/watermark']],
+								['label' => 'Очистка', 'url' => ['/image/settings/clear-thumbs']],
+						]],
+						['label' => 'Главная', 'url' => ['/']],
+				],
+		]);
+	}
 
 	$rightItems = [];
 	if (Yii::$app->user->isGuest) {
