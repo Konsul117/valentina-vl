@@ -27,6 +27,8 @@ CommonAsset::register($this);
 		}
 	}
 
+	$this->title .= ' - Авторский блог Валентины Панченко';
+
 	if (!$this->metaTagContainer->title) {
 		$this->metaTagContainer->title = $this->title;
 	}
@@ -36,7 +38,7 @@ CommonAsset::register($this);
 			'metaTagContainer' => $this->metaTagContainer,
 	]) ?>
 
-	<title><?= Html::encode($this->title) ?> - Авторский блог Валентины Панченко</title>
+	<title><?= Html::encode($this->title) ?></title>
 
 	<link rel="shortcut icon" href="<?php echo Yii::$app->request->baseUrl; ?>/favicon.ico" type="image/x-icon" />
 
