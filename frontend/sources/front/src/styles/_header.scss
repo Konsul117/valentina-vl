@@ -20,10 +20,6 @@ header {
 	margin:   auto;
 	position: relative;
 
-	.fonted-heading {
-		font-family: 'a_simpler_clg';
-	}
-
 	@include respond-to(mobile) {
 		width:         100%;
 		padding-left:  1em;
@@ -32,6 +28,17 @@ header {
 
 	@include respond-to(desktop) {
 		width: 60%;
+	}
+
+	.header-sup {
+		padding-top: 1em;
+		.inner {
+			background:        url(../images/header_desktop_sup.png);
+			background-size:   contain;
+			background-repeat: no-repeat;
+			display:           block;
+			padding-bottom:    3%;
+		}
 	}
 
 	//картинка с именем

@@ -12,7 +12,11 @@ use yii\helpers\Html;
 	$blogFrontModule = Yii::$app->modules['blogFront'];
 	?>
 
-	<h1 class="fonted-heading">Авторский блог Валентины Панченко</h1>
+	<div class="header-sup">
+		<div class="inner">
+
+		</div>
+	</div>
 
 	<?= $blogFrontModule->getImagePostsWidget(10)->run() ?>
 
