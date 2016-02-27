@@ -1,3 +1,11 @@
+@font-face {
+	font-family: 'a_simpler_clg';
+	src: url('fonts/a_simpler_clg.eot');
+	src: local('вє'), url('fonts/a_simpler_clg.woff') format('woff'), url('fonts/a_simpler_clg.ttf') format('truetype'), url('fonts/a_simpler_clg.svg') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
 body {
 	position:         relative;
 	background-image: url(../images/background_wood.jpg);

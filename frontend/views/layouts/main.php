@@ -19,7 +19,9 @@ CommonAsset::register($this);
 
 	<?= Html::csrfMetaTags() ?>
 
-	<?php if ($this->title === null) {
+	<?php
+
+	if ($this->title === null) {
 		$lastBreadcrumb = $this->breadcrumbs->getLast();
 
 		if ($lastBreadcrumb !== null) {
@@ -27,10 +29,10 @@ CommonAsset::register($this);
 		}
 	}
 
-	$this->title .= ' - Авторский блог Валентины Панченко';
+	$pageTagHeading = $this->title . ' - Авторский блог Валентины Панченко';
 
 	if (!$this->metaTagContainer->title) {
-		$this->metaTagContainer->title = $this->title;
+		$this->metaTagContainer->title = $pageTagHeading;
 	}
 	?>
 
@@ -38,7 +40,7 @@ CommonAsset::register($this);
 			'metaTagContainer' => $this->metaTagContainer,
 	]) ?>
 
-	<title><?= Html::encode($this->title) ?></title>
+	<title><?= Html::encode($pageTagHeading) ?></title>
 
 	<link rel="shortcut icon" href="<?php echo Yii::$app->request->baseUrl; ?>/favicon.ico" type="image/x-icon" />
 

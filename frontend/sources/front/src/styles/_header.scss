@@ -20,8 +20,14 @@ header {
 	margin:   auto;
 	position: relative;
 
+	.fonted-heading {
+		font-family: 'a_simpler_clg';
+	}
+
 	@include respond-to(mobile) {
-		width: 100%;
+		width:         100%;
+		padding-left:  1em;
+		padding-right: 1em;
 	}
 
 	@include respond-to(desktop) {
@@ -39,7 +45,7 @@ header {
 
 			@include respond-to(desktop) {
 				position:       relative;
-				padding-bottom: 19%;
+				padding-bottom: 16%;
 
 				.img-name {
 					position: absolute;
@@ -78,7 +84,7 @@ header {
 									background-image: url(../images/header_mobile_left.png);
 									float:            left;
 									width:            236px;
-									height:           56px;
+									height:           37px;
 								}
 
 								//правая часть
@@ -112,7 +118,6 @@ header {
 
 	.menu-wrapper {
 		@include respond-to(mobile) {
-			margin:   0 1em;
 			position: relative;
 			display:  block;
 		}

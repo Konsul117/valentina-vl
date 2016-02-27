@@ -12,6 +12,8 @@ use yii\helpers\Html;
 	$blogFrontModule = Yii::$app->modules['blogFront'];
 	?>
 
+	<h1 class="fonted-heading">Авторский блог Валентины Панченко</h1>
+
 	<?= $blogFrontModule->getImagePostsWidget(10)->run() ?>
 
 	<div class="img-name-wrapper">
