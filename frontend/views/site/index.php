@@ -1,16 +1,16 @@
 <?php
 
+use common\base\View;
 use common\modules\image\models\ImageProvider;
 use common\modules\page\models\Page;
 use frontend\modules\blogFront\components\PostOutHelper;
 use yii\base\Widget;
 
-/* @var $this \common\base\View */
+/** @var $this View */
 /** @var Widget $postsWidget */
 /** @var Page $mainPage */
 
-$this->title = 'Валентина Панченко';
-$this->titleCustom = 'Главная';
+$this->title = 'Главная';
 ?>
 
 <?php if ($mainPage !== null): ?>
