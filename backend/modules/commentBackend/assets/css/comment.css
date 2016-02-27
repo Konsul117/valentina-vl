@@ -1,0 +1,49 @@
+.last-comments-widget {
+	width:   400px;
+	display: inline-block;
+	padding: 1em;
+	border:  1px solid #000;
+}
+
+.last-comments-widget h2 {
+	margin-top: 0;
+}
+
+.last-comments-widget .commment-item {
+	padding-bottom: 0.5em;
+	margin-bottom:  0.5em;
+	border-bottom:  1px dashed #888;
+}
+
+.last-comments-widget .commment-item:last-child {
+	border-bottom:  none;
+	margin-bottom:  0;
+	padding-bottom: 0;
+}
+
+.last-comments-widget .commment-item .comment-field {
+	display:       inline-block;
+	width:         100%;
+	margin-bottom: 0.5em;
+}
+
+.last-comments-widget .commment-item .comment-field .lbl,
+.last-comments-widget .commment-item .comment-field .value {
+	display: inline-block;
+	width:   50%;
+}
+
+.last-comments-widget .commment-item .comment-field .lbl {
+	padding-right: 1em;
+	width:         100px;
+}
+
+.last-comments-widget .commment-item .content {
+	word-break: break-all;
+	overflow:   auto;
+	font-style: italic;
+}
+
+.last-comments-widget .commment-item .actions {
+	margin: 0.5em 0;
+}

@@ -26,6 +26,7 @@ $formatter = new Formatter();
 		<div class="comments-list">
 			<?php foreach ($comments as $comment): ?>
 				<div class="comment-item">
+					<?= Html::a(null, null, ['id' => 'comment-id-' . $comment->id]) ?>
 
 					<div class="comment-fied name">
 						<?= $comment->nickname ?>
@@ -36,7 +37,7 @@ $formatter = new Formatter();
 					</div>
 
 					<div class="comment-fied comment-content">
-						<?= $comment->content ?>
+						<?= htmlentities($comment->content) ?>
 					</div>
 				</div>
 			<?php endforeach ?>

@@ -2,6 +2,7 @@
 namespace backend\controllers;
 
 use backend\base\BackendController;
+use backend\modules\commentBackend\CommentBackend;
 use Yii;
 use common\models\LoginForm;
 
@@ -22,7 +23,12 @@ class SiteController extends BackendController {
 	}
 
 	public function actionIndex() {
-		return $this->render('index');
+		/** @var CommentBackend $commentModule */
+		$commentModule = Yii::$app->modules['commentBackend'];
+
+		return $this->render('index', [
+			'lastCommentsWiget' => $commentModule->getLastCommentsWidget(),
+		]);
 	}
 
 	public function actionLogin() {

@@ -19,9 +19,9 @@ class Sitemap extends Module {
 	 * @return DOMDocument
 	 */
 	public function generateSitemap() {
-		$dom				 = new DOMDocument('1.0', 'utf-8');
+		$dom = new DOMDocument('1.0', 'utf-8');
 
-		$urlset	 = $dom->createElement('urlset');
+		$urlset = $dom->createElement('urlset');
 		$urlset->setAttribute('xmlns', 'http://www.sitemaps.org/schemas/sitemap/0.9');
 		$urlset->setAttribute('xmlns:image', 'http://www.google.com/schemas/sitemap-image/1.1');
 		$dom->appendChild($urlset);
@@ -44,15 +44,16 @@ class Sitemap extends Module {
 		/** @var BlogPost[] $posts */
 		$posts = BlogPost::find()
 			->orderBy([
-				BlogPost::ATTR_INSERT_STAMP => SORT_DESC
+				BlogPost::ATTR_INSERT_STAMP => SORT_DESC,
 			])
 			->all();
 
-		foreach($posts as $post) {
+		foreach ($posts as $post) {
 			$url = $dom->createElement('url');
 
 			$url->appendChild($dom->createElement('loc'))
-				->appendChild($dom->createTextNode(Url::to(['/blogFront/posts/view', 'title_url' => $post->title_url], true)));
+				->appendChild($dom->createTextNode(Url::to(['/blogFront/posts/view', 'title_url' => $post->title_url],
+					true)));
 
 			$url->appendChild($dom->createElement('lastmod'))
 				->appendChild($dom->createTextNode($formatter->asLocalDate($post->update_stamp, 'Y-m-d')));
@@ -61,7 +62,7 @@ class Sitemap extends Module {
 				try {
 					$t = $dom->createTextNode($image->getImageUrl(ImageProvider::FORMAT_FULL));
 				}
-				catch(ImageException $e) {
+				catch (ImageException $e) {
 					continue;
 				}
 
@@ -74,11 +75,9 @@ class Sitemap extends Module {
 				$imageNode->appendChild($imageLocNode);
 
 				$url->appendChild($imageNode);
-
 			}
 
 			$urlset->appendChild($url);
-
 		}
 	}
 

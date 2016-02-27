@@ -5,7 +5,7 @@ namespace backend\modules\image\assets;
 use yii\web\AssetBundle;
 
 /**
- * Class ImageUploadAsset
+ * Бандл ассетов для загрузчика изображений
  */
 class ImageUploadAsset extends AssetBundle {
 

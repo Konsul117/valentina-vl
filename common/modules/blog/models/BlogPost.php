@@ -3,10 +3,13 @@
 namespace common\modules\blog\models;
 
 use common\components\behaviors\TimestampUTCBehavior;
+use common\interfaces\EntityInterface;
 use common\models\Entity;
 use common\modules\comment\behaviors\CommentBehavior;
 use common\modules\image\models\Image;
+use Yii;
 use yii\db\ActiveRecord;
+use yii\helpers\Url;
 
 /**
  * Посты блога
@@ -28,7 +31,7 @@ use yii\db\ActiveRecord;
  * @property BlogTag[]    $tagsModels      Теги (модели)
  * @property Image        $mainImage       Главное изображение
  */
-class BlogPost extends ActiveRecord {
+class BlogPost extends ActiveRecord implements EntityInterface {
 
 	/** Уникальный идентификатор поста */
 	const ATTR_ID = 'id';
@@ -135,4 +138,24 @@ class BlogPost extends ActiveRecord {
 			]);
 	}
 
+	/**
+	 * @inheritdoc
+	 */
+	public function getFrontItemUrl() {
+		return 'http://' . Yii::$app->params['baseDomain'] . Url::to(['/blogFront/posts/view', 'title_url' => $this->title_url]);
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	public function getEntityTitle() {
+		return 'Блог';
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	public function getEntityItemTitle() {
+		return $this->title;
+	}
 }
