@@ -13,20 +13,23 @@ body {
 			display: block;
 		}
 		position:          absolute;
-		bottom:            0;
 		top:               0;
 		background-size:   100%;
 		background-repeat: no-repeat;
-		min-height:        1000px;
+		vertical-align:    top;
 		&.bg-left {
-			background-image: url(../images/tree-left.svg);
-			left:             0;
-			width:            17%;
+			background-image:    url(../images/tree-left.svg);
+			left:                0;
+			width:               17%;
+			padding-bottom:      31%;
+			background-position: 0 0;
 		}
 		&.bg-right {
-			background-image: url(../images/tree-right.svg);
-			right:            0;
-			width:            18%;
+			background-image:    url(../images/tree-right.svg);
+			right:               0;
+			width:               18%;
+			padding-bottom:      31%;
+			background-position: 0 0;
 		}
 	}
 
