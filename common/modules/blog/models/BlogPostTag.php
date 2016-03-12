@@ -32,45 +32,65 @@ class BlogPostTag extends ActiveRecord {
 	public static function bindPostTags(BlogPost $post) {
 		$currentTagsModels = $post->tagsModels;
 
-		$newTagsStr = explode(' ', $post->tags);
+		//кладём строку с тегами в переменную для обработки
+		$newTagsStr = $post->tags;
 
-		$newTagsStr = array_filter($newTagsStr, function($item) {
-			return $item !== '';
-		});
+		//заменяем все запятые пробелами
+		$newTagsStr = preg_replace('/,+/', ' ', $newTagsStr);
+		//и если есть несколько пробелов подряд - то заменяем их одним пробелом
+		$newTagsStr = preg_replace('/(\s{2,})/', ' ', $newTagsStr);
 
+		//триммим
+		$newTagsStr = trim($newTagsStr);
+
+		//теперь разбиваем строку по пробелам на массив
+		$newTagsArr = explode(' ', $newTagsStr);
+
+		//ищем существующие теги в бд
 		/** @var BlogTag[] $newTagsModels */
 		$newTagsModels = BlogTag::find()
-			->where((['name' => $newTagsStr]))
+			->where((['name' => $newTagsArr]))
 			->indexBy('name')
 			->all();
 
+		//флаг того, что теги в посте поменялись
 		$changed = false;
 
-		if (count($currentTagsModels) === count($newTagsStr)) {
-			$currentTagsStr = [];
+		//сравниваем количество, которое найдено и которое есть в данный момент
+		if (count($currentTagsModels) === count($newTagsArr)) {
+			//если одинаковое, то сравниваем по содержимому
+			$currentTagsArr = [];
 			foreach($currentTagsModels as $currModel) {
-				$currentTagsStr[] = $currModel->name;
+				$currentTagsArr[] = $currModel->name;
 			}
 
-			if (!empty(array_diff($currentTagsStr, $newTagsStr)) || !empty(array_diff($newTagsStr, $currentTagsStr))) {
+			if (!empty(array_diff($currentTagsArr, $newTagsArr)) || !empty(array_diff($newTagsArr, $currentTagsArr))) {
+				//если теги поменялись
 				$changed = true;
 			}
 		}
 		else {
+			//если не равно, то теги поменялись
 			$changed = true;
 		}
 
 		if ($changed) {
+			//если теги поменялись, то удаляем из БД все имеющиеся
 			static::deleteAll([static::ATTR_POST_ID => $post->id]);
 
-			foreach($newTagsStr as $i => $newTagStr) {
+			//проходим по тегам, которые нужно добавить
+			foreach($newTagsArr as $i => $newTagStr) {
+				//создаём связь между постом и тегами
 				$postTag = new BlogPostTag();
 				$postTag->post_id = $post->id;
 
+				//проверяем, есть ли уже текущий тег в базе,
 				if (isset($newTagsModels[$newTagStr])) {
+					//если есть, то берём его id
 					$tagId = $newTagsModels[$newTagStr]->id;
 				}
 				else {
+					//если нет, то создаём его
 					$newTagModel = new BlogTag();
 					$newTagModel->name = $newTagStr;
 					if (!$newTagModel->save()) {
@@ -82,6 +102,7 @@ class BlogPostTag extends ActiveRecord {
 					$tagId = $newTagModel->id;
 				}
 
+				//добавляем id тега в связь
 				$postTag->tag_id = $tagId;
 				$postTag->sort = $i;
 
