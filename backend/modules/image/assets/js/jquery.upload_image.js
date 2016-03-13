@@ -11,15 +11,20 @@
 
 	/** параметры модалки добавления изображений */
 	var addImageModalOptions = {
-		'editorId':   false,
-		'positionId': false
+		editorId:      false,
+		positionId:    false,
+		addSpaceAfter: false
 	};
+
+	var IMAGE_POSITION_TEXT = 'text';
+	var IMAGE_POSITION_LEFT = 'left';
+	var IMAGE_POSITION_RIGHT = 'right';
 
 	//позиции размещения изображения в редакторе
 	var addImagePositions = {
-		'text':  'В тексте',
-		'left':  'Слева',
-		'right': 'Справа'
+		text:  'В тексте',
+		left:  'Слева',
+		right: 'Справа'
 	};
 
 	/**
@@ -36,7 +41,7 @@
 				evt.returnValue = message;
 			}
 			return message;
-		}
+		};
 
 		this.resetUnload = function() {
 			$(window).off('beforeunload', o.unload);
@@ -44,7 +49,7 @@
 			setTimeout(function() {
 				$(window).on('beforeunload', o.unload);
 			}, 1000);
-		}
+		};
 
 		this.init = function() {
 			$(window).on('beforeunload', o.unload);
@@ -57,7 +62,7 @@
 					o.resetUnload();
 				}
 			});
-		}
+		};
 		this.init();
 	}
 
@@ -102,7 +107,6 @@
 
 			if ($previewPane.length > 0) {
 				$previewPane.on('click', '.image-item img', function() {
-					//methods.addImage($(this), 'text_content','left');
 					methods.imageItemAddToEditor($(this));
 				});
 			}
@@ -196,12 +200,12 @@
 			var editorsRadiobuttons = '<ul class="list-unstyled">';
 
 			$.each(settings.editorsIds, function(key, editorId) {
-				if (addImageModalOptions['editorId'] === false) {
-					addImageModalOptions['editorId'] = editorId;
+				if (addImageModalOptions.editorId === false) {
+					addImageModalOptions.editorId = editorId;
 				}
 
 				editorsRadiobuttons += '<li class="radio">'
-						+ '<label><input name="editorId" type="radio" value="' + editorId + '"' + (addImageModalOptions['editorId'] === editorId ? ' checked' : '') + '>'
+						+ '<label><input name="editorId" type="radio" value="' + editorId + '"' + (addImageModalOptions.editorId === editorId ? ' checked' : '') + '>'
 						+ $('#' + editorId).siblings('label').text() + '</label>'
 						+ '</li>';
 			});
@@ -211,12 +215,12 @@
 			var positionRadiobuttons = '<ul class="list-unstyled">';
 
 			$.each(addImagePositions, function(positionId, title) {
-				if (addImageModalOptions['positionId'] === false) {
-					addImageModalOptions['positionId'] = positionId;
+				if (addImageModalOptions.positionId === false) {
+					addImageModalOptions.positionId = positionId;
 				}
 
 				positionRadiobuttons += '<li class="radio">'
-					+ '<label><input name="positionId" type="radio" value="' + positionId + '"' + (addImageModalOptions['positionId'] === positionId ? ' checked' : '') + '>'
+					+ '<label><input name="positionId" type="radio" value="' + positionId + '"' + (addImageModalOptions.positionId === positionId ? ' checked' : '') + '>'
 					+ title + '</label>'
 					+ '</li>';
 			});
@@ -243,6 +247,13 @@
 								+ '</div>'
 
 								+ '<div class="form-group">'
+									+ '<label>'
+										+ '<input type="checkbox" name="addSpaceAfter" value="1"' + (addImageModalOptions.addSpaceAfter ? ' checked="checked"' : '') + '"/>'
+										+ ' Добавлять пробел'
+									+ '</label>'
+								+ '</div>'
+
+								+ '<div class="form-group">'
 									+ '<label>Название</label>'
 									+ '<input type="text" id="title" class="form-control">'
 								+ '</div>'
@@ -256,12 +267,11 @@
 					+ '</div>'
 				+ '</div>';
 
-			$addModal = $(modalHtml);
+			var $addModal = $(modalHtml);
 
 			$addModal.modal();
 
 			$addModal.on('hidden.bs.modal', function() {
-				console.log('hidden');
 				$(this).remove();
 			});
 
@@ -276,15 +286,16 @@
 				var positionId = $addModal.find('input[name=positionId]:checked').val();
 				var title = $addModal.find('#title').val();
 
-				addImageModalOptions['editorId'] = editorId;
-				addImageModalOptions['positionId'] = positionId;
-				methods.addImage($image, editorId, positionId, title);
+				addImageModalOptions.editorId = editorId;
+				addImageModalOptions.positionId = positionId;
+				addImageModalOptions.addSpaceAfter = $addModal.find('input[name=addSpaceAfter]').prop('checked');
+				methods.addImage($image, title);
 			});
 
 
 		},
-		addImage: function($image, textFieldId, position, title) {
-			editor = tinyMCE.get(textFieldId);
+		addImage: function($image, title) {
+			var editor = tinyMCE.get(addImageModalOptions.editorId);
 
 			if (editor === null) {
 				console.log('Ошибка при добавлении изображения: неизвестный редактор tinyMCE');
@@ -292,25 +303,28 @@
 
 			var $content = $('<div class="wrap">' + editor.getContent() + '</div>');
 
-			if (typeof (addImagePositions[position]) === 'undefined') {
+			if (typeof (addImagePositions[addImageModalOptions.positionId]) === 'undefined') {
 				console.log('Ошибка при добавлении изображения: неизвестная позиция');
 				return ;
 			}
 
-			if (position === 'text') {
+			if (addImageModalOptions.positionId === IMAGE_POSITION_TEXT) {
+				//добавление изображения в тексте
 				editor.insertContent(methods.getAddImageHtml($image, title, false));
 
-				$content = $('<div class="wrap">' + editor.getContent() + '</div>');
+				return ;
 			}
 			else {
-				var posClass = 'format-' + position;
+				//не в тексте
+				var posClass = 'format-' + addImageModalOptions.positionId;
 
-				$imagesBlock =  $content.find('div.image-block.' + posClass);
+				var $imagesBlock =  $content.find('div.image-block.' + posClass);
 
 				if ($imagesBlock.length === 0) {
 
-					if (position === 'right') {
-						$leftBlock = $content.find('div.image-block.format-left');
+					if (addImageModalOptions.positionId === IMAGE_POSITION_RIGHT) {
+						//справа
+						var $leftBlock = $content.find('div.image-block.format-left');
 						if ($leftBlock.length > 0) {
 							$leftBlock.after('<div class="image-block ' + posClass + '"></div>');
 						}
@@ -318,7 +332,8 @@
 							$content.prepend('<div class="image-block ' + posClass + '"></div>');
 						}
 					}
-					else {
+					else if (addImageModalOptions.positionId === IMAGE_POSITION_LEFT) {
+						//слева
 						$content.prepend('<div class="image-block ' + posClass + '"></div>');
 					}
 
@@ -341,15 +356,23 @@
 				wrapLabel = false;
 			}
 
+			var returnHtml = '';
+
 			if (wrapLabel === true) {
-				return '<div class="img-wrap">'
+				returnHtml += '<div class="img-wrap">'
 					+ '<img src="'+$image.data('medium-url')+'" data-image-id="'+$image.data('image-id')+'" title="' + title + '"/>'
 					+ ((title !== '') ? ('<div class="img-title">' + title + '</div>') : '')
 					+ '</div>';
 			}
 			else {
-				return '<img src="'+$image.data('medium-url')+'" data-image-id="'+$image.data('image-id')+'" title="' + title + '"/>';
+				returnHtml += '<img src="'+$image.data('medium-url')+'" data-image-id="'+$image.data('image-id')+'" title="' + title + '"/>';
 			}
+
+			if (addImageModalOptions.addSpaceAfter) {
+				returnHtml += '&nbsp;';
+			}
+
+			return returnHtml;
 		}
 	};
 
