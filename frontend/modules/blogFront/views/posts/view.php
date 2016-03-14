@@ -3,6 +3,7 @@ use common\modules\image\models\ImageProvider;
 use common\modules\blog\models\BlogPost;
 use common\base\View;
 use frontend\modules\blogFront\components\PostOutHelper;
+use frontend\modules\blogFront\widgets\TagsPostWidget;
 use yii\base\Widget;
 
 /** @var View $this */
@@ -15,7 +16,7 @@ $this->breadcrumbs->addBreadcrumb(['/blogFront/posts/category', 'category_url' =
 		$post->category->title);
 $this->breadcrumbs->addBreadcrumb(['/blogFront/posts/view', 'title_url' => $post->title_url], $post->title);
 
-$this->metaTagContainer->title = $post->title;
+$this->metaTagContainer->title = PostOutHelper::clearString($post->title);
 $this->metaTagContainer->description = PostOutHelper::clearString($post->short_content);
 
 $mainImage = $post->mainImage;
@@ -25,9 +26,11 @@ if ($mainImage !== null) {
 }
 ?>
 
-<div class="blog-post-content">
-	<?= PostOutHelper::wrapContentImages($post->content, [ImageProvider::FORMAT_MEDIUM]) ?>
+<div class="blog-post-content clearfix">
+	<?= PostOutHelper::wrapContentImages($post->content, [ImageProvider::FORMAT_MEDIUM], $post->title) ?>
 </div>
+
+<?= TagsPostWidget::widget(['post' => $post]) ?>
 
 <?= $this->render('//blocks/socials') ?>
 

@@ -4,6 +4,7 @@ use common\modules\image\models\ImageProvider;
 use common\modules\blog\models\BlogPost;
 use frontend\modules\blogFront\components\PostOutHelper;
 use frontend\modules\blogFront\widgets\PostsWidget;
+use frontend\modules\blogFront\widgets\TagsPostWidget;
 use yii\data\Pagination;
 use yii\helpers\Html;
 use yii\widgets\LinkPager;
@@ -31,8 +32,10 @@ $formatter = new Formatter();
 				</div>
 
 				<div class="item-content">
-					<?= PostOutHelper::wrapContentImages($post->short_content, [ImageProvider::FORMAT_MEDIUM]) ?>
+					<?= PostOutHelper::wrapContentImages($post->short_content, [ImageProvider::FORMAT_MEDIUM], $post->title) ?>
 				</div>
+
+				<?= TagsPostWidget::widget(['post' => $post]) ?>
 
 				<p>
 					<?= Html::a('Подробнее', ['/blogFront/posts/view', 'title_url' => $post->title_url], [
@@ -43,6 +46,8 @@ $formatter = new Formatter();
 		<?php endforeach ?>
 
 		<?php if ($widget->showTotalCount): ?>
+			<br />
+			<br />
 			<div class="post-count">Всего записей: <?= $pages->totalCount ?></div>
 		<?php endif ?>
 

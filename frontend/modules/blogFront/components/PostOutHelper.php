@@ -13,17 +13,25 @@ class PostOutHelper {
 	/** Параметр data для тега ссылки a для вызова lightbox */
 	const LINK_LIGHTBOX_PARAM = 'lightbox';
 
+	//теги
+	/** Тэг title */
+	const TAG_TITLE = 'title';
+	/** Тег alt */
+	const TAG_ALT   = 'alt';
+
 	/**
 	 * Оборачивание изображений контента для кликабельности
 	 *
 	 * @param string $content      Контент поста
 	 * @param array  $checkFormats Форматы изображения, для которых нужно проверить и регенерировать тамбы
+	 * @param string $defaultTitle Название изображений по-умолчанию (если в самом изображении оно не указано,
+	 *                             то задаётся переданное в данном параметре)
 	 *
 	 * @return string
 	 *
 	 * @throws Exception
 	 */
-	public static function wrapContentImages($content, $checkFormats = []) {
+	public static function wrapContentImages($content, $checkFormats = [], $defaultTitle = null) {
 		/** @var Image $imageModule */
 		$imageModule = Yii::$app->getModule('image');
 
@@ -32,10 +40,20 @@ class PostOutHelper {
 
 		//проходися по тегам всех изображений
 		foreach ($doc->find('img[data-image-id]') as $imgEl) {
+			/** @var \DOMElement $imgEl */
 			//получаем id изображения
 			$imageId = (int) $imgEl->getAttribute('data-image-id');
+
 			if (!$imageId) {
 				//если id изображения нет, то пропускаем его
+				continue;
+			}
+
+			/** @var \common\modules\image\models\Image $image */
+			$image = \common\modules\image\models\Image::getCachedInstance($imageId);
+
+			if ($image === null) {
+				//если модель изображения не получилось загрузить, то пропускаем его
 				continue;
 			}
 
@@ -44,14 +62,32 @@ class PostOutHelper {
 				continue;
 			}
 
+			//название изображения
+			$imageTitle = null;
+
+			if ($image->title) {
+				$imageTitle = $image->title;
+			}
+			else if ($defaultTitle) {
+				$imageTitle = $defaultTitle;
+			}
+
+			if ($imageTitle) {
+				$imageTitle = static::clearString($imageTitle);
+			}
+
 			//генерируем новые элементы a и img
 			$a = $imgEl->ownerDocument->createElement('a');
 
 			$a->setAttribute('href', $imageModule->imageThumbCreator->getImageThumbUrl(
 				$imageId,
 				ImageProvider::FORMAT_FULL,
-				$imageModule->imageThumbCreator->getImageNeedWatermark($imageId)
+				$image->is_need_watermark
 			));
+
+			if ($imageTitle) {
+				$a->setAttribute(static::TAG_TITLE, $imageTitle);
+			}
 
 			$a->setAttribute('data-' . static::LINK_LIGHTBOX_PARAM, '1');
 			$a->setAttribute('rel', 'img_group');
@@ -60,6 +96,11 @@ class PostOutHelper {
 
 			foreach($imgEl->attributes as $attr) {
 				$img->setAttribute((string)$attr->name, (string)$attr->value);
+			}
+
+			if ($imageTitle) {
+				$img->setAttribute(static::TAG_ALT, $imageTitle);
+				$img->setAttribute(static::TAG_TITLE, $imageTitle);
 			}
 
 			$a->appendChild($img);
@@ -72,7 +113,7 @@ class PostOutHelper {
 				//вызываем получение среднего тамба для проверки наличия
 
 				foreach ($checkFormats as $format) {
-					$imageModule->imageThumbCreator->touchThumb($imageId, $format, $imageModule->imageThumbCreator->getImageNeedWatermark($imageId));
+					$imageModule->imageThumbCreator->touchThumb($imageId, $format, $image->is_need_watermark);
 				}
 			}
 		}
@@ -88,6 +129,8 @@ class PostOutHelper {
 	 * @return string
 	 */
 	public static function clearString($str) {
+		$str = preg_replace('/(?:"([^>]*)")(?!>)/', '«$1»', $str);
+		$str = addslashes($str);
 		$str = strip_tags($str);
 		$str = str_replace("\n", '', $str);
 		$str = str_replace("\r", '', $str);

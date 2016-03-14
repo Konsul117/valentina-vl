@@ -4,7 +4,6 @@ namespace common\modules\image\components;;
 
 use common\exceptions\ImageException;
 use common\modules\config\Config;
-use common\modules\image\models\Image;
 use common\modules\image\models\ImageProvider;
 use PHPImageWorkshop\Exception\ImageWorkshopBaseException;
 use PHPImageWorkshop\ImageWorkshop;
@@ -12,7 +11,6 @@ use Yii;
 use yii\base\Component;
 use yii\base\Exception;
 use yii\base\InvalidParamException;
-use yii\caching\TagDependency;
 use yii\helpers\Url;
 
 /**
@@ -229,32 +227,5 @@ class ImageThumbCreator extends Component {
 				throw new ImageException('Не удалось удалить тамб фото - нет доступа: ' . $path);
 			}
 		}
-	}
-
-	public function getImageNeedWatermark($imageId) {
-		if (isset($this->needWatermarkCache[$imageId])) {
-			return (bool) $this->needWatermarkCache[$imageId];
-		}
-
-		$cacheKey = __METHOD__ . '-id=' . $imageId;
-
-		$result = Yii::$app->cache->get($cacheKey);
-
-		if ($result === false) {
-			/** @var Image $image */
-			$image = Image::findOne($imageId);
-
-			if ($image !== null) {
-				$result = (int) $image->is_need_watermark;
-			}
-
-			Yii::$app->cache->set($cacheKey, $result, 3600 * 6, new TagDependency(['tags' => [
-				static::class,
-			]]));
-		}
-
-		$this->needWatermarkCache[$imageId] = $result;
-
-		return (bool) $result;
 	}
 }

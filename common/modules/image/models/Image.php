@@ -7,6 +7,7 @@ use common\exceptions\ImageException;
 use common\modules\blog\models\BlogPost;
 use Yii;
 use yii\base\Exception;
+use yii\caching\TagDependency;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
@@ -16,6 +17,7 @@ use yii\db\ActiveRecord;
  * @property int      $id                         Уникальынй идентификатор изображения
  * @property int      $related_entity_id          Идентификатор сущности, с которой связано изображение
  * @property int      $related_entity_item_id     Идентификатр объекта сущности, с которой связано изображение
+ * @property string   $title                      Название изображения
  * @property bool     $is_main                    Главная картинка
  * @property bool     $is_need_watermark          Нужен водяной знак
  * @property string   $insert_stamp               Дата-время создания изображения
@@ -34,6 +36,8 @@ class Image extends ActiveRecord implements ImageProvider {
 	/** Идентификатр объекта сущности, с которой связано изображение */
 	const ATTR_RELATED_ENTITY_ITEM_ID = 'related_entity_item_id';
 
+	const ATTR_TITLE = 'title';
+
 	/** Главная картинка */
 	const ATTR_IS_MAIN = 'is_main';
 
@@ -44,6 +48,30 @@ class Image extends ActiveRecord implements ImageProvider {
 	const ATTR_INSERT_STAMP = 'insert_stamp';
 	/** Отношение к Post */
 	const REL_POST = 'post';
+
+	/**
+	 * Получить закэшированную модель изображения.
+	 *
+	 * @param int $imageId Id изображения
+	 *
+	 * @return Image|null
+	 */
+	public static function getCachedInstance($imageId) {
+		$cacheKey = __METHOD__ . '-id=' . $imageId;
+
+		$image = Yii::$app->cache->get($cacheKey);
+
+		if ($image === false) {
+			/** @var Image $image */
+			$image = static::findOne($imageId);
+
+			Yii::$app->cache->set($cacheKey, $image, 3600 * 6, new TagDependency(['tags' => [
+				static::class,
+			]]));
+		}
+
+		return $image;
+	}
 
 	/**
 	 * @inheritdoc

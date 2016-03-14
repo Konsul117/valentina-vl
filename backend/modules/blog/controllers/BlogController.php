@@ -6,7 +6,7 @@ use backend\base\BackendController;
 use backend\modules\blog\models\BlogPostForm;
 use backend\modules\blog\models\BlogPostSearch;
 use common\modules\blog\models\BlogCategory;
-use common\modules\image\components\ImageThumbCreator;
+use common\modules\image\models\Image;
 use Yii;
 use yii\caching\TagDependency;
 use yii\filters\VerbFilter;
@@ -141,26 +141,61 @@ class BlogController extends BackendController {
 			$errors[] = 'Ошибка при сохранении записи';
 		}
 
-		//обновляем флаг "Watermark"
-		$needWatermarkItems = Yii::$app->request->post('needWatermark');
+		$this->processImagesParams($model);
 
-		if (is_array($needWatermarkItems)) {
-			$images = $model->images;
+		return $errors;
+	}
 
-			foreach($images as $image) {
-				if (isset($needWatermarkItems[$image->id])) {
-					if ((bool) $image->is_need_watermark !== (bool) $needWatermarkItems[$image->id]) {
-						$image->is_need_watermark = (bool) $needWatermarkItems[$image->id];
-						$image->save();
-						$image->clearThumbs();
-					}
+	/**
+	 * Обработка параметров изображений после поста страницы.
+	 *
+	 * @param BlogPostForm $model
+	 */
+	protected function processImagesParams(BlogPostForm $model) {
+		//обрабаытваем изображения
+
+		//флаги "Watermark"
+		$needWatermarkItems = Yii::$app->request->post('needWatermark', []);
+		//имена изображений
+		$imageTitles = Yii::$app->request->post('image-title', []);
+
+		//получаем все загруженные изображения
+		$images = $model->images;
+
+		//и далее обрабатыаем
+		//было ли обновлено любое изображение
+		$isUpdatedAnyImage = false;
+
+		foreach ($images as $image) {
+			//нужно ли сохранять текущее изображение
+			$needCurrentSave = false;
+
+			if (isset($needWatermarkItems[$image->id])) {
+				if ((bool)$image->is_need_watermark !== (bool)$needWatermarkItems[$image->id]) {
+					$image->is_need_watermark = (bool)$needWatermarkItems[$image->id];
+
+					$needCurrentSave = true;
+
+					$image->clearThumbs();
 				}
 			}
 
-			TagDependency::invalidate(Yii::$app->cache, ImageThumbCreator::class);
+			if (isset($imageTitles[$image->id])) {
+				if ($image->title !== $imageTitles[$image->id]) {
+					$image->title = $imageTitles[$image->id];
+					$needCurrentSave     = true;
+				}
+			}
+
+			if ($needCurrentSave) {
+				$image->save();
+				$isUpdatedAnyImage = true;
+			}
 		}
 
-		return $errors;
+		if ($isUpdatedAnyImage) {
+			TagDependency::invalidate(Yii::$app->cache, Image::class);
+		}
 	}
 
 	/**

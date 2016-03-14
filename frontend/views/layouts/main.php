@@ -48,8 +48,9 @@ CommonAsset::register($this);
 </head>
 <body>
 
-
-<?= $this->render('//layouts/blocks/counters') ?>
+<?php if (!defined('YII_DEBUG') || !YII_DEBUG): ?>
+	<?= $this->render('//layouts/blocks/counters') ?>
+<?php endif ?>
 
 <?php $this->beginBody() ?>
 

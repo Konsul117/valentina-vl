@@ -137,9 +137,10 @@
 			}
 
 			if ($previewPane.length > 0) {
-				$previewPane.append('<div class="image-item">'
+				$previewPane.append('<div class="image-item" data-role="image-item-params">'
 					+'<img src="'+response.data.urls.thumb+'" data-medium-url="'+response.data.urls.medium+'" data-image-id="'+response.data.image_id+'"/>'
 					+'<input type="hidden" name="needWatermark['+response.data.image_id+']" value="0">'
+					+'<input type="hidden" name="image-title['+response.data.image_id+']" value="">'
 					+'<label><input type="checkbox" name="needWatermark['+response.data.image_id+']" value="1" checked=""> Watermark</label>'
 					+'</div>');
 
@@ -269,6 +270,8 @@
 
 			var $addModal = $(modalHtml);
 
+			$addModal.find('#title').val(methods.getImageTitle($image.data('image-id')));
+
 			$addModal.modal();
 
 			$addModal.on('hidden.bs.modal', function() {
@@ -294,6 +297,29 @@
 
 
 		},
+
+		/**
+		 * Получить название изображения
+		 * @param {integer} imageId Id изображения
+		 * @returns {string}
+		 */
+		getImageTitle: function(imageId) {
+			return $('[data-role=image-item-params] input').filter(function(){
+				return $(this).prop('name') === 'image-title[' +imageId + ']';
+			}).val();
+		},
+
+		/**
+		 * Установить название изображения
+		 * @param {integer} imageId Id изображения
+		 * @param {string} title Название
+		 */
+		setImageTitle: function(imageId, title) {
+			$('[data-role=image-item-params] input').filter(function(){
+				return $(this).prop('name') === 'image-title[' +imageId + ']';
+			}).val(title);
+		},
+
 		addImage: function($image, title) {
 			var editor = tinyMCE.get(addImageModalOptions.editorId);
 
@@ -307,6 +333,8 @@
 				console.log('Ошибка при добавлении изображения: неизвестная позиция');
 				return ;
 			}
+
+			methods.setImageTitle($image.data('image-id'), title);
 
 			if (addImageModalOptions.positionId === IMAGE_POSITION_TEXT) {
 				//добавление изображения в тексте
@@ -360,12 +388,12 @@
 
 			if (wrapLabel === true) {
 				returnHtml += '<div class="img-wrap">'
-					+ '<img src="'+$image.data('medium-url')+'" data-image-id="'+$image.data('image-id')+'" title="' + title + '"/>'
+					+ '<img src="'+$image.data('medium-url')+'" data-image-id="'+$image.data('image-id')+'" />'
 					+ ((title !== '') ? ('<div class="img-title">' + title + '</div>') : '')
 					+ '</div>';
 			}
 			else {
-				returnHtml += '<img src="'+$image.data('medium-url')+'" data-image-id="'+$image.data('image-id')+'" title="' + title + '"/>';
+				returnHtml += '<img src="'+$image.data('medium-url')+'" data-image-id="'+$image.data('image-id')+'" />';
 			}
 
 			if (addImageModalOptions.addSpaceAfter) {

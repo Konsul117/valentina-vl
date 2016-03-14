@@ -18,4 +18,4 @@ if ($mainImage !== null) {
 }
 ?>
 
-<?= PostOutHelper::wrapContentImages($page->content, [ImageProvider::FORMAT_MEDIUM]) ?>
+<?= PostOutHelper::wrapContentImages($page->content, [ImageProvider::FORMAT_MEDIUM], $mainImage->title) ?>

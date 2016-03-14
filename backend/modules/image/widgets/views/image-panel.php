@@ -17,7 +17,7 @@ use yii\web\View;
 
 	<?php if (!empty($widget->images)): ?>
 		<?php foreach ($widget->images as $image): ?>
-			<div class="image-item">
+			<div class="image-item" data-role="image-item-params">
 				<?php /** @var Image $image */ ?>
 				<?= Html::img($image->getImageUrl(ImageProvider::FORMAT_THUMB), [
 					'data-medium-url' => $image->getImageUrl(ImageProvider::FORMAT_MEDIUM),
@@ -27,6 +27,7 @@ use yii\web\View;
 					'uncheck' => 0,
 					'label'   => 'Watermark',
 				]) ?>
+				<?= Html::hiddenInput('image-title[' . $image->getIdent() . ']', $image->title) ?>
 			</div>
 		<?php endforeach ?>
 	<?php endif ?>

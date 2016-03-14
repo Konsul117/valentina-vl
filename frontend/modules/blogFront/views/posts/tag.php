@@ -8,7 +8,7 @@ use common\base\View;
 /** @var BlogTag $tag */
 
 $this->breadcrumbs->addBreadcrumb(['/blogFront/posts/tags'], 'Теги');
-$this->breadcrumbs->addBreadcrumb(['/blogFront/posts/tag', 'tag' => $tag->name_url], 'Тег ' . $tag->name);
+$this->breadcrumbs->addBreadcrumb(['/blogFront/posts/tag', 'tag' => $tag->name_url], $tag->name);
 ?>
 
 <?= $postsWidget->run() ?>

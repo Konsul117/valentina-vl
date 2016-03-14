@@ -9,6 +9,7 @@ use common\modules\blog\models\BlogPost;
 use common\modules\image\models\ImageProvider;
 use DOMDocument;
 use DOMElement;
+use frontend\modules\blogFront\components\PostOutHelper;
 use yii\helpers\Url;
 
 class Sitemap extends Module {
@@ -69,10 +70,29 @@ class Sitemap extends Module {
 				$imageNode = $dom->createElement('image:image');
 
 				$imageLocNode = $dom->createElement('image:loc');
-
 				$imageLocNode->appendChild($dom->appendChild($t));
-
 				$imageNode->appendChild($imageLocNode);
+
+				if ($image->title) {
+					$clearedTitle = PostOutHelper::clearString($image->title);
+				}
+				else {
+					$clearedTitle = PostOutHelper::clearString($post->title);
+				}
+
+				if ($clearedTitle) {
+					$imageCaptionNode = $dom->createElement('image:caption');
+					$imageCaptionNode->appendChild($dom->appendChild(
+						$dom->createTextNode($clearedTitle)
+					));
+					$imageNode->appendChild($imageCaptionNode);
+
+					$imageTitleNode = $dom->createElement('image:title');
+					$imageTitleNode->appendChild($dom->appendChild(
+						$dom->createTextNode($clearedTitle)
+					));
+					$imageNode->appendChild($imageTitleNode);
+				}
 
 				$url->appendChild($imageNode);
 			}

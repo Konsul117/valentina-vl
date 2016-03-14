@@ -43,10 +43,23 @@ header {
 	}
 }
 
+/** Облако тегов внизу страницы */
 .tags-cloud {
 	ul.tags-list {
 		> li {
 			display: inline-block;
+		}
+	}
+}
+
+/** Список тегов в конце поста */
+.tags-post {
+	font-size: 0.9em;
+	margin: 0.5em 0;
+	ul.tags-list {
+		display: inline-block;
+		> li {
+			display:   inline-block;
 		}
 	}
 }

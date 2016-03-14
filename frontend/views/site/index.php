@@ -14,7 +14,7 @@ $this->title = 'Главная';
 ?>
 
 <?php if ($mainPage !== null): ?>
-	<?= PostOutHelper::wrapContentImages($mainPage->content, [ImageProvider::FORMAT_MEDIUM]) ?>
+	<?= PostOutHelper::wrapContentImages($mainPage->content, [ImageProvider::FORMAT_MEDIUM], $mainPage->title) ?>
 <?php endif ?>
 
 <?php if ($postsWidget !== null): ?>
