@@ -2,6 +2,7 @@
 use common\base\View;
 use common\modules\image\models\ImageProvider;
 use common\modules\image\models\Image;
+use frontend\modules\blogFront\components\PostOutHelper;
 use frontend\modules\blogFront\widgets\PostsWidget;
 use yii\helpers\Html;
 
@@ -16,8 +17,15 @@ use yii\helpers\Html;
 			<?php foreach ($images as $image): ?>
 				<div class="photo-item">
 					<?= Html::a(
-							Html::img($image->getImageUrl(ImageProvider::FORMAT_THUMB)),
-							['/blogFront/posts/view', 'title_url' => $image->post->title_url]
+							Html::img(
+									$image->getImageUrl(ImageProvider::FORMAT_THUMB),
+									[
+											'title' => PostOutHelper::clearString($image->post->title),
+											'alt'   => PostOutHelper::clearString($image->post->title),
+									]
+							),
+							['/blogFront/posts/view', 'title_url' => $image->post->title_url],
+							['title' => PostOutHelper::clearString($image->post->title)]
 					) ?>
 				</div>
 			<?php endforeach ?>
