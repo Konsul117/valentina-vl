@@ -13,9 +13,14 @@ use yii\helpers\Html;
 	?>
 
 	<div class="header-sup">
-		<div class="inner">
-
-		</div>
+		<?= Html::a(
+				Html::tag('div', '', ['class' => 'inner']),
+				['/'],
+				[
+					'alt'   => 'Авторский блог Валентины Панченко',
+					'title' => 'Авторский блог Валентины Панченко',
+				]
+		) ?>
 	</div>
 
 	<?= $blogFrontModule->getImagePostsWidget(10)->run() ?>
@@ -23,11 +28,17 @@ use yii\helpers\Html;
 	<div class="img-name-wrapper">
 		<div class="img-name-container">
 			<div class="img-name img-name-desktop">
-				<?= Html::a('', ['/']) ?>
+				<?= Html::a('', ['/'], [
+						'alt' => 'Авторский блог Валентины Панченко',
+						'title' => 'Авторский блог Валентины Панченко',
+				]) ?>
 			</div>
 
 			<div class="img-name img-name-mobile">
-				<?= Html::a('', ['/']) ?>
+				<?= Html::a('', ['/'], [
+					'alt' => 'Авторский блог Валентины Панченко',
+					'title' => 'Авторский блог Валентины Панченко',
+				]) ?>
 				<div class="wrapper">
 					<div class="img-part left-part"></div>
 					<div class="img-part right-part"></div>
