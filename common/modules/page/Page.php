@@ -39,7 +39,7 @@ class Page extends Module {
 	 * @return string|null
 	 */
 	public function getPageUrlById($id) {
-		$cacheKey = __METHOD__ . '.v3';
+		$cacheKey = __METHOD__ . '.id-' . $id .'.v3';
 		$result   = Yii::$app->cache->get($cacheKey);
 
 		if ($result === false) {

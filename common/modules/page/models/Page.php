@@ -51,10 +51,10 @@ class Page extends ActiveRecord {
 	const PAGE_ID_MAIN = 1;
 
 	/** Страница контактов */
-	const PAGE_ID_CONTANCTS = 2;
+	const PAGE_ID_CONTACTS = 2;
 
 	/** ЧПУ страницы контактов */
-	const PAGE_URL_CONTANCTS = 'contacts';
+	const PAGE_URL_CONTACTS = 'contacts';
 	/** Отношение к изображениям */
 	const REL_IMAGES = 'images';
 	const REL_MAIN_IMAGE = 'mainImage';

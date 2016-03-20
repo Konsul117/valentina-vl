@@ -44,6 +44,7 @@ AppAsset::register($this);
 						['label' => 'Не бисер', 'url' => ['/blog/blog/category/?category_url=not_biser']],
 						['label' => 'Страницы', 'url' => ['/pageBackend/page/index']],
 						['label' => 'Комментарии', 'url' => ['/commentBackend/comments/index']],
+						['label' => 'Категории', 'url' => ['/blog/category/index']],
 						['label' => 'Настройки', 'items' => [
 								['label' => 'Водяной знак', 'url' => ['/image/settings/watermark']],
 								['label' => 'Очистка', 'url' => ['/image/settings/clear-thumbs']],
