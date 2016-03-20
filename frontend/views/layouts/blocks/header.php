@@ -64,19 +64,25 @@ use yii\helpers\Html;
 				</li>
 
 				<?php
-				$contactsTitleUrl = false;
-				if (isset(Yii::$app->modules['pageFront'])) {
 					/** @var PageFront $pageModule */
 					$pageModule       = Yii::$app->modules['pageFront'];
-					$contactsTitleUrl = $pageModule->getPageUrlById(\common\modules\page\models\Page::PAGE_ID_CONTANCTS);
-				}
 				?>
 
-				<?php if ($contactsTitleUrl): ?>
-					<li class="item-contacts">
-						<?= Html::a('', ['/pageFront/page/view', 'title_url' => $contactsTitleUrl]) ?>
-					</li>
-				<?php endif ?>
+				<li class="item-contacts">
+					<?= Html::a('', [
+							'/pageFront/page/view',
+							'title_url' => $pageModule->getPageUrlById(\common\modules\page\models\Page::PAGE_ID_CONTACTS),
+					]) ?>
+				</li>
+
+				<?php /*
+				<li class="item-contacts">
+					<?= Html::a('', [
+							'/pageFront/page/view',
+							'title_url' => $pageModule->getPageUrlById(\common\modules\page\models\Page::PAGE_ID_MAIN),
+					]) ?>
+				</li>
+ 				*/?>
 			</ul>
 		</div>
 
