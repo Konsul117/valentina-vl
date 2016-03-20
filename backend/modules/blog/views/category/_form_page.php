@@ -27,8 +27,8 @@ use yii\widgets\ActiveForm;
 
 	<?= $form->field($model, BlogCategory::ATTR_TITLE)->textInput(['maxlength' => 100]) ?>
 	<?= $form->field($model, BlogCategory::ATTR_TITLE_URL)->textInput(['maxlength' => 100]) ?>
-	<?= $form->field($model, BlogCategory::ATTR_META_TITLE)->textInput(['maxlength' => 100]) ?>
-	<?= $form->field($model, BlogCategory::ATTR_META_DESCRIPTION)->textInput(['maxlength' => 100]) ?>
+	<?= $form->field($model, BlogCategory::ATTR_META_TITLE)->textInput(['maxlength' => 255]) ?>
+	<?= $form->field($model, BlogCategory::ATTR_META_DESCRIPTION)->textInput(['maxlength' => 255]) ?>
 
 </div>
 
