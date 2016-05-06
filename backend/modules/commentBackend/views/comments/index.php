@@ -3,6 +3,7 @@ use backend\modules\commentBackend\models\CommentSearch;
 use common\base\View;
 use common\components\Formatter;
 use yii\data\ActiveDataProvider;
+use yii\grid\ActionColumn;
 use yii\grid\DataColumn;
 use yii\grid\GridView;
 
@@ -33,6 +34,10 @@ GridView::widget([
 			'attribute' => CommentSearch::ATTR_UPDATE_STAMP,
 			'format'    => 'localDateTime',
 		],
+			[
+					'class'    => ActionColumn::class,
+					'template' => '{update} {delete}',
+			],
 	],
 	'layout'         => "{pager}\n{summary}\n{items}\n{pager}",
 	'formatter'      => [

@@ -2,8 +2,6 @@
 
 namespace frontend\controllers;
 
-use common\modules\page\models\Page as PageModel;
-use common\modules\page\Page;
 use common\modules\sitemap\Sitemap;
 use frontend\modules\blogFront\BlogFront;
 use Yii;
@@ -31,20 +29,8 @@ class SiteController extends Controller {
 			$postsWidget->showEmptyLabel = false;
 		}
 
-		$mainPage = null;
-
-		/** @var Page $pageModule */
-		$pageModule = null;
-
-		if (isset(Yii::$app->modules['pageFront'])) {
-			$pageModule = Yii::$app->modules['pageFront'];
-
-			$mainPage = $pageModule->getPageById(PageModel::PAGE_ID_MAIN);
-		}
-
 		return $this->render('index', [
 			'postsWidget' => $postsWidget,
-			'mainPage'    => $mainPage,
 		]);
 	}
 
