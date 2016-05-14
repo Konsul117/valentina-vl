@@ -8,6 +8,7 @@ use common\components\UploadedFileParams;
 use common\modules\config\Config;
 use Yii;
 use yii\base\InvalidParamException;
+use yii\web\Response;
 use yii\web\ServerErrorHttpException;
 
 /**
@@ -116,7 +117,8 @@ class SettingsController extends Controller {
 			throw new InvalidParamException('Водяной знак не существует');
 		}
 
-		Yii::$app->response->headers->set('Content-Type', 'image/png');
+		Yii::$app->response->format = Response::FORMAT_RAW;
+		Yii::$app->response->headers->set('Content-type', 'image/png');
 
 		return file_get_contents($watermarkPath);
 	}
