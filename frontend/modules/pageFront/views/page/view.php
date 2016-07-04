@@ -13,9 +13,12 @@ $this->metaTagContainer->title = $page->title;
 
 $mainImage = $page->mainImage;
 
+$mainImageTitle = null;
+
 if ($mainImage !== null) {
 	$this->metaTagContainer->image = $mainImage->getImageUrl(ImageProvider::FORMAT_MEDIUM);
+	$mainImageTitle = $mainImage->title;
 }
 ?>
 
-<?= PostOutHelper::wrapContentImages($page->content, [ImageProvider::FORMAT_MEDIUM], $mainImage->title) ?>
+<?= PostOutHelper::wrapContentImages($page->content, [ImageProvider::FORMAT_MEDIUM], $mainImageTitle) ?>
