@@ -54,8 +54,6 @@ CommonAsset::register($this);
 
 <?php $this->beginBody() ?>
 
-<div class="bg-aside bg-left"></div>
-
 <?= $this->render('//layouts/blocks/header') ?>
 
 <div class="content">
@@ -67,8 +65,6 @@ CommonAsset::register($this);
 	<?= $content ?>
 
 </div>
-
-<div class="bg-aside bg-right"></div>
 
 <?= $this->render('//layouts/blocks/footer') ?>
 

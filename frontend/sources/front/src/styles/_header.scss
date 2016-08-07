@@ -27,7 +27,7 @@ header {
 	}
 
 	@include respond-to(desktop) {
-		width: 60%;
+		width: 75%;
 	}
 
 	.header-sup {
@@ -44,7 +44,6 @@ header {
 	//картинка с именем
 	.img-name-wrapper {
 		@include respond-to(desktop) {
-			max-width: 860px;
 			margin:    auto;
 		}
 
@@ -52,7 +51,7 @@ header {
 
 			@include respond-to(desktop) {
 				position:       relative;
-				padding-bottom: 16%;
+				padding-bottom: 11%;
 
 				.img-name {
 					position: absolute;
@@ -70,7 +69,6 @@ header {
 					height:  100%;
 				}
 				display: none;
-				margin:  1em auto;
 
 				@include respond-to(mobile) {
 					//мобильная
@@ -111,7 +109,6 @@ header {
 				@include respond-to(desktop) {
 					//десктопная
 					&.img-name-desktop {
-						max-width:         860px;
 						display:           block;
 						background-image:  url(../images/header_desktop.png);
 						background-size:   contain;
@@ -154,48 +151,28 @@ header {
 						height:  100%;
 					}
 
-					@include respond-to(mobile) {
-						margin:          0 12px 0 0;
-						height:          15px;
-						background:      url(../images/menu/menu-mobile-sprite.png) no-repeat;
-						background-size: cover;
+					margin:          0 12px 0 0;
+					height:          16px;
+					background:      url(../images/menu/menu-sprite.png) no-repeat;
 
-						&.item-biser {
-							background-position: 0 0;
-							width:               64px;
-						}
-
-						&.item-not-biser {
-							background-position: -64px 0;
-							width:               94px;
-						}
-
-						&.item-contacts {
-							background-position: -159px 0;
-							width:               111px;
-						}
+					&.item-biser {
+						background-position: 0 0;
+						width:               66px;
 					}
 
-					@include respond-to(desktop) {
-						margin:          0 18px 0 0;
-						height:          16px;
-						background:      url(../images/menu/menu-mobile-sprite.png) no-repeat;
-						background-size: cover;
+					&.item-not-biser {
+						background-position: -66px 0;
+						width:               97px;
+					}
 
-						&.item-biser {
-							background-position: 0 0;
-							width:               68px;
-						}
+					&.item-contacts {
+						background-position: -164px 0;
+						width:               113px;
+					}
 
-						&.item-not-biser {
-							background-position: -68px 0;
-							width:               102px;
-						}
-
-						&.item-contacts {
-							background-position: -169px 0;
-							width:               119px;
-						}
+					&.item-about-me {
+						background-position: -279px 0;
+						width:               90px;
 					}
 				}
 			}
@@ -210,8 +187,8 @@ header {
 				position: absolute;
 				width:    $social-icon-width-desktop-block;
 				height:   $social-icon-height-desktop-block;
-				left:     -19%;
-				bottom:   -300px;
+				left:     -39px;
+				bottom:   -167px;
 				display:  table-cell;
 			}
 
@@ -260,13 +237,12 @@ header {
 				position: relative;
 				display:  table-cell;
 			}
-			//display:   block;
-			//float:     right;
 			min-width: 5em;
 			height:    1em;
 			input[type=text] {
 				width:            100%;
-				background-color: $color-salmon;
+				background-color: $color-menu-bg;
+				border: 1px solid #FFF;
 				&::-webkit-input-placeholder { color: #000; }
 				&::-moz-placeholder { color: #000; }
 				/* Firefox 19+ */

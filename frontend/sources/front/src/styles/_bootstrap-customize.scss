@@ -3,21 +3,21 @@ a.btn-default {
 	&:link,
 	&:visited,
 	&:active {
-		background-color: #000;
-		color:            $color-heading;
+		background-color: $color-menu-bg;
+		color:            $color-text;
 	}
 
 	&:hover {
-		color: #000;
-		background-color: #eee;
+		color:            $color-text;
+		background-color: #EEE;
 	}
 }
 
 .pagination {
 	> li, li.disabled {
 		> a, span {
-			background-color: #000;
-			color:            #FFF;
+			background-color: $color-menu-bg;
+			color:            $color-text;
 		}
 
 		&.active {

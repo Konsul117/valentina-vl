@@ -86,14 +86,12 @@ use yii\helpers\Html;
 					]) ?>
 				</li>
 
-				<?php /*
-				<li class="item-contacts">
+				<li class="item-about-me">
 					<?= Html::a('', [
 							'/pageFront/page/view',
 							'title_url' => $pageModule->getPageUrlById(\common\modules\page\models\Page::PAGE_ID_MAIN),
 					]) ?>
 				</li>
- 				*/?>
 			</ul>
 		</div>
 
