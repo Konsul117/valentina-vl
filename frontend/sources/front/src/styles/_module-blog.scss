@@ -24,7 +24,7 @@ header {
 		display: none;
 		@include respond-to(desktop) {
 			display:    block;
-			margin:     1em auto;
+			margin:     0 auto 1em;
 			text-align: center;
 			//контейнер с фото
 			.photos-container {

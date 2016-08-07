@@ -9,11 +9,11 @@
 	padding:    1px 1em;
 
 	@include respond-to(desktop) {
-		width:  75%;
+		max-width:  $screen-lg-max;
 		margin: 1em auto;
 	}
 
-	background: rgba(255, 255, 255, 0.4);
+	background: rgba(255, 255, 255, 0.6);
 
 	ul.breadcrubms {
 		margin:  0.5em 0;
