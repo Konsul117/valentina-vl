@@ -29,9 +29,17 @@ header {
 			margin:    auto;
 		}
 
+		@include respond-to(mobile) {
+			display: table;
+			width:   100%;
+		}
+
 		.img-name-container {
 			@include respond-to(mobile) {
-				width: 90%;
+				width:          90%;
+				display:        table-cell;
+				padding-right:  5px;
+				vertical-align: top;
 			}
 			@include respond-to(desktop) {
 				width: 100%;
@@ -83,6 +91,10 @@ header {
 		}
 
 		.search-heading {
+			@include respond-to(mobile) {
+				display:        table-cell;
+				vertical-align: top;
+			}
 			@include respond-to(desktop) {
 				display: none;
 			}
