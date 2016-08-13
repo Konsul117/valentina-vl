@@ -114,10 +114,18 @@ class BlogFront extends Blog {
 	/**
 	 * Получение виджета поиска
 	 *
+	 * @param string $buttonClass Класс кнопки поиска
+	 *
 	 * @return SearchWidget
 	 */
-	public function getSearchWidget() {
-		return new SearchWidget();
+	public function getSearchWidget($buttonClass = null) {
+		$params = [];
+
+		if ($buttonClass !== null) {
+			$params[SearchWidget::ATTR_BUTTON_CLASS] = $buttonClass;
+		}
+
+		return new SearchWidget($params);
 	}
 
 	/**

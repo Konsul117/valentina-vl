@@ -1,7 +1,16 @@
 <?php
+use common\base\View;
+use common\modules\page\models\Page;
+use Faker\Provider\Uuid;
 use frontend\modules\blogFront\BlogFront;
 use frontend\modules\pageFront\PageFront;
 use yii\helpers\Html;
+use yii\helpers\Url;
+use yii\widgets\Spaceless;
+
+/**
+ * @var View $this
+ */
 
 ?>
 
@@ -25,77 +34,70 @@ use yii\helpers\Html;
 
 	<?= $blogFrontModule->getImagePostsWidget(10)->run() ?>
 
+	<?php Spaceless::begin() ?>
 	<div class="img-name-wrapper">
 		<div class="img-name-container">
-			<div class="img-name img-name-desktop">
+			<div class="img-name">
 				<?= Html::a('', ['/'], [
 						'alt' => 'Авторский блог Валентины Панченко',
 						'title' => 'Авторский блог Валентины Панченко',
 				]) ?>
 			</div>
-
-			<div class="img-name img-name-mobile">
-				<?= Html::a('', ['/'], [
-					'alt' => 'Авторский блог Валентины Панченко',
-					'title' => 'Авторский блог Валентины Панченко',
-				]) ?>
-				<div class="wrapper">
-					<div class="img-part left-part"></div>
-					<div class="img-part right-part"></div>
-				</div>
-			</div>
+			<div class="beads-photo"></div>
 		</div>
+
+		<? $seachPanelGuid = Uuid::uuid(); ?>
+		<div class="search-heading" id="<?= $seachPanelGuid ?>">
+			<div class="search-panel hidden" data-role="search-panel">
+				<?= $blogFrontModule->getSearchWidget('btn btn-panel-search')->run() ?>
+			</div>
+			<button class="btn-header-search glyphicon glyphicon-search" data-role="search-panel-open"></button>
+		</div>
+
+		<?= $this->registerJs('$("#' . $seachPanelGuid . '").searchHeadingPanel();') ?>
 	</div>
+	<?php Spaceless::end() ?>
 
 	<div class="sup-menu">
 
 	</div>
 
-	<div class="menu-wrapper">
+	<?php Spaceless::begin() ?>
+		<div class="menu-wrapper">
 
-		<div class="social-icons">
-			<div class="social-logo social-logo-instagram"><?= Html::a('', 'https://www.instagram.com/vasa_vasa400/ ',
-						['target' => '_blank']) ?></div><!--
-		 -->
-			<div class="social-logo social-logo-ok"><?= Html::a('', 'http://ok.ru/valentina.panchenko1 ',
-						['target' => '_blank']) ?></div><!--
-		 -->
-			<div class="social-logo social-logo-vk"><?= Html::a('', 'https://vk.com/id215242627 ',
-						['target' => '_blank']) ?></div>
-		</div>
+			<ul class="menu">
+				<?php
+				/** @var PageFront $pageModule */
+				$pageModule       = Yii::$app->modules['pageFront'];
+				?>
 
-		<div class="menu">
-			<ul class="menu-items">
+				<li class="item-about-me">
+					<a href="<?= Url::to(['/pageFront/page/view', 'title_url' => $pageModule->getPageUrlById(Page::PAGE_ID_MAIN)]) ?>">
+						<span class="text-label">Обо мне</span>
+					</a>
+				</li>
+
 				<li class="item-biser">
-					<?= Html::a('', ['/blogFront/posts/category', 'category_url' => 'biser']) ?>
+					<a href="<?= Url::to(['/blogFront/posts/category', 'category_url' => 'biser']) ?>">
+						<span class="text-label">Бисер</span>
+					</a>
 				</li>
 
 				<li class="item-not-biser">
-					<?= Html::a('', ['/blogFront/posts/category', 'category_url' => 'not_biser']) ?>
+					<a href="<?= Url::to(['/blogFront/posts/category', 'category_url' => 'not_biser']) ?>">
+						<span class="text-label">Не бисер</span>
+					</a>
 				</li>
-
-				<?php
-					/** @var PageFront $pageModule */
-					$pageModule       = Yii::$app->modules['pageFront'];
-				?>
 
 				<li class="item-contacts">
-					<?= Html::a('', [
-							'/pageFront/page/view',
-							'title_url' => $pageModule->getPageUrlById(\common\modules\page\models\Page::PAGE_ID_CONTACTS),
-					]) ?>
-				</li>
-
-				<li class="item-about-me">
-					<?= Html::a('', [
-							'/pageFront/page/view',
-							'title_url' => $pageModule->getPageUrlById(\common\modules\page\models\Page::PAGE_ID_MAIN),
-					]) ?>
+					<a href="<?= Url::to(['/pageFront/page/view', 'title_url' => $pageModule->getPageUrlById(Page::PAGE_ID_CONTACTS)]) ?>">
+						<span class="text-label">Контакты</span>
+					</a>
 				</li>
 			</ul>
-		</div>
 
-		<?= $blogFrontModule->getSearchWidget()->run() ?>
-	</div>
+			<?= $blogFrontModule->getSearchWidget()->run() ?>
+		</div>
+	<?php Spaceless::end() ?>
 
 </header>

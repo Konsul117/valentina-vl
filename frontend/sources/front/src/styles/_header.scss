@@ -1,42 +1,25 @@
 //шапка
 
-$social-icons-count: 3;
-
-$social-icon-width-mobile: 30px;
-$social-icon-height-mobile: 30px;
-$social-icon-delim-mobile: 15px;
-
-$social-icon-width-mobile-block: $social-icon-width-mobile * $social-icons-count + $social-icon-delim-mobile * ($social-icons-count - 1);
-$social-icon-height-mobile-block: $social-icon-height-mobile;
-
-$social-icon-width-desktop: 40px;
-$social-icon-height-desktop: 40px;
-$social-icon-delim-desktop: 15px;
-
-$social-icon-width-desktop-block: $social-icon-width-desktop;
-$social-icon-height-desktop-block: $social-icon-height-desktop * $social-icons-count + $social-icon-delim-desktop * ($social-icons-count - 1);
-
 header {
 	margin:   auto;
 	position: relative;
-
-	@include respond-to(mobile) {
-		width:         100%;
-		padding-left:  1em;
-		padding-right: 1em;
-	}
 
 	@include respond-to(desktop) {
 		max-width: $screen-lg-max;
 	}
 
 	.header-sup {
+		@include respond-to(mobile) {
+			display: none;
+		}
 		.inner {
-			background:        url(../images/header_desktop_sup.png);
-			background-size:   contain;
-			background-repeat: no-repeat;
-			display:           block;
-			padding-bottom:    3%;
+			@include respond-to(desktop) {
+				background:        url(../images/header_desktop_sup.png);
+				background-size:   contain;
+				background-repeat: no-repeat;
+				display:           block;
+				padding-bottom:    2%;
+			}
 		}
 	}
 
@@ -47,19 +30,14 @@ header {
 		}
 
 		.img-name-container {
-
-			@include respond-to(desktop) {
-				position:       relative;
-				padding-bottom: 11%;
-
-				.img-name {
-					position: absolute;
-					top:      0;
-					bottom:   0;
-					left:     0;
-					right:    0;
-				}
+			@include respond-to(mobile) {
+				width: 90%;
 			}
+			@include respond-to(desktop) {
+				width: 100%;
+			}
+			display: inline-block;
+			margin-bottom: 5px;
 
 			.img-name {
 				> a {
@@ -67,153 +45,105 @@ header {
 					width:   100%;
 					height:  100%;
 				}
-				display: none;
 
+				display:           block;
+				background-image:  url(../images/header_desktop.png);
+				background-size:   contain;
+				background-repeat: no-repeat;
 				@include respond-to(mobile) {
 					//мобильная
-					&.img-name-mobile {
-						width:     67%;
-						max-width: 457px;
-						display:   block;
-						.wrapper {
-							display: inline-block;
-							//части
-							.img-part {
-								display:           block;
-								background-size:   contain;
-								background-repeat: no-repeat;
-
-								//левая часть
-								&.left-part {
-									background-image: url(../images/header_mobile_left.png);
-									float:            left;
-									width:            236px;
-									height:           37px;
-								}
-
-								//правая часть
-								&.right-part {
-									background-image: url(../images/header_mobile_right.png);
-									float:            right;
-									width:            261px;
-									height:           61px;
-									margin-top:       5px;
-								}
-							}
-
-						}
-					}
+					padding-bottom:    7%;
+					width:             100%;
 				}
-
 				@include respond-to(desktop) {
 					//десктопная
-					&.img-name-desktop {
-						display:           block;
-						background-image:  url(../images/header_desktop.png);
-						background-size:   contain;
-						background-repeat: no-repeat;
-						//height:            122px;
-					}
+
+					padding-bottom:    6%;
+					width:             83%;
+
+
+				}
+			}
+
+			.beads-photo {
+				display:           inline-block;
+				background-repeat: no-repeat;
+				background-image:  url(../images/header_desktop_right.png);
+				float:             right;
+				background-size:   contain;
+				@include respond-to(mobile) {
+					width:          41%;
+					padding-bottom: 5%;
+				}
+				@include respond-to(desktop) {
+					width:          32%;
+					padding-bottom: 4%;
+				}
+			}
+		}
+
+		.search-heading {
+			@include respond-to(desktop) {
+				display: none;
+			}
+			&.opened {
+				position: absolute;
+				left:     0;
+				right:    0;
+				top:      0;
+			}
+			display:          inline-block;
+			vertical-align:   top;
+			background-color: $menu-bg-mobile-color;
+			float:            right;
+			z-index:          10;
+			$search-button-width: 50px;
+			$search-button-height: 50px;
+
+			.search-panel {
+				position:         absolute;
+				top:              0;
+				left:             0;
+				right:            $search-button-width;
+				height:           $search-button-height;
+				background-color: $menu-bg-mobile-color;
+				padding:          0.5em;
+				input[type=text] {
+					font-size: 23px;
+				}
+				.btn-panel-search {
+					background:     $content-bg-color;
+					font-size:      0.9em;
+					margin-left:    0.5em;
+					vertical-align: top;
+				}
+			}
+			.btn-header-search {
+				float:      right;
+				border:     none;
+				background: none;
+				width:      $search-button-width;
+				height:     $search-button-height;
+				&:focus {
+					outline: none;
 				}
 			}
 		}
 	}
 
 	.menu-wrapper {
-		@include respond-to(mobile) {
-			position: relative;
-			display:  block;
-		}
-		@include respond-to(desktop) {
-			display: table;
-			width:   100%;
-		}
-		//menu
-		.menu {
+		width:   100%;
+
+		ul.menu {
 			@include respond-to(mobile) {
+				width:            100%;
+				display:          table;
+				background-color: $menu-bg-mobile-color;
+			}
+			display: inline-block;
+
+			> li {
 				display: inline-block;
-			}
-
-			@include respond-to(desktop) {
-				display: table-cell;
-			}
-
-			ul.menu-items {
-				display: inline-block;
-
-				> li {
-					display: inline-block;
-
-					> a {
-						display: block;
-						width:   100%;
-						height:  100%;
-					}
-
-					margin:          0 12px 0 0;
-					height:          16px;
-					background:      url(../images/menu/menu-sprite.png) no-repeat;
-
-					&.item-biser {
-						background-position: 0 0;
-						width:               66px;
-					}
-
-					&.item-not-biser {
-						background-position: -66px 0;
-						width:               97px;
-					}
-
-					&.item-contacts {
-						background-position: -164px 0;
-						width:               113px;
-					}
-
-					&.item-about-me {
-						background-position: -279px 0;
-						width:               90px;
-					}
-				}
-			}
-		}
-
-		.social-icons {
-			@include respond-to(mobile) {
-				margin: 0.5em 0;
-			}
-
-			@include respond-to(desktop) {
-				position: absolute;
-				width:    $social-icon-width-desktop-block;
-				height:   $social-icon-height-desktop-block;
-				left:     -46px;
-				bottom:   -167px;
-				display:  table-cell;
-			}
-
-			@import "social/*.png";
-			@include all-social-sprites;
-
-			.social-logo {
-				@include respond-to(mobile) {
-					display: inline-block;
-					width:   $social-icon-width-desktop;
-					height:  $social-icon-height-desktop;
-					margin:  0 $social-icon-delim-desktop 0 0;
-					zoom:    0.9;
-					&:last-child {
-						margin-right: 0;
-					}
-				}
-
-				@include respond-to(desktop) {
-					width:  $social-icon-width-desktop;
-					height: $social-icon-height-desktop;
-					margin: 0 0 $social-icon-delim-desktop 0;
-					&:last-child {
-						margin-bottom: 0;
-					}
-				}
 
 				> a {
 					display: block;
@@ -221,20 +151,69 @@ header {
 					height:  100%;
 				}
 
+				$margin-right: 		12px;
+				$height: 			18px;
+				$offset-about-me: 	0px;
+				$width-about-me: 	107px;
+				$offset-biser: 		-108px;
+				$width-biser: 		76px;
+				$offset-not-biser: 	-185px;
+				$width-not-biser: 	113px;
+				$offset-contacts: 	-299px;
+				$width-contacts: 	132px;
+
+				$mobile-scale: 0.6;
+
+				@include respond-to(desktop) {
+					.text-label {
+						display: none;
+					}
+					margin:     0 $margin-right 0 0;
+					height:     $height;
+					background: url(../images/menu/menu-desktop.png) no-repeat;
+
+					&.item-about-me {
+						background-position: $offset-about-me 0;
+						width:               $width-about-me;
+					}
+
+					&.item-biser {
+						background-position: $offset-biser 0;
+						width:               $width-biser;
+					}
+
+					&.item-not-biser {
+						background-position: $offset-not-biser 0;
+						width:               $width-not-biser;
+					}
+
+					&.item-contacts {
+						background-position: $offset-contacts 0;
+						width:               $width-contacts;
+					}
+				}
+
+				@include respond-to(mobile) {
+					display:        table-cell;
+					width:          25%;
+					border:         1px solid $color-heading;
+					> a {
+						text-align:     center;
+						height:      56px;
+						line-height: 56px;
+					}
+				}
 			}
 		}
 
 		.search-panel {
 			@include respond-to(mobile) {
-				position: absolute;
-				right:    0;
-				top:      0;
-				width:    140px;
+				display: none;
 			}
 			@include respond-to(desktop) {
 				width:    23%;
+				float:    right;
 				position: relative;
-				display:  table-cell;
 			}
 			min-width: 5em;
 			height:    1em;
@@ -266,6 +245,10 @@ header {
 				right:            0;
 				background-color: transparent;
 				border:           none;
+			}
+
+			.button-label {
+				display: none;
 			}
 		}
 	}

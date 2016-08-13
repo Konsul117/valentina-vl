@@ -1,0 +1,7 @@
+@mixin zoom($scale) {
+	zoom: $scale;
+	-ms-zoom: $scale;
+	-webkit-zoom: $scale;
+	-moz-transform:  scale($scale, $scale);
+	-moz-transform-origin: left center;
+}

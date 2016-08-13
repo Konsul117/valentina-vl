@@ -886,11 +886,15 @@ $page-logo-margin:					$page-aside-margin;
 
 $border-color:						$gray-light-some;
 
-$background-base-color:			#000;
+$background-base-color:			#FFF;
 $color-menu-bg: 				#B7E6D6;
 $color-text:					#422209;
 $color-heading:					#b19d9d;
 $color-breadcrumbs: 			#888;
 $link-color:					#555;
+$content-bg-color:				rgba(255, 255, 255, 0.8);
+$footer-bg-color:				#b8e7d7;
+$menu-bg-mobile-color:			#b8e7d7;
 //максимальная ширина
 $screen-lg-max: 				1066px;
+$footer-height: 				100px;

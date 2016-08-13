@@ -1,4 +1,5 @@
 <?php
+use common\components\Formatter;
 use common\modules\image\models\ImageProvider;
 use common\modules\blog\models\BlogPost;
 use common\base\View;
@@ -24,9 +25,16 @@ $mainImage = $post->mainImage;
 if ($mainImage !== null) {
 	$this->metaTagContainer->image = $mainImage->getImageUrl(ImageProvider::FORMAT_MEDIUM);
 }
+
+$formatter = new Formatter();
 ?>
 
 <div class="blog-post-content clearfix">
+
+	<div class="post-stamp">
+		<?= $formatter->asLocalDateTime($post->insert_stamp, 'd.m.Y H:i') ?>
+	</div>
+
 	<?= PostOutHelper::wrapContentImages($post->content, [ImageProvider::FORMAT_MEDIUM], $post->title) ?>
 </div>
 

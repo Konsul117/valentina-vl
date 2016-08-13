@@ -1,7 +1,6 @@
 @charset "UTF-8";
 @import "variables";
 
-@import "bootstrap_helper";
 @import "bootstrap";
 
 //import compass
@@ -11,13 +10,14 @@
 @import "compass/utilities/sprites";
 
 @import "mixins/respond-to";
+@import "mixins/zoom";
 
 @import "reset";
-//@import "fonts";
 @import "bootstrap-customize";
 @import "fancybox_customize";
 @import "base";
 @import "header";
+@import "footer";
 @import "content";
 @import "module-blog";
 @import "module-comment";

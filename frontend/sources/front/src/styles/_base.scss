@@ -1,5 +1,35 @@
+html, body {
+	margin:  0;
+	padding: 0;
+	position: relative;
+}
+
+html {
+	height: 100%;
+}
+
 body {
-	position:         relative;
+	min-height: 100%;
+	position:   relative;
+}
+
+#fade-layer {
+	position:   absolute;
+	display:    none;
+	top:        0;
+	left:       0;
+	width:      100%;
+	height:     100%;
+	background: rgba(0, 0, 0, .5);
+	z-index:    5;
+}
+
+.wrapper {
+	min-height: 100%;
+	position: relative;
+}
+
+body {
 	background-image: url(../images/background_wood_white.jpg);
 	background-color: $background-base-color;
 	min-width:        $screen-xs-min;
@@ -16,14 +46,12 @@ body {
 		color:       $color-heading;
 		font-size:   2em;
 		font-weight: bold;
-		margin:      0.5em 0;
 	}
 
 	h2 {
 		font-size:   1.5em;
 		color:       $color-text;
 		font-weight: bold;
-		margin:      0.5em 0;
 	}
 }
 
@@ -40,8 +68,4 @@ a {
 input[type=text],
 select {
 	border: 1px solid #AAA;
-}
-
-footer {
-	text-align: center;
 }

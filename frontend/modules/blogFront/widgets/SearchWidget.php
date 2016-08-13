@@ -11,14 +11,20 @@ use yii\helpers\Html;
  */
 class SearchWidget extends Widget {
 
+	const ATTR_BUTTON_CLASS = 'buttonClass';
+	/** @var string Класс кнопки поиска */
+	public $buttonClass = 'icons icons-search';
+	/** @var string Поисковый запрос */
+	public $query;
+
 	public function run() {
 
 		$query = Yii::$app->request->get('query');
 
-		$query = Html::encode($query);
+		$this->query = Html::encode($query);
 
 		return $this->render('search', [
-			'query' => $query,
+			'widget' => $this,
 		]);
 	}
 

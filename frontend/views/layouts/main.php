@@ -69,6 +69,9 @@ CommonAsset::register($this);
 <?= $this->render('//layouts/blocks/footer') ?>
 
 <?php $this->endBody() ?>
+
+<div id="fade-layer"></div>
+
 </body>
 </html>
 <?php $this->endPage() ?>

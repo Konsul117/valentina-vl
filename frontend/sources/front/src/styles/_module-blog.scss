@@ -63,3 +63,12 @@ header {
 		}
 	}
 }
+
+//содержимое поста блога при выводе на своей странице
+.blog-post-content {
+	.post-stamp {
+		font-size:     0.9em;
+		font-style:    italic;
+		margin-bottom: 0.2em;
+	}
+}
