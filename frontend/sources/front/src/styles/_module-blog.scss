@@ -12,6 +12,19 @@ $header-photo-height: 90px;
 			font-size:  0.9em;
 			font-style: italic;
 		}
+		.image-block {
+			//применяем форматирование изображений слева и справа только для десктопных разрешений
+			&.format-left {
+				float: left;
+				clear: left;
+
+				.img-wrap {
+					img {
+						margin: 0 1em 0 0;
+					}
+				}
+			}
+		}
 	}
 	.pagination-wrap {
 		text-align: center;
