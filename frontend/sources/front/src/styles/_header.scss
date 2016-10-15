@@ -5,7 +5,7 @@ header {
 	position: relative;
 
 	@include respond-to(desktop) {
-		max-width: $screen-lg-max;
+		max-width:  $screen-lg-max;
 	}
 
 	.header-sup {
@@ -25,27 +25,23 @@ header {
 
 	//картинка с именем
 	.img-name-wrapper {
-		@include respond-to(desktop) {
-			margin:    auto;
-		}
-
-		@include respond-to(mobile) {
-			display: table;
-			width:   100%;
-		}
-
 		.img-name-container {
 			@include respond-to(mobile) {
-				width:          90%;
-				display:        table-cell;
-				padding-right:  5px;
 				vertical-align: top;
 			}
-			@include respond-to(desktop) {
-				width: 100%;
-			}
-			display: inline-block;
+			width: 100%;
 			margin-bottom: 5px;
+
+			display: table;
+
+			> * {
+				display:        table-cell;
+				vertical-align: bottom;
+
+				@include respond-to(desktop) {
+					height: 33px;
+				}
+			}
 
 			.img-name {
 				> a {
@@ -54,10 +50,10 @@ header {
 					height:  100%;
 				}
 
-				display:           block;
-				background-image:  url(../images/header_desktop.png);
-				background-size:   contain;
-				background-repeat: no-repeat;
+				background-image:    url(../images/header_desktop.png);
+				background-size:     contain;
+				background-repeat:   no-repeat;
+				background-position: bottom;
 				@include respond-to(mobile) {
 					//мобильная
 					padding-bottom:    7%;
@@ -66,26 +62,71 @@ header {
 				@include respond-to(desktop) {
 					//десктопная
 
-					padding-bottom:    6%;
-					width:             83%;
-
-
+					width:          60%;
+					padding-bottom: 4%;
 				}
 			}
 
 			.beads-photo {
-				display:           inline-block;
-				background-repeat: no-repeat;
-				background-image:  url(../images/header_desktop_right.png);
-				float:             right;
-				background-size:   contain;
+				background-repeat:   no-repeat;
+				background-image:    url(../images/beads_photo_and_love.png);
+				background-size:     contain;
+				background-position: bottom;
 				@include respond-to(mobile) {
 					width:          41%;
 					padding-bottom: 5%;
 				}
 				@include respond-to(desktop) {
-					width:          32%;
-					padding-bottom: 4%;
+					margin-left:    1em;
+					width:          22%;
+				}
+			}
+
+			.search-block {
+				@include respond-to(desktop) {
+					width:       18%;
+					padding-left: 0.9em;
+					form {
+						position: relative;
+					}
+				}
+				@include respond-to(mobile) {
+					display: none;
+				}
+				min-width: 5em;
+				height:    1em;
+				input[type=text] {
+					width:            100%;
+					background-color: $color-menu-bg;
+					border: 1px solid #FFF;
+					&::-webkit-input-placeholder { color: #000; }
+					&::-moz-placeholder { color: #000; }
+					/* Firefox 19+ */
+					&:-moz-placeholder { color: #000; }
+					/* Firefox 18- */
+					&:-ms-input-placeholder { color: #000; }
+					color:            #000;
+					//font-size:        0.8em;
+					height:           22px;
+					margin:           0;
+					padding:          0;
+					font-size:        0.8em;
+					//border: none;
+				}
+
+				.icons-search {
+					width:            20px;
+					height:           20px;
+					zoom:             0.7;
+					position:         absolute;
+					top:              5px;
+					right:            0;
+					background-color: transparent;
+					border:           none;
+				}
+
+				.button-label {
+					display: none;
 				}
 			}
 		}
@@ -93,24 +134,26 @@ header {
 		.search-heading {
 			@include respond-to(mobile) {
 				display:        table-cell;
-				vertical-align: top;
 			}
 			@include respond-to(desktop) {
 				display: none;
 			}
+			$search-button-width: 50px;
+			$search-button-height: 50px;
 			&.opened {
 				position: absolute;
 				left:     0;
 				right:    0;
 				top:      0;
+				.btn-header-search {
+					width:      $search-button-width;
+					height:     $search-button-height;
+				}
 			}
 			display:          inline-block;
-			vertical-align:   top;
+			vertical-align:   middle;
 			background-color: $menu-bg-mobile-color;
-			float:            right;
 			z-index:          10;
-			$search-button-width: 50px;
-			$search-button-height: 50px;
 
 			.search-panel {
 				position:         absolute;
@@ -122,6 +165,7 @@ header {
 				padding:          0.5em;
 				input[type=text] {
 					font-size: 23px;
+					width:     170px;
 				}
 				.btn-panel-search {
 					background:     $content-bg-color;
@@ -134,8 +178,6 @@ header {
 				float:      right;
 				border:     none;
 				background: none;
-				width:      $search-button-width;
-				height:     $search-button-height;
 				&:focus {
 					outline: none;
 				}
@@ -144,9 +186,18 @@ header {
 	}
 
 	.menu-wrapper {
+		@include respond-to(desktop) {
+			margin-top: 0.7em;
+		}
 		width:   100%;
 
 		ul.menu {
+
+			@media (min-width: $screen-sm-min) {
+				@import "menu/*.png";
+				@include all-menu-sprites;
+			}
+
 			@include respond-to(mobile) {
 				width:            100%;
 				display:          table;
@@ -163,16 +214,12 @@ header {
 					height:  100%;
 				}
 
-				$margin-right: 		12px;
+				$margin-right: 		20px;
 				$height: 			18px;
-				$offset-about-me: 	0px;
-				$width-about-me: 	107px;
-				$offset-biser: 		-108px;
-				$width-biser: 		76px;
-				$offset-not-biser: 	-185px;
-				$width-not-biser: 	113px;
-				$offset-contacts: 	-299px;
-				$width-contacts: 	132px;
+				$width-about-me: 	113px;
+				$width-biser: 		82px;
+				$width-not-biser: 	122px;
+				$width-contacts: 	139px;
 
 				$mobile-scale: 0.6;
 
@@ -182,25 +229,20 @@ header {
 					}
 					margin:     0 $margin-right 0 0;
 					height:     $height;
-					background: url(../images/menu/menu-desktop.png) no-repeat;
 
-					&.item-about-me {
-						background-position: $offset-about-me 0;
+					&.menu-about-me {
 						width:               $width-about-me;
 					}
 
-					&.item-biser {
-						background-position: $offset-biser 0;
+					&.menu-biser {
 						width:               $width-biser;
 					}
 
-					&.item-not-biser {
-						background-position: $offset-not-biser 0;
+					&.menu-not-biser {
 						width:               $width-not-biser;
 					}
 
-					&.item-contacts {
-						background-position: $offset-contacts 0;
+					&.menu-contacts {
 						width:               $width-contacts;
 					}
 				}
@@ -215,52 +257,6 @@ header {
 						line-height: 56px;
 					}
 				}
-			}
-		}
-
-		.search-panel {
-			@include respond-to(mobile) {
-				display: none;
-			}
-			@include respond-to(desktop) {
-				width:    23%;
-				float:    right;
-				position: relative;
-			}
-			min-width: 5em;
-			height:    1em;
-			input[type=text] {
-				width:            100%;
-				background-color: $color-menu-bg;
-				border: 1px solid #FFF;
-				&::-webkit-input-placeholder { color: #000; }
-				&::-moz-placeholder { color: #000; }
-				/* Firefox 19+ */
-				&:-moz-placeholder { color: #000; }
-				/* Firefox 18- */
-				&:-ms-input-placeholder { color: #000; }
-				color:            #000;
-				//font-size:        0.8em;
-				height:           22px;
-				margin:           0;
-				padding:          0;
-				font-size:        0.8em;
-				//border: none;
-			}
-
-			.icons-search {
-				width:            20px;
-				height:           20px;
-				zoom:             0.7;
-				position:         absolute;
-				top:              5px;
-				right:            0;
-				background-color: transparent;
-				border:           none;
-			}
-
-			.button-label {
-				display: none;
 			}
 		}
 	}

@@ -9,7 +9,6 @@ use yii\helpers\Html;
  */
 ?>
 
-<div class="search-panel">
 	<?= Html::beginForm(['/blogFront/posts/search'], 'get') ?>
 	<?= Html::textInput('query', $widget->query, [
 			'maxlength'   => 50,
@@ -22,4 +21,3 @@ use yii\helpers\Html;
 		</span>
 	</button>
 	<?= Html::endForm() ?>
-</div>

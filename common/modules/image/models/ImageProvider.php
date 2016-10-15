@@ -7,8 +7,14 @@ namespace common\modules\image\models;
  */
 interface ImageProvider {
 
+	/** Формат мини-превью на главной странице */
+	const FORMAT_THUMB_FRONT_MAIN = 'thumb-front-main';
+
 	/** Формат превью */
 	const FORMAT_THUMB = 'thumb';
+
+	/** Формат изображений постов для главной страницы */
+	const FORMAT_POST_MAIN = 'post-main';
 
 	/** Формат среднего разера */
 	const FORMAT_MEDIUM = 'medium';

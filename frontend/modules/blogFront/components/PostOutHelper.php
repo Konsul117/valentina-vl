@@ -23,7 +23,7 @@ class PostOutHelper {
 	 * Оборачивание изображений контента для кликабельности
 	 *
 	 * @param string $content      Контент поста
-	 * @param array  $checkFormats Форматы изображения, для которых нужно проверить и регенерировать тамбы
+	 * @param string  $srcFormat Формат изображения, для которых нужно проверить и регенерировать тамбы
 	 * @param string $defaultTitle Название изображений по-умолчанию (если в самом изображении оно не указано,
 	 *                             то задаётся переданное в данном параметре)
 	 *
@@ -31,7 +31,7 @@ class PostOutHelper {
 	 *
 	 * @throws Exception
 	 */
-	public static function wrapContentImages($content, $checkFormats = [], $defaultTitle = null) {
+	public static function wrapContentImages($content, $srcFormat, $defaultTitle = null) {
 		/** @var Image $imageModule */
 		$imageModule = Yii::$app->getModule('image');
 
@@ -95,7 +95,22 @@ class PostOutHelper {
 			$img = $imgEl->ownerDocument->createElement('img');
 
 			foreach($imgEl->attributes as $attr) {
-				$img->setAttribute((string)$attr->name, (string)$attr->value);
+				switch ($attr->name) {
+					case 'src':
+						$img->setAttribute((string)$attr->name, $imageModule->imageThumbCreator->getImageThumbUrl(
+							$imageId,
+							$srcFormat,
+							$image->is_need_watermark
+						));
+
+						break;
+
+					default:
+						$img->setAttribute((string)$attr->name, (string)$attr->value);
+
+						break;
+				}
+
 			}
 
 			if ($imageTitle) {

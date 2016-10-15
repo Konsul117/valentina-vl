@@ -1,7 +1,7 @@
 /** Модуль "Блог" **/
 
-$header-photo-width: 90px;
-$header-photo-height: 90px;
+$header-photo-width: 50px;
+$header-photo-height: 50px;
 
 .blog-posts {
 	.post-item {
@@ -37,7 +37,7 @@ header {
 		display: none;
 		@include respond-to(desktop) {
 			display:    block;
-			margin:     0 auto 1em;
+			margin:     0 auto 0.5em;
 			text-align: center;
 			//контейнер с фото
 			.photos-container {

@@ -35,7 +35,7 @@ $formatter = new Formatter();
 		<?= $formatter->asLocalDateTime($post->insert_stamp, 'd.m.Y H:i') ?>
 	</div>
 
-	<?= PostOutHelper::wrapContentImages($post->content, [ImageProvider::FORMAT_MEDIUM], $post->title) ?>
+	<?= PostOutHelper::wrapContentImages($post->content, ImageProvider::FORMAT_MEDIUM, $post->title) ?>
 </div>
 
 <?= TagsPostWidget::widget(['post' => $post]) ?>

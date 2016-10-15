@@ -21,5 +21,5 @@ EditorViewAsset::register($this);
 </p>
 
 <div class="post-content">
-	<?= PostOutHelper::wrapContentImages($model->content, [ImageProvider::FORMAT_MEDIUM]) ?>
+	<?= PostOutHelper::wrapContentImages($model->content, ImageProvider::FORMAT_MEDIUM) ?>
 </div>

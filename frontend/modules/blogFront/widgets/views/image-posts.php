@@ -18,7 +18,7 @@ use yii\helpers\Html;
 				<div class="photo-item">
 					<?= Html::a(
 							Html::img(
-									$image->getImageUrl(ImageProvider::FORMAT_THUMB),
+									$image->getImageUrl(ImageProvider::FORMAT_THUMB_FRONT_MAIN),
 									[
 											'title' => PostOutHelper::clearString($image->post->title),
 											'alt'   => PostOutHelper::clearString($image->post->title),

@@ -31,7 +31,7 @@ $formatter = new Formatter();
 				</div>
 
 				<div class="item-content">
-					<?= PostOutHelper::wrapContentImages($post->short_content, [ImageProvider::FORMAT_MEDIUM], $post->title) ?>
+					<?= PostOutHelper::wrapContentImages($post->short_content, ImageProvider::FORMAT_POST_MAIN, $post->title) ?>
 				</div>
 
 				<p>
