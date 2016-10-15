@@ -133,7 +133,7 @@ class ImageThumbCreator extends Component {
 					}
 				}
 
-				$imageLayer->save($this->getResizedPath(), $resizedFilename);
+				$imageLayer->save($this->getResizedPath(), $resizedFilename, true, null, 100);
 			}
 			catch (ImageWorkshopBaseException $e) {
 				throw new ImageException('Исключение при генерации тамба: ' . $e->getMessage(), 0, $e);

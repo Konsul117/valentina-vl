@@ -55,7 +55,7 @@ class ImageUploader extends Component {
 		$savePath = $this->getSavePath();
 		$filename = $imageIdent . '.jpg';
 
-		$imageLayer->save($savePath, $filename);
+		$imageLayer->save($savePath, $filename, true, null, 100);
 
 		//т.к. ImageResize::save() не возвращает результат сохранения, то приходиться проверять результат по наличию итогового файла
 		if (!file_exists($savePath . DIRECTORY_SEPARATOR . $filename)) {
