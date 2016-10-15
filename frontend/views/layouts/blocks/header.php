@@ -19,7 +19,7 @@ use yii\widgets\Spaceless;
 	$blogFrontModule = Yii::$app->modules['blogFront'];
 	?>
 
-	<?= $blogFrontModule->getImagePostsWidget(10)->run() ?>
+	<?= $blogFrontModule->getImagePostsWidget(15)->run() ?>
 
 	<?php Spaceless::begin() ?>
 	<div class="img-name-wrapper">
