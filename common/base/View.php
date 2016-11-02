@@ -19,6 +19,9 @@ class View extends \yii\web\View {
 	 */
 	public $titleCustom;
 
+	/** @var bool Показывать ли заголовок */
+	public $showTitle = true;
+
 	/** @var MetaTagContainer */
 	public $metaTagContainer;
 

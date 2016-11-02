@@ -61,6 +61,10 @@ CommonAsset::register($this);
 
 	<?= $this->render('//layouts/blocks/breadcrumbs') ?>
 
+	<?php if ($this->showTitle): ?>
+		<h1><?= ($this->titleCustom !== null ? $this->titleCustom : $this->title) ?></h1>
+	<?php endif ?>
+
 	<?= $content ?>
 
 </div>
