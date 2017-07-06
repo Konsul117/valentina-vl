@@ -1,4 +1,5 @@
 <?php
+use backend\modules\editor\assets\TinyMCEInnerAsset;
 use backend\modules\editor\widgets\EditorWidget;
 use yii\web\View;
 
@@ -12,4 +13,4 @@ use yii\web\View;
 <?php
 $this->registerJs(
 		'tinymce_init(\'' . $widget->id . '\''
-		. ',\'' . $this->assetBundles[\backend\modules\editor\assets\TinyMCEInnerAsset::class]->baseUrl . '/css/editor_inner.css\')'); ?>
+		. ',\'' . $this->assetBundles[TinyMCEInnerAsset::class]->baseUrl . '/css/editor_inner.css\')'); ?>

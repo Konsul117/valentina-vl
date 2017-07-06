@@ -2,7 +2,6 @@
 
 namespace frontend\modules\blogFront\controllers;
 
-use common\models\Entity;
 use common\modules\blog\models\BlogCategory;
 use common\modules\blog\models\BlogPost;
 use common\modules\blog\models\BlogTag;
@@ -74,7 +73,7 @@ class PostsController extends Controller {
 
 		return $this->render('view', [
 			'post'          => $post,
-			'commentWidget' => $commentModule->getCommentWidget(Entity::ENTITY_BLOG_POST_ID, $post->id)
+//			'commentWidget' => $commentModule->getCommentWidget(Entity::ENTITY_BLOG_POST_ID, $post->id),
 		]);
 	}
 

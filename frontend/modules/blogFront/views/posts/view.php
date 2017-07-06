@@ -1,8 +1,8 @@
 <?php
-use common\components\Formatter;
-use common\modules\image\models\ImageProvider;
-use common\modules\blog\models\BlogPost;
 use common\base\View;
+use common\components\Formatter;
+use common\modules\blog\models\BlogPost;
+use common\modules\image\models\ImageProvider;
 use frontend\modules\blogFront\components\PostOutHelper;
 use frontend\modules\blogFront\widgets\TagsPostWidget;
 use yii\base\Widget;
@@ -42,4 +42,4 @@ $formatter = new Formatter();
 
 <?= $this->render('//blocks/socials') ?>
 
-<?= $commentWidget->run() ?>
+<?#= $commentWidget->run() ?>
